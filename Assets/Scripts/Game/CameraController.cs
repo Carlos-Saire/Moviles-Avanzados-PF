@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private float sensitivity = 10f;
+    private Vector2 direction;
     private Vector2 currentRotation;
     private void OnValidate()
     {
@@ -16,11 +17,15 @@ public class CameraController : MonoBehaviour
     {
         InputHandler.OnLook -= HandleLook;
     }
-    private void HandleLook(Vector2 direction)
+    private void Update()
     {
         currentRotation.x += direction.x * sensitivity * Time.deltaTime;
         currentRotation.y -= direction.y * sensitivity * Time.deltaTime;
         currentRotation.y = Mathf.Clamp(currentRotation.y, -60f, 60f);
         transform.rotation = Quaternion.Euler(currentRotation.y, currentRotation.x, 0f);
+    }
+    private void HandleLook(Vector2 direction)
+    {
+        this.direction = direction;
     }
 }
