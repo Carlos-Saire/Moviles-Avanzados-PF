@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -27,11 +25,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        InputHandler.OnMove += MovePlayer;
+        InputHandler.OnMove += HandleMove;
     }
     private void OnDisable()
     {
-        InputHandler.OnMove -= MovePlayer;
+        InputHandler.OnMove -= HandleMove;
     }
     private void Update()
     {
@@ -41,7 +39,7 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
-    private void MovePlayer(Vector2 direction)
+    private void HandleMove(Vector2 direction)
     {
         this.direction = direction;
     }
