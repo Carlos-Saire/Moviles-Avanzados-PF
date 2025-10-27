@@ -13,6 +13,7 @@ namespace VictorGame
         public GameObject panelLogin;
         public GameObject panelUser;
         public GameObject panelEditName; 
+        public GameObject panelInsertCode; 
 
         [Header("Login UI")]
         public Button loginButton;
@@ -27,6 +28,10 @@ namespace VictorGame
         public TMP_InputField nameInput;
         public Button applyNameButton;
         public Button closeEditPanelButton;
+
+        [Header("Insert Code")]
+        public Button openPanelCode;
+        public Button closeEditPanelCode;
 
         private void Awake()
         {
@@ -47,6 +52,8 @@ namespace VictorGame
             logoutButton.onClick.AddListener(() => loginManager.Logout());
             applyNameButton.onClick.AddListener(ApplyNewName);
             closeEditPanelButton.onClick.AddListener(CloseEditPanel);
+            openPanelCode.onClick.AddListener(OpenInsertCode);
+            closeEditPanelCode.onClick.AddListener(CloseCodePanel);
         }
 
         private void OnDisable()
@@ -82,6 +89,10 @@ namespace VictorGame
             panelEditName.SetActive(true);
         }
 
+        private void OpenInsertCode()
+        {
+            panelInsertCode.SetActive(true); 
+        }
         private void ApplyNewName()
         {
             string newName = nameInput.text.Trim();
@@ -95,6 +106,10 @@ namespace VictorGame
         private void CloseEditPanel()
         {
             panelEditName.SetActive(false);
+        }
+        private void CloseCodePanel()
+        {
+            panelInsertCode.SetActive(false);
         }
 
         private void UpdatePlayerNameUI(string newName)
