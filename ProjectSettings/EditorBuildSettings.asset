@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/VictorAssets/Scenes/MyLogin.unity
+    guid: c3cf7898df5454d44898b4ee56202390
+  - enabled: 1
+    path: Assets/VictorAssets/Scenes/MyLobby.unity
+    guid: 394f4289dd3a4964ba423de85faf5b8c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: a6bbdc35d50509d45b91eef8300ce038, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
