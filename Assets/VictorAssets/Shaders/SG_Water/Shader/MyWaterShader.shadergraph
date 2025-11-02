@@ -6295,8 +6295,8 @@
     "m_ObjectId": "705fcfd63cc042f6bb79f7f03b2b711f",
     "m_Title": "Normals Calculate",
     "m_Position": {
-        "x": -3722.999755859375,
-        "y": -1912.9998779296875
+        "x": -3723.0,
+        "y": -1913.0
     }
 }
 
@@ -10076,8 +10076,8 @@
     "m_ObjectId": "cfc4464f1a9746e2bb3b126b97828936",
     "m_Title": "Invert Reflection Fixed",
     "m_Position": {
-        "x": -2813.0,
-        "y": -2583.0
+        "x": -2813.000244140625,
+        "y": -2583.000244140625
     }
 }
 
