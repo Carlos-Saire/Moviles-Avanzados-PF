@@ -14,7 +14,9 @@ namespace VictorGame
 
         private async void Start()
         {
-            await InitializeUnityServices();
+            if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized)
+                await InitializeUnityServices();
+
             PlayerAccountService.Instance.SignedIn += HandleSignedIn;
         }
 
@@ -48,14 +50,25 @@ namespace VictorGame
             try
             {
                 string accessToken = PlayerAccountService.Instance.AccessToken;
-                await AuthenticationService.Instance.SignInWithUnityAsync(accessToken);
+
+                if (!AuthenticationService.Instance.IsSignedIn)
+                    await AuthenticationService.Instance.SignInWithUnityAsync(accessToken);
 
                 string playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
                 OnLoginSuccess?.Invoke(playerName);
             }
             catch (Exception e)
             {
-                OnLoginFailed?.Invoke($"Error al autenticar: {e.Message}");
+                if (e.Message.Contains("already signed in"))
+                {
+                    Debug.LogWarning("Ya estabas autenticado. Continuando con la sesión existente.");
+                    string playerName = await AuthenticationService.Instance.GetPlayerNameAsync();
+                    OnLoginSuccess?.Invoke(playerName);
+                }
+                else
+                {
+                    OnLoginFailed?.Invoke($"Error al autenticar: {e.Message}");
+                }
             }
         }
 

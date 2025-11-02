@@ -5,6 +5,9 @@ namespace VictorGame
     using UnityEngine.UI;
     public class UIManager_Login : MonoBehaviour
     {
+        [Header("Lobby Manager")]
+        public LobbyManagerMyLobby lobbyManagerUGS;
+
         [Header("Managers")]
         public LoginManager loginManager;
         public PlayerProfile playerProfile;
@@ -63,20 +66,15 @@ namespace VictorGame
 
         private void JoinLobby()
         {
-            createLobbyButton.onClick.AddListener(() =>
+            createLobbyButton.onClick.AddListener(async () =>
             {
-                LobbyManagerMyLobby.IsHost = true;
-                UnityEngine.SceneManagement.SceneManager.LoadScene("MyLobby");
+                await lobbyManagerUGS.CreateLobbyAsync("SalaVictor", 4);
             });
 
-            joinLobbyButton.onClick.AddListener(() =>
+            joinLobbyButton.onClick.AddListener(async () =>
             {
-                LobbyManagerMyLobby.IsHost = false;
-                LobbyManagerMyLobby.JoinAddress = string.IsNullOrEmpty(codeInputField.text)
-                    ? "127.0.0.1"
-                    : codeInputField.text.Trim();
-
-                UnityEngine.SceneManagement.SceneManager.LoadScene("MyLobby");
+                string code = codeInputField.text.Trim();
+                await lobbyManagerUGS.JoinLobbyByCodeAsync(code);
             });
         }
 
