@@ -14,7 +14,7 @@ public class Panelkick : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            LobbyManager.instance.PrintPlayer(LobbyManager.instance.hostLobby);
+
         }
         if (Input.GetKeyDown(KeyCode.I))
         {

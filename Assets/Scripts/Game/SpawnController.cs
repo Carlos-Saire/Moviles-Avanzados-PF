@@ -4,7 +4,6 @@ using UnityEngine;
 public class SpawnController : NetworkBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;
-    private int nextSpawnIndex = 0;
     private void OnEnable()
     {
         
@@ -13,6 +12,11 @@ public class SpawnController : NetworkBehaviour
     {
         if (NetworkManager.Singleton != null) NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnectedRpc;
     }
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        
+    }
     private void Start()
     {
         if (NetworkManager.Singleton != null)
@@ -20,11 +24,19 @@ public class SpawnController : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedRpc;
             OnClientConnectedRpc(NetworkManager.Singleton.LocalClientId);
         }
-
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log(spawnPoints.Length);
+            Debug.Log(spawnPoints[0].name);
+        }
     }
     [Rpc(SendTo.Server)]
     private void OnClientConnectedRpc(ulong clientId)
     {
+
         if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
         {
             NetworkObject playerNetworkObject = client.PlayerObject;
@@ -32,7 +44,7 @@ public class SpawnController : NetworkBehaviour
             if (playerNetworkObject != null)
             {
                 GameObject playerGO = playerNetworkObject.gameObject;
-
+                Debug.Log(spawnPoints.Length);
                 Debug.Log(spawnPoints[0].name);
                 playerGO.transform.position = spawnPoints[0].position;
                 Debug.Log(spawnPoints[0].name);

@@ -166,11 +166,20 @@ public class LobbyManager : MonoBehaviour
             }
         };
     }
-    public async void KickPlayer()
+    public async void KickPlayer(int indexPlayer)
     {
         try
         {
-            await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, joinedLobby.Players[1].Id);
+            var playerId = hostLobby.Players[indexPlayer].Id;
+            await LobbyService.Instance.RemovePlayerAsync(hostLobby.Id, hostLobby.Players[indexPlayer].Id);
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.ClientId != NetworkManager.Singleton.LocalClientId) 
+                {
+                    NetworkManager.Singleton.DisconnectClient(client.ClientId);
+                    Debug.Log($"Jugador {client.ClientId} desconectado por kick.");
+                }
+            }
         }
         catch (LobbyServiceException e)
         {
