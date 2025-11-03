@@ -37,12 +37,11 @@ public class PlayerController : NetworkBehaviour
     }
     private void Start()
     {
-        mainCamera = transform.GetChild(0);
+        mainCamera = transform.GetChild(1);
     }
     private void Update()
     {
         if(!IsOwner) return;
-        Debug.Log(direction);
         MoveRpc(direction, mainCamera.forward, mainCamera.right);
 
     }

@@ -78,5 +78,9 @@ namespace VictorGame
             PlayerAccountService.Instance.SignOut();
             OnLogout?.Invoke();
         }
+        public async void ListLobbies()
+        {
+
+        }
     }
 }

@@ -2,18 +2,21 @@ using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Unity.Netcode;
 using System.Collections.Generic;
+[RequireComponent(typeof(NetworkObject))]
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
     [SerializeField] private Transform playerPrefab;
     private List<Transform> ListPlayer = new List<Transform>();
+    private void Reset()
+    {
+        gameObject.name = "GameManager";
+    }
     private void OnEnable()
     {
-        SceneManagerController.OnCompleteLoadScene += Practice;
     }
     private void OnDisable()
     {
-        SceneManagerController.OnCompleteLoadScene -= Practice;
     }
     private void Awake()
     {
@@ -60,7 +63,6 @@ public class GameManager : NetworkBehaviour
     {
         Transform player = Instantiate(playerPrefab);
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(ID);
-        player.gameObject.SetActive(false);
         ListPlayer.Add(player);
     }
 }
