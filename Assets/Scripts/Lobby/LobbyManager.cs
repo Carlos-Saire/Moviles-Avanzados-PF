@@ -14,6 +14,7 @@ public class LobbyManager : MonoBehaviour
     public Lobby hostLobby;
     public Lobby joinedLobby;
     private string playerName;
+
     private void Reset()
     {
         gameObject.gameObject.name = "LobbyManager";
@@ -34,9 +35,7 @@ public class LobbyManager : MonoBehaviour
     {
         await UnityServices.InitializeAsync();
 
-        
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        //await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
         playerName = "Carlos" + UnityEngine.Random.Range(0, 100);
     }
@@ -55,18 +54,39 @@ public class LobbyManager : MonoBehaviour
             CreateLobbyOptions options = new CreateLobbyOptions
             {
                 IsPrivate = false,
-                Player = GetPlayer()
+                Player = GetPlayer(),
             };
 
-            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers,options);
+            hostLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers,options);
+
+            Debug.Log(hostLobby.LobbyCode);
+
+            string relayJoinCode = await RelayManager.instance.CreateRelay();
+
+            Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(hostLobby.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject>
+                    {
+                        { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode) }
+                    }
+            });
+
             hostLobby = lobby;
-            Debug.Log("Created Lobby " + lobby.Name + " - " + lobby.MaxPlayers +" - " + lobby.LobbyCode);
-            NetworkManager.Singleton.StartHost();
 
-            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            Debug.Log(hostLobby.LobbyCode);
 
-            Debug.Log(" Host iniciado y escena Lobby cargada correctamente");
 
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.LogException(e);
+        }
+    }
+    public async void DeleteLobby(string lobbyName)
+    {
+        try
+        {
+            await LobbyService.Instance.DeleteLobbyAsync(hostLobby.Name);
         }
         catch (LobbyServiceException e)
         {
@@ -85,10 +105,10 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbycode, joinLobbyByCodeOptions);
             joinedLobby = lobby;
 
-            NetworkManager.Singleton.StartClient();
-            SceneManager.LoadScene("Lobby");
+            RelayManager.instance.JoinRelay(lobbycode);
 
-            Debug.Log("Joined Lobby with code " + lobbycode);
+
+
         }
         catch (LobbyServiceException e)
         {
@@ -99,6 +119,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+            Debug.Log(lobbyID);
             JoinLobbyByIdOptions joinLobbyByCodeOptions = new JoinLobbyByIdOptions
             {
                 Player = GetPlayer()
@@ -107,10 +128,12 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyID, joinLobbyByCodeOptions);
             joinedLobby = lobby;
 
-            NetworkManager.Singleton.StartClient();
-            SceneManager.LoadScene("Lobby");
+            string relayCode = lobby.Data["RelayJoinCode"].Value;
 
-            Debug.Log("Joined Lobby with code " + lobbyID);
+            RelayManager.instance.JoinRelay(relayCode);
+
+
+
         }
         catch (LobbyServiceException e)
         {
@@ -198,4 +221,5 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(lobby.Players[i].Id + " - "+ lobby.Players[i].Data["PlayerName"].Value);
         }
     }
+
 }

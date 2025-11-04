@@ -21,6 +21,7 @@ public class MenuManager : MonoBehaviour
     private async void Start()
     {
         await UnityServices.InitializeAsync();
+
         AuthenticationService.Instance.SignedIn += () =>
         {
             Debug.Log("Holaaaaa" + AuthenticationService.Instance.PlayerId);
