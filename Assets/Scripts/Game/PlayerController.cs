@@ -22,6 +22,9 @@ public class PlayerController : NetworkBehaviour
     private Vector2 direction;
     private Vector3 moveDirection;
 
+    [Header("BT Animator")]
+    private float inputX;
+    private float inputZ;
     private void Reset()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -61,6 +64,8 @@ public class PlayerController : NetworkBehaviour
     private void HandleMove(Vector2 direction)
     {
         this.direction = direction;
+        inputX = direction.x;
+        inputZ = direction.y;
     }
 
     [Rpc(SendTo.Server)]
@@ -71,12 +76,6 @@ public class PlayerController : NetworkBehaviour
 
         moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
 
-        if (moveDirection.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            model.rotation = Quaternion.Lerp(model.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        }
-
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
@@ -85,7 +84,7 @@ public class PlayerController : NetworkBehaviour
 
     private void UpdateAnimations()
     {
-        float speed = new Vector2(direction.x, direction.y).magnitude;
-        animator.SetFloat("Speed", speed);
+        animator.SetFloat("X", inputX, 0.1f, Time.deltaTime);
+        animator.SetFloat("Z", inputZ, 0.1f, Time.deltaTime);
     }
 }

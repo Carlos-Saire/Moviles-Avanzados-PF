@@ -28,6 +28,9 @@ public class FirstPersonCamController : NetworkBehaviour
     {
         virtualCamera = GetComponent<CinemachineCamera>();
         panTilt = virtualCamera.GetComponentInChildren<CinemachinePanTilt>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     private void Start()
     {
@@ -56,10 +59,16 @@ public class FirstPersonCamController : NetworkBehaviour
     }
     private void MoveLook()
     {
-        currentRotation.x += direction.x * sensitivity * Time.deltaTime;
+        //currentRotation.x += direction.x * sensitivity * Time.deltaTime;
+        //currentRotation.y -= direction.y * sensitivity * Time.deltaTime;
+        //currentRotation.y = Mathf.Clamp(currentRotation.y, -60f, 60f);
+        //panTilt.PanAxis.Value = currentRotation.x;
+        //panTilt.TiltAxis.Value = currentRotation.y;
+        transform.parent.Rotate(Vector3.up * direction.x * sensitivity * Time.deltaTime);
+
         currentRotation.y -= direction.y * sensitivity * Time.deltaTime;
         currentRotation.y = Mathf.Clamp(currentRotation.y, -60f, 60f);
-        panTilt.PanAxis.Value = currentRotation.x;
+
         panTilt.TiltAxis.Value = currentRotation.y;
     }
 }
