@@ -29,16 +29,30 @@ public class AuthenticationManager : MonoBehaviour
     }
     private async void Start()
     {
+        if (AuthenticationService.Instance.SessionTokenExists)
+        {
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                try
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    Debug.Log("Sesión restaurada automáticamente con token existente.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning("El token expiró o no es válido, se requiere nuevo login.");
+                    Debug.LogException(ex);
+                }
+            }
 
-        //if (!AuthenticationService.Instance.IsSignedIn && AuthenticationService.Instance.SessionTokenExists)
-        //{
-        //    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        //    Debug.Log("Sesion restaurada automáticamente");
-        //}
-        //else
-        //{
-        //    Debug.Log("No hay sesión previa, se requiere login nuevo");
-        //}
+            playerInfo = AuthenticationService.Instance.PlayerInfo;
+            string name = await AuthenticationService.Instance.GetPlayerNameAsync();
+            OnSignedIn?.Invoke(false, playerInfo, name);
+        }
+        else
+        {
+            Debug.Log("No hay sesión previa, se requiere login nuevo");
+        }
     }
 
 
@@ -46,7 +60,7 @@ public class AuthenticationManager : MonoBehaviour
     {
         try
         {
-            var accessToken = PlayerAccountService.Instance.AccessToken;
+            string accessToken = PlayerAccountService.Instance.AccessToken;
             await SignInWithUnityAsync(accessToken);
         }
         catch (Exception ex)
@@ -87,21 +101,22 @@ public class AuthenticationManager : MonoBehaviour
         try
         {
             bool firstTime = false;
+            Debug.Log(accessToken);
             await AuthenticationService.Instance.SignInWithUnityAsync(accessToken);
             Debug.Log("SignIn successfully.");
 
             playerInfo = AuthenticationService.Instance.PlayerInfo;
 
-            var name = await AuthenticationService.Instance.GetPlayerNameAsync(false);
+            string name = await AuthenticationService.Instance.GetPlayerNameAsync();
 
-            if (name == null)
+            if(name == null)
             {
-                firstTime = true;
-                Debug.Log("First time log in");
+                Debug.Log("No tiene nombre");
             }
             else
             {
-                Debug.Log("Not first time log in");
+                Debug.Log(name);
+                Debug.Log("Por fin tiene nombre UWU");
             }
 
             OnSignedIn?.Invoke(firstTime, playerInfo, name);
@@ -114,6 +129,10 @@ public class AuthenticationManager : MonoBehaviour
         {
             Debug.LogException(ex);
         }
+    }
+    public async void EditNameAsync(string newName)
+    {
+        await AuthenticationService.Instance.UpdatePlayerNameAsync(newName);
     }
 
 }

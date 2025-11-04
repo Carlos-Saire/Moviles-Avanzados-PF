@@ -5,19 +5,19 @@ using UnityEngine.UI;
 public class PanelController : MonoBehaviour
 {
     [SerializeField] private  Button buttonOpen;
-    [SerializeField] private Button buttonClouse;
+    [SerializeField] private Button buttonBack;
 
     private Tween tween;
     private void OnEnable()
     {
         buttonOpen?.onClick.AddListener(Open);
-        buttonClouse?.onClick.AddListener(Clouse);
+        buttonBack?.onClick.AddListener(Back);
     }
 
     private void OnDisable()
     {
         buttonOpen?.onClick.RemoveListener(Open);
-        buttonClouse?.onClick.RemoveListener(Clouse);
+        buttonBack?.onClick.RemoveListener(Back);
     }
     private void Start()
     {
@@ -25,10 +25,10 @@ public class PanelController : MonoBehaviour
     }
     private void Open()
     {
-
+        gameObject.SetActive(true);
     }
-    private void Clouse()
+    private void Back()
     {
-
+        gameObject.SetActive(false);
     }
 }

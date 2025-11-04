@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 public class LobbyManager : MonoBehaviour
 {
     public static LobbyManager instance;
-    [SerializeField] private SceneManagerController SceneManager;
     public Lobby hostLobby;
     public Lobby joinedLobby;
     private string playerName;
@@ -131,7 +129,6 @@ public class LobbyManager : MonoBehaviour
             string relayCode = lobby.Data["RelayJoinCode"].Value;
 
             RelayManager.instance.JoinRelay(relayCode);
-
 
 
         }

@@ -5,15 +5,16 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using Unity.Services.Core;
-using Unity.Services.Authentication;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
-using Unity.Services.Lobbies.Models;
 
 
 public class RelayManager : MonoBehaviour
 {
     public static RelayManager instance;
+
+    [SerializeField] private SceneManagerController SceneManager;
+
     private void Reset()
     {
         gameObject.name="RelayManager";
@@ -31,7 +32,7 @@ public class RelayManager : MonoBehaviour
         }
         await UnityServices.InitializeAsync();
 
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        //await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
     public async Task<string> CreateRelay()
     {
@@ -51,8 +52,7 @@ public class RelayManager : MonoBehaviour
 
             NetworkManager.Singleton.StartHost();
 
-            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
-
+            SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
 
             return joinCode;
         }
