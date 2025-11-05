@@ -25,14 +25,6 @@ public class SpawnController : NetworkBehaviour
             OnClientConnectedRpc(NetworkManager.Singleton.LocalClientId);
         }
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log(spawnPoints.Length);
-            Debug.Log(spawnPoints[0].name);
-        }
-    }
     [Rpc(SendTo.Server)]
     private void OnClientConnectedRpc(ulong clientId)
     {
