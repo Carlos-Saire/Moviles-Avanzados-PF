@@ -9,8 +9,10 @@ using System.Collections.Generic;
 public class VivoxManager : MonoBehaviour
 {
     public static VivoxManager instance;
-
     private string currentChannelName;
+
+    public static event Action<string> OnMessageReceived;
+
     private void Reset()
     {
         gameObject.name = "VivoxManager";
@@ -19,11 +21,6 @@ public class VivoxManager : MonoBehaviour
     {
         AuthenticationManager.OnSignedIn += LoginToVivoxAsync;
     }
-    private void OnDisable()
-    {
-        AuthenticationManager.OnSignedIn -= LoginToVivoxAsync;
-    }
-
     private void Awake()
     {
         if (instance == null)
@@ -40,8 +37,17 @@ public class VivoxManager : MonoBehaviour
     private async void Start()
     {
         await UnityServices.InitializeAsync();
-
         await VivoxService.Instance.InitializeAsync();
+
+        VivoxService.Instance.ChannelMessageReceived += HandleMessageReceived;
+    }
+    private void OnDestroy()
+    {
+        VivoxService.Instance.ChannelMessageReceived -= HandleMessageReceived;
+    }
+    private void HandleMessageReceived(VivoxMessage message)
+    {
+        OnMessageReceived?.Invoke(message.MessageText);
     }
     public async void LoginToVivoxAsync(string playerName)
     {

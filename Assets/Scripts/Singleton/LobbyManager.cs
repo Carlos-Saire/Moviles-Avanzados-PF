@@ -69,9 +69,7 @@ public class LobbyManager : MonoBehaviour
 
             hostLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers,options);
 
-            Debug.Log(hostLobby.LobbyCode);
 
-            //VivoxManager.instance.JoinGroupChannelAsync(hostLobby.LobbyCode);
 
             string relayJoinCode = await RelayManager.instance.CreateRelay();
 
@@ -85,7 +83,8 @@ public class LobbyManager : MonoBehaviour
 
             hostLobby = lobby;
 
-            Debug.Log(hostLobby.LobbyCode);
+            VivoxManager.instance.JoinGroupChannelAsync(hostLobby.LobbyCode);
+
 
 
         }
@@ -140,10 +139,12 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyID, joinLobbyByCodeOptions);
             joinedLobby = lobby;
 
+
             string relayCode = lobby.Data["RelayJoinCode"].Value;
 
             RelayManager.instance.JoinRelay(relayCode);
 
+            VivoxManager.instance.JoinGroupChannelAsync(joinedLobby.LobbyCode);
 
         }
         catch (LobbyServiceException e)

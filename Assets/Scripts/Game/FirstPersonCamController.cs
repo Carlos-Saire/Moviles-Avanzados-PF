@@ -30,8 +30,8 @@ public class FirstPersonCamController : MonoBehaviour
         panTilt = virtualCamera.GetComponentInChildren<CinemachinePanTilt>();
 
         player = transform.parent.GetComponent<PlayerController>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
     private void Update()
     {

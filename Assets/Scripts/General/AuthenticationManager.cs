@@ -29,34 +29,34 @@ public class AuthenticationManager : MonoBehaviour
     {
         PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
     }
-    //private async void Start()
-    //{
-    //    if (AuthenticationService.Instance.SessionTokenExists)
-    //    {
-    //        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    private async void Start()
+    {
+        if (AuthenticationService.Instance.SessionTokenExists)
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-    //        if (!AuthenticationService.Instance.IsSignedIn)
-    //        {
-    //            try
-    //            {
-    //                Debug.Log("Sesión restaurada automáticamente con token existente.");
-    //            }
-    //            catch (Exception ex)
-    //            {
-    //                Debug.LogWarning("El token expiró o no es válido, se requiere nuevo login.");
-    //                Debug.LogException(ex);
-    //            }
-    //        }
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                try
+                {
+                    Debug.Log("Sesión restaurada automáticamente con token existente.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning("El token expiró o no es válido, se requiere nuevo login.");
+                    Debug.LogException(ex);
+                }
+            }
 
-    //        playerInfo = AuthenticationService.Instance.PlayerInfo;
-    //        string name = await AuthenticationService.Instance.GetPlayerNameAsync();
-    //        OnSignedIn?.Invoke(name);
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("No hay sesión previa, se requiere login nuevo");
-    //    }
-    //}
+            playerInfo = AuthenticationService.Instance.PlayerInfo;
+            string name = await AuthenticationService.Instance.GetPlayerNameAsync();
+            OnSignedIn?.Invoke(name);
+        }
+        else
+        {
+            Debug.Log("No hay sesión previa, se requiere login nuevo");
+        }
+    }
 
 
     private async void SignedInWithUnity()
