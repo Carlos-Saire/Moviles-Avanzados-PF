@@ -52,6 +52,8 @@ public class GameManager : NetworkBehaviour
         Transform player = Instantiate(playerPrefab);
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
+        PlayerController controller = player.GetComponent<PlayerController>();
+        controller.SetCameraStateClientRpc(true);
         ListPlayer.Add(player);
 
     }

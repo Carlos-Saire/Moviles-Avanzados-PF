@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
@@ -13,9 +14,9 @@ public class PlayerController : NetworkBehaviour
     private float gravity = -9.81f;
 
     [Header("References")]
-    [SerializeField] private Transform model; 
+    [SerializeField] private Transform model;
     [SerializeField] private Animator animator;
-    [SerializeField] private Transform playerCamera; 
+    [SerializeField] private Transform playerCamera;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -49,16 +50,19 @@ public class PlayerController : NetworkBehaviour
     private void Start()
     {
         if (playerCamera == null)
-            playerCamera = transform.GetChild(1); 
+            playerCamera = transform.GetChild(1);
     }
 
     private void Update()
     {
+
         if (!IsOwner) return;
 
         MoveRpc(direction, playerCamera.forward, playerCamera.right);
 
-        MoveAnimationRpc(inputX,inputZ);
+
+
+        MoveAnimationRpc(inputX, inputZ);
     }
 
     private void HandleMove(Vector2 direction)
@@ -67,7 +71,16 @@ public class PlayerController : NetworkBehaviour
         inputX = direction.x;
         inputZ = direction.y;
     }
-
+    [Rpc(SendTo.Server)]
+    public void UpdateRotationServerRpc(Quaternion newRotation)
+    {
+        transform.rotation = newRotation;
+    }
+    [Rpc(SendTo.Owner)]
+    public void SetCameraStateClientRpc(bool state)
+    {
+        playerCamera.gameObject.SetActive(state);
+    }
     [Rpc(SendTo.Server)]
     public void MoveRpc(Vector2 direction, Vector3 camForward, Vector3 camRight)
     {
@@ -75,20 +88,13 @@ public class PlayerController : NetworkBehaviour
         camRight.y = 0;
 
         moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
-
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
-
-    private void UpdateAnimations()
-    {
-        animator.SetFloat("X", inputX, 0.1f, Time.deltaTime);
-        animator.SetFloat("Z", inputZ, 0.1f, Time.deltaTime);
-    }
     [Rpc(SendTo.Server)]
-    private void MoveAnimationRpc(float inputX,float inputZ)
+    private void MoveAnimationRpc(float inputX, float inputZ)
     {
         animator.SetFloat("X", inputX, 0.1f, Time.deltaTime);
         animator.SetFloat("Z", inputZ, 0.1f, Time.deltaTime);
