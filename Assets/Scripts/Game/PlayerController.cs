@@ -58,7 +58,7 @@ public class PlayerController : NetworkBehaviour
 
         MoveRpc(direction, playerCamera.forward, playerCamera.right);
 
-        UpdateAnimations();
+        MoveAnimationRpc(inputX,inputZ);
     }
 
     private void HandleMove(Vector2 direction)
@@ -83,6 +83,12 @@ public class PlayerController : NetworkBehaviour
     }
 
     private void UpdateAnimations()
+    {
+        animator.SetFloat("X", inputX, 0.1f, Time.deltaTime);
+        animator.SetFloat("Z", inputZ, 0.1f, Time.deltaTime);
+    }
+    [Rpc(SendTo.Server)]
+    private void MoveAnimationRpc(float inputX,float inputZ)
     {
         animator.SetFloat("X", inputX, 0.1f, Time.deltaTime);
         animator.SetFloat("Z", inputZ, 0.1f, Time.deltaTime);
