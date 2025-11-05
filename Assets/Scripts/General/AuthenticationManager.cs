@@ -4,11 +4,13 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 public class AuthenticationManager : MonoBehaviour
 {
-    public event Action<bool, PlayerInfo, string> OnSignedIn;
-    public event Action<string> OnSignedOut;
+    public static event Action<string> OnSignedIn;
+    public static event Action<string> OnSignedOut;
+
     private PlayerInfo playerInfo;
 
     [SerializeField] private AuthenticationUI authenticationUI;
@@ -27,33 +29,34 @@ public class AuthenticationManager : MonoBehaviour
     {
         PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
     }
-    private async void Start()
-    {
-        if (AuthenticationService.Instance.SessionTokenExists)
-        {
-            if (!AuthenticationService.Instance.IsSignedIn)
-            {
-                try
-                {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    Debug.Log("Sesión restaurada automáticamente con token existente.");
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogWarning("El token expiró o no es válido, se requiere nuevo login.");
-                    Debug.LogException(ex);
-                }
-            }
+    //private async void Start()
+    //{
+    //    if (AuthenticationService.Instance.SessionTokenExists)
+    //    {
+    //        await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-            playerInfo = AuthenticationService.Instance.PlayerInfo;
-            string name = await AuthenticationService.Instance.GetPlayerNameAsync();
-            OnSignedIn?.Invoke(false, playerInfo, name);
-        }
-        else
-        {
-            Debug.Log("No hay sesión previa, se requiere login nuevo");
-        }
-    }
+    //        if (!AuthenticationService.Instance.IsSignedIn)
+    //        {
+    //            try
+    //            {
+    //                Debug.Log("Sesión restaurada automáticamente con token existente.");
+    //            }
+    //            catch (Exception ex)
+    //            {
+    //                Debug.LogWarning("El token expiró o no es válido, se requiere nuevo login.");
+    //                Debug.LogException(ex);
+    //            }
+    //        }
+
+    //        playerInfo = AuthenticationService.Instance.PlayerInfo;
+    //        string name = await AuthenticationService.Instance.GetPlayerNameAsync();
+    //        OnSignedIn?.Invoke(name);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("No hay sesión previa, se requiere login nuevo");
+    //    }
+    //}
 
 
     private async void SignedInWithUnity()
@@ -119,7 +122,7 @@ public class AuthenticationManager : MonoBehaviour
                 Debug.Log("Por fin tiene nombre UWU");
             }
 
-            OnSignedIn?.Invoke(firstTime, playerInfo, name);
+            OnSignedIn?.Invoke(name);
         }
         catch (AuthenticationException ex)
         {

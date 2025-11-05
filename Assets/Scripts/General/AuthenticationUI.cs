@@ -41,8 +41,8 @@ public class AuthenticationUI : MonoBehaviour
         closeEditNameButton?.onClick.AddListener(ConfirmNameButtonButtonPressed);
         nameInputField.onValueChanged.AddListener(OnNameInputChanged);
 
-        authenticationManager.OnSignedIn += LoginController_OnsignedIn;
-        authenticationManager.OnSignedOut += LoginController_OnsignedOut;
+        AuthenticationManager.OnSignedIn += LoginController_OnsignedIn;
+        AuthenticationManager.OnSignedOut += LoginController_OnsignedOut;
     }
 
     private void OnDisable()
@@ -55,15 +55,14 @@ public class AuthenticationUI : MonoBehaviour
         closeEditNameButton?.onClick.RemoveListener(ConfirmNameButtonButtonPressed);
         nameInputField.onValueChanged.RemoveListener(OnNameInputChanged);
 
-        authenticationManager.OnSignedIn -= LoginController_OnsignedIn;
+        AuthenticationManager.OnSignedIn -= LoginController_OnsignedIn;
     }
-    private void LoginController_OnsignedIn(bool firstTime, PlayerInfo playerInfo, string playerName)
+    private void LoginController_OnsignedIn(string playerName)
     {
         playerNameText.text = playerName;
 
         panelLobby.gameObject.SetActive(false);
-
-        Debug.Log("Player Name: " + playerName + " | Player ID: " + playerInfo.Id);
+        Debug.Log("Player Name: " + playerName );
     }
 
     private async void LoginButtonPressed()

@@ -5,6 +5,7 @@ using Unity.Services.Lobbies;
 using UnityEngine;
 using Unity.Netcode;
 using System.Threading.Tasks;
+using System;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -16,6 +17,18 @@ public class LobbyManager : MonoBehaviour
     private void Reset()
     {
         gameObject.gameObject.name = "LobbyManager";
+    }
+    private void OnEnable()
+    {
+        AuthenticationManager.OnSignedIn += OnsignedIn;
+    }
+    private void OnDisable()
+    {
+        AuthenticationManager.OnSignedIn -= OnsignedIn;
+    }
+    private void OnsignedIn(string obj)
+    {
+        playerName = obj;
     }
     private void Awake()
     {
@@ -35,7 +48,6 @@ public class LobbyManager : MonoBehaviour
 
         //await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-        playerName = "Carlos" + UnityEngine.Random.Range(0, 100);
     }
     public void Create()
     {
@@ -58,6 +70,8 @@ public class LobbyManager : MonoBehaviour
             hostLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers,options);
 
             Debug.Log(hostLobby.LobbyCode);
+
+            //VivoxManager.instance.JoinGroupChannelAsync(hostLobby.LobbyCode);
 
             string relayJoinCode = await RelayManager.instance.CreateRelay();
 
