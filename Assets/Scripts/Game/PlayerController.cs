@@ -1,4 +1,3 @@
-using DG.Tweening;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
@@ -22,6 +21,9 @@ public class PlayerController : NetworkBehaviour
     private Vector3 velocity;
     private Vector2 direction;
     private Vector3 moveDirection;
+    private Quaternion rotation;
+
+    private Transform camera;
 
     [Header("BT Animator")]
     private float inputX;
@@ -58,13 +60,29 @@ public class PlayerController : NetworkBehaviour
 
         if (!IsOwner) return;
 
-        MoveRpc(direction, playerCamera.forward, playerCamera.right);
+        Vector3 camForward = playerCamera.forward;
+        Vector3 camRight = playerCamera.right;
+        camForward.y = 0;
+        camRight.y = 0;
 
+        moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
+        Vector3 move = moveDirection * moveSpeed * Time.deltaTime;
+        //controller.Move(move);
 
+        velocity.y += gravity * Time.deltaTime;
+        //controller.Move(velocity * Time.deltaTime);
+
+        MoveRpc(move,velocity);
+
+        Quaternion newRotation = Quaternion.Euler(0f, playerCamera.eulerAngles.y, 0f);
+        UpdateRotationServerRpc(newRotation);
 
         MoveAnimationRpc(inputX, inputZ);
     }
-
+    public void rotate(Quaternion a)
+    {
+        rotation = a;
+    }
     private void HandleMove(Vector2 direction)
     {
         this.direction = direction;
@@ -74,7 +92,14 @@ public class PlayerController : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void UpdateRotationServerRpc(Quaternion newRotation)
     {
-        transform.rotation = newRotation;
+        model.rotation = newRotation;
+        UpdateRotationClientRpc(newRotation);
+    }
+
+    [Rpc(SendTo.NotServer)]
+    private void UpdateRotationClientRpc(Quaternion newRotation)
+    {
+        model.rotation = newRotation;
     }
     [Rpc(SendTo.Owner)]
     public void SetCameraStateClientRpc(bool state)
@@ -82,16 +107,10 @@ public class PlayerController : NetworkBehaviour
         playerCamera.gameObject.SetActive(state);
     }
     [Rpc(SendTo.Server)]
-    public void MoveRpc(Vector2 direction, Vector3 camForward, Vector3 camRight)
+    public void MoveRpc(Vector3 direction,Vector3 velocity)
     {
-        camForward.y = 0;
-        camRight.y = 0;
-
-        moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
-        controller.Move(moveDirection * moveSpeed * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(direction);
+        controller.Move(velocity);
     }
     [Rpc(SendTo.Server)]
     private void MoveAnimationRpc(float inputX, float inputZ)

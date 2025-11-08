@@ -43,18 +43,18 @@ public class FirstPersonCamController : MonoBehaviour
     }
     private void MoveLook()
     {
-        //currentRotation.x += direction.x * sensitivity * Time.deltaTime;
-        //currentRotation.y -= direction.y * sensitivity * Time.deltaTime;
-        //currentRotation.y = Mathf.Clamp(currentRotation.y, -60f, 60f);
-        //panTilt.PanAxis.Value = currentRotation.x;
-        //panTilt.TiltAxis.Value = currentRotation.y;
-
-
         currentRotation.x += direction.x * sensitivity * Time.deltaTime;
         currentRotation.y -= direction.y * sensitivity * Time.deltaTime;
         currentRotation.y = Mathf.Clamp(currentRotation.y, -60f, 60f);
+        panTilt.PanAxis.Value = currentRotation.x;
         panTilt.TiltAxis.Value = currentRotation.y;
-        Quaternion newRotation = Quaternion.Euler(0f, currentRotation.x, 0f);
-        player.UpdateRotationServerRpc(newRotation);
+
+
+        //currentRotation.x += direction.x * sensitivity * Time.deltaTime;
+        //currentRotation.y -= direction.y * sensitivity * Time.deltaTime;
+        //currentRotation.y = Mathf.Clamp(currentRotation.y, -60f, 60f);
+        //panTilt.TiltAxis.Value = currentRotation.y;
+        //Quaternion newRotation = Quaternion.Euler(0f, currentRotation.x, 0f);
+        //player.rotate(newRotation);
     }
 }

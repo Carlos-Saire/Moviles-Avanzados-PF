@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7968813499974626916}
   - component: {fileID: 1666602424417323290}
   - component: {fileID: 7543948554626358849}
-  - component: {fileID: 4202902398152282367}
+  - component: {fileID: 606179306169303017}
   m_Layer: 5
   m_Name: TextVivox
   m_TagString: Untagged
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4202902398152282367
+--- !u!114 &606179306169303017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3142637814537056437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b209f28de90c07243a137095051f834f, type: 3}
+  m_Script: {fileID: 11500000, guid: 40cd2bde6da647743bb959d60c40d390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textInormation: {fileID: 153325138642845035}
