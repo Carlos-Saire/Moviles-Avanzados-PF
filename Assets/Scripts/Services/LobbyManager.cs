@@ -49,6 +49,13 @@ public class LobbyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnDestroy()
+    {
+        if (currentLobby != null)
+        {
+            RemovePlayerAsync();
+        }
+    }
     public void Create()
     {
         CreateLobby("a", 5);
@@ -104,6 +111,7 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
+
             JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions
             {
                 Player = GetPlayer()
@@ -214,6 +222,10 @@ public class LobbyManager : MonoBehaviour
         {
             Debug.Log(e);
         }
+    }
+    public async void RemovePlayerAsync()
+    {
+        await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerSO.PlayerID);
     }
     public async Task RefreshLobby()
     {

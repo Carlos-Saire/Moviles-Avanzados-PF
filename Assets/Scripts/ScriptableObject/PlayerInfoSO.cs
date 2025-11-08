@@ -3,4 +3,5 @@ using UnityEngine;
 public class PlayerInfoSO : ScriptableObject
 {
     public string PlayerName { get; set; }
+    public string PlayerID { get; set; }
 }

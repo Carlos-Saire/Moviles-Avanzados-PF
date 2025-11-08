@@ -158,6 +158,9 @@ public class AuthenticationManager : MonoBehaviour
             playerInfo = AuthenticationService.Instance.PlayerInfo;
             Debug.Log("Player ID: " + playerInfo.Username);
 
+            playerSo.PlayerID = playerInfo.Id;
+            Debug.Log("Se mando el player Id al scriptable object");
+
             playerSo.PlayerName = await AuthenticationService.Instance.GetPlayerNameAsync();
             Debug.Log("Se optuvo nombre del player");
 
