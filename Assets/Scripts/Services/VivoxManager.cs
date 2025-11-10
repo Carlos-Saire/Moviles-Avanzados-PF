@@ -44,13 +44,14 @@ public class VivoxManager : MonoBehaviour
     }
     public async void LoginToVivoxAsync(string playerName)
     {
+        Debug.Log(playerName);
+
         LoginOptions options = new LoginOptions()
         {
             DisplayName = playerName,
             EnableTTS = true
         };
         await VivoxService.Instance.LoginAsync(options);
-        Debug.Log(playerName);
 
         JoinGroupChannelAsync(currentChannelId);
     }
@@ -60,7 +61,7 @@ public class VivoxManager : MonoBehaviour
         try
         {
             await VivoxService.Instance.JoinGroupChannelAsync(channelToJoin, ChatCapability.TextAndAudio);
-            SetMicrophone(false);
+            SetMicrophone(true);
             currentChannelName = channelToJoin;
             Debug.Log("Entraste");
         }

@@ -14,6 +14,6 @@ public class SceneManagerController : MonoBehaviour
     }
     public void LoadScene(string scene, LoadSceneMode mode)
     {
-        NetworkManager.Singleton.SceneManager.LoadScene(scene, mode);
+        NetworkManager.Singleton.SceneManager.LoadScene(scene,mode);
     }
 }

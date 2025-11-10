@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
-using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using UnityEngine;
 using Unity.Netcode;
 using System.Threading.Tasks;
-using System;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -56,21 +54,17 @@ public class LobbyManager : MonoBehaviour
             RemovePlayerAsync();
         }
     }
-    public void Create()
-    {
-        CreateLobby("a", 5);
-    }
     public void A()
     {
         ListLobbies();
     }
-    public async void CreateLobby(string lobbyName, int maxPlayers)
+    public async void CreateLobby(string lobbyName, int maxPlayers,bool isPrivate)
     {
         try
         {
             CreateLobbyOptions options = new CreateLobbyOptions
             {
-                IsPrivate = false,
+                IsPrivate = isPrivate,
                 Player = GetPlayer(),
             };
 

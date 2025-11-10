@@ -24,14 +24,19 @@ public class SpawnController : NetworkBehaviour
         Debug.Log("Se devolvio una posicion");
         return spawnPoint.position;
     }
-    private void Start()
+    private void Awake()
     {
+        
+    }
+    protected override void OnNetworkPostSpawn()
+    {
+        base.OnNetworkPostSpawn();
         for (int i = 0; i < spawnPointArray.Length; ++i)
         {
             spawnPoints.Enqueue(spawnPointArray[i]);
         }
 
-        if (NetworkManager.Singleton != null&&IsServer)
+        if (NetworkManager.Singleton != null && IsServer)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedRpc;
         }
