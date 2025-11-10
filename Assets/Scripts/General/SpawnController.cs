@@ -24,22 +24,33 @@ public class SpawnController : NetworkBehaviour
         Debug.Log("Se devolvio una posicion");
         return spawnPoint.position;
     }
-    private void Start()
+    private void Awake()
     {
+        
+    }
+    public override void OnNetworkPreDespawn()
+    {
+        base.OnNetworkPreDespawn();
+
+    }
+    protected override void OnNetworkPostSpawn()
+    {
+        base.OnNetworkPostSpawn();
         for (int i = 0; i < spawnPointArray.Length; ++i)
         {
             spawnPoints.Enqueue(spawnPointArray[i]);
         }
 
-        if (NetworkManager.Singleton != null&&IsServer)
+        if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedRpc;
-        }
-
-        if (IsServer)
-        {
             OnClientConnectedRpc(NetworkManager.Singleton.LocalClientId);
         }
+    }
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+       
     }
     public override void OnDestroy()
     {
