@@ -1,5 +1,5 @@
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 [RequireComponent(typeof(NetworkObject))]
 public class GameManager : NetworkBehaviour
 {
@@ -7,6 +7,36 @@ public class GameManager : NetworkBehaviour
 
     [Header("Player")]
     [SerializeField] private Transform playerPrefab;
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        RegisterPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
+        if(NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+        }
+    }
+
+    private void OnClientDisconnected(ulong obj)
+    {
+        if( obj== NetworkManager.ServerClientId)
+        {
+            NetworkManager.Singleton.Shutdown();
+            
+            Debug.Log("El servidor se ha desconectado.");
+        }
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+        }
+    }
 
     private void Reset()
     {
@@ -36,11 +66,7 @@ public class GameManager : NetworkBehaviour
         //Screen.orientation = ScreenOrientation.AutoRotation;
     }
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        RegisterPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
-    }
+   
 
     [Rpc(SendTo.Server)]
     public void RegisterPlayerServerRpc(ulong clientId)
@@ -52,4 +78,12 @@ public class GameManager : NetworkBehaviour
         controller.SetCameraStateClientRpc(true);
 
     }
+    private void OnClientConnected(ulong obj)
+    {
+        if (obj == NetworkManager.ServerClientId)
+        {
+            Debug.Log("El servidor se ha conectado.");
+        }
+    }
+
 }

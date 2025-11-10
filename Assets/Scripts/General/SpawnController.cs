@@ -8,6 +8,14 @@ public class SpawnController : NetworkBehaviour
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPointArray;
     [SerializeField] private Queue<Transform> spawnPoints = new Queue<Transform>();
+    private void OnEnable()
+    {
+        
+    }
+    private void OnDisable()
+    {
+        
+    }
     private void Reset()
     {
         gameObject.name = "SpawnController";

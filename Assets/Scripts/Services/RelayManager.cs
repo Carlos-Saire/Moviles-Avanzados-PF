@@ -16,13 +16,13 @@ public class RelayManager : MonoBehaviour
     {
         gameObject.name = "RelayManager";
     }
-    public async Task<string> CreateRelay()
+    public async Task<string> CreateRelay(int maxPlayers)
     {
         try
         {
             //List<Region> regions = await RelayService.Instance.ListRegionsAsync();
 
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxPlayers-1);
 
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 

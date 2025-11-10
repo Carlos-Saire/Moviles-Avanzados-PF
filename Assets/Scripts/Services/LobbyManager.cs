@@ -72,7 +72,7 @@ public class LobbyManager : MonoBehaviour
 
 
 
-            string relayJoinCode = await relayManager.CreateRelay();
+            string relayJoinCode = await relayManager.CreateRelay(maxPlayers);
 
             Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions
             {
@@ -137,7 +137,6 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyID, joinLobbyByCodeOptions);
             currentLobby = lobby;
 
-
             string relayCode = lobby.Data["RelayJoinCode"].Value;
 
             relayManager.JoinRelay(relayCode);
@@ -176,7 +175,11 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            await LobbyService.Instance.QuickJoinLobbyAsync();
+            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+            currentLobby = lobby;
+
+            string relayCode = lobby.Data["RelayJoinCode"].Value;
+            relayManager.JoinRelay(relayCode);
         }
         catch (LobbyServiceException e)
         {

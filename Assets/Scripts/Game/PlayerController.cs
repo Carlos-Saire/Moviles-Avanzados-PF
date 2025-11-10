@@ -21,7 +21,9 @@ public class PlayerController : NetworkBehaviour
     private Vector3 velocity;
     private Vector2 direction;
     private Vector3 moveDirection;
+    private Vector3 move;
     private Quaternion rotation;
+
 
     private Transform camera;
 
@@ -57,20 +59,8 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-
         if (!IsOwner) return;
-
-        Vector3 camForward = playerCamera.forward;
-        Vector3 camRight = playerCamera.right;
-        camForward.y = 0;
-        camRight.y = 0;
-
-        moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
-        Vector3 move = moveDirection * moveSpeed * Time.deltaTime;
-        //controller.Move(move);
-
-        velocity.y += gravity * Time.deltaTime;
-        //controller.Move(velocity * Time.deltaTime);
+        Move();
 
         MoveRpc(move,velocity);
 
@@ -88,6 +78,20 @@ public class PlayerController : NetworkBehaviour
         this.direction = direction;
         inputX = direction.x;
         inputZ = direction.y;
+    }
+    private void Move()
+    {
+        Vector3 camForward = playerCamera.forward;
+        Vector3 camRight = playerCamera.right;
+        camForward.y = 0;
+        camRight.y = 0;
+
+        moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
+        move = moveDirection * moveSpeed * Time.deltaTime;
+        //controller.Move(move);
+
+        velocity.y += gravity * Time.deltaTime;
+        //controller.Move(velocity * Time.deltaTime);
     }
     [Rpc(SendTo.Server)]
     public void UpdateRotationServerRpc(Quaternion newRotation)
