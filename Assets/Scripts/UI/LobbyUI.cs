@@ -16,12 +16,14 @@ public class LobbyUI : MonoBehaviour
 
     [Header("Create Lobby")]
     [SerializeField] private Transform createLobbyPanel;
+    [SerializeField] private Transform editNamePanel; 
     [SerializeField] private TMP_Text currentNumberPlayersText;
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private Button buttonNext;
     [SerializeField] private Button buttonPrevious;
     [SerializeField] private Button buttonOpenPanelCreateLobby;
     [SerializeField] private Button buttonClousePanelCreateLobby;
+    [SerializeField] private Button buttonClousePanelEditName; 
     [SerializeField] private Button buttonCreateLobby;
     [SerializeField] private TMP_Dropdown dropdownSegurity;
     private bool isPrivate;
@@ -37,6 +39,7 @@ public class LobbyUI : MonoBehaviour
         buttonNext?.onClick.AddListener(HandleButtonNext);
         buttonPrevious?.onClick.AddListener(HandleButtonPrevious);
         buttonClousePanelCreateLobby?.onClick.AddListener(HandleButtonClousePanelCreateLobby);
+        buttonClousePanelEditName?.onClick.AddListener(HandleButtonClousePanelEditName);
         buttonCreateLobby?.onClick.AddListener(HandlebuttonCreateLobby);
         dropdownSegurity?.onValueChanged.AddListener(OnDropdownCambiado);
     }
@@ -86,6 +89,11 @@ public class LobbyUI : MonoBehaviour
     private void HandleButtonClousePanelCreateLobby()
     {
         createLobbyPanel.gameObject.SetActive(false);
+        Debug.Log("Se Cerro el panel para crear un lobby");
+    }
+    private void HandleButtonClousePanelEditName()
+    {
+        editNamePanel.gameObject.SetActive(false);
         Debug.Log("Se Cerro el panel para crear un lobby");
     }
 
