@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
+using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkTransport))]
@@ -28,6 +29,10 @@ public class PlayerController : NetworkBehaviour
     [Header("BT Animator")]
     private float inputX;
     private float inputZ;
+
+    [Header("Attack")]
+    [SerializeField] private bool isAttacking = false;
+    [SerializeField] private GameObject dagger;
     private void Reset()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -37,11 +42,13 @@ public class PlayerController : NetworkBehaviour
     private void OnEnable()
     {
         InputHandler.OnMove += HandleMove;
+        InputHandler.OnAttack += HandleAttack;
     }
 
     private void OnDisable()
     {
         InputHandler.OnMove -= HandleMove;
+        InputHandler.OnAttack -= HandleAttack;
     }
 
     private void Awake()
@@ -53,6 +60,9 @@ public class PlayerController : NetworkBehaviour
     {
         if (playerCamera == null)
             playerCamera = transform.GetChild(1);
+
+        if (dagger != null)
+            dagger.SetActive(false);
     }
 
     private void Update()
@@ -60,6 +70,8 @@ public class PlayerController : NetworkBehaviour
 
         if (!IsOwner) return;
 
+        if (isAttacking)
+            return;
         Vector3 camForward = playerCamera.forward;
         Vector3 camRight = playerCamera.right;
         camForward.y = 0;
@@ -89,6 +101,44 @@ public class PlayerController : NetworkBehaviour
         inputX = direction.x;
         inputZ = direction.y;
     }
+    #region Attack
+    private void HandleAttack()
+    {
+        if (!IsOwner) return;
+        if (isAttacking) return;
+
+        isAttacking = true;
+        animator.SetBool("IsAttacking", true);
+        PlayAttackAnimationRpc();
+
+        if (dagger != null)
+            dagger.SetActive(true);
+
+        StartCoroutine(EndAttack());
+    }
+    [Rpc(SendTo.Server)]
+    private void PlayAttackAnimationRpc()
+    {
+        animator.SetTrigger("Attack");
+        PlayAttackAnimationClientRpc();
+    }
+
+    [Rpc(SendTo.NotServer)]
+    private void PlayAttackAnimationClientRpc()
+    {
+        animator.SetTrigger("Attack");
+    }
+    private IEnumerator EndAttack()
+    {
+        yield return new WaitForSeconds(1f);
+
+        isAttacking = false;
+        animator.SetBool("IsAttacking", false);
+
+        if (dagger != null)
+            dagger.SetActive(false);
+    }
+    #endregion
     [Rpc(SendTo.Server)]
     public void UpdateRotationServerRpc(Quaternion newRotation)
     {
