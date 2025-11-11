@@ -1,82 +1,38 @@
 using UnityEngine;
 using Unity.Netcode;
-using System.Collections.Generic;
+using System;
 
 [RequireComponent(typeof(NetworkObject))]
 public class SpawnController : NetworkBehaviour
 {
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPointArray;
-    [SerializeField] private Queue<Transform> spawnPoints = new Queue<Transform>();
-    private void OnEnable()
-    {
-        
-    }
-    private void OnDisable()
-    {
-        
-    }
+    private int currentIndexArrayPosition;
     private void Reset()
     {
         gameObject.name = "SpawnController";
     }
+    private void OnEnable()
+    {
+        GameManager.OnPositionPlayer += GetSpawnPoint;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnPositionPlayer -= GetSpawnPoint;
+    }
     public Vector3 GetSpawnPoint()
     {
-        if (spawnPoints.Count == 0)
-        {
-            Debug.LogWarning("No spawn points available!");
-            return Vector3.zero;
-        }
-        Transform spawnPoint = spawnPoints.Dequeue();
-        spawnPoints.Enqueue(spawnPoint);
-        Debug.Log("Se devolvio una posicion");
-        return spawnPoint.position;
-    }
-    private void Awake()
-    {
-        
-    }
-    public override void OnNetworkPreDespawn()
-    {
-        base.OnNetworkPreDespawn();
 
-    }
-    protected override void OnNetworkPostSpawn()
-    {
-        base.OnNetworkPostSpawn();
-        for (int i = 0; i < spawnPointArray.Length; ++i)
+        if (currentIndexArrayPosition < spawnPointArray.Length)
         {
-            spawnPoints.Enqueue(spawnPointArray[i]);
+            ++currentIndexArrayPosition;
+            Debug.Log(currentIndexArrayPosition - 1);
+            return spawnPointArray[currentIndexArrayPosition-1].position;
+        }
+        else
+        {
+            throw new Exception("Fuera De los limites");
         }
 
-        if (NetworkManager.Singleton != null)
-        {
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedRpc;
-            OnClientConnectedRpc(NetworkManager.Singleton.LocalClientId);
-        }
     }
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-       
-    }
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
-        if (NetworkManager.Singleton != null)
-            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnectedRpc;
-    }
-    private void OnClientConnectedRpc(ulong clientId)
-    {
-        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
-        {
-            NetworkObject playerNetworkObject = client.PlayerObject;
-            Debug.Log("Se encontro al cliente ");
-
-            GameObject playerGO = playerNetworkObject.gameObject;
-            playerGO.transform.position = spawnPointArray[0].position;
-            Debug.Log("Modificando posicon del cliente");
-        }
-    }
-
 }
