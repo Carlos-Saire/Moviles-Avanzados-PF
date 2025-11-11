@@ -132,4 +132,11 @@ public class GameManager : NetworkBehaviour
             Debug.Log("Se perdio Coneccion con el Server Volviendo al Menu");
         }
     }
+    public int CalculatePing()
+    {
+        int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
+        Debug.Log($"{ping}");
+        return ping;
+    }
 }
+
