@@ -33,6 +33,5 @@ public class SpawnController : NetworkBehaviour
         {
             throw new Exception("Fuera De los limites");
         }
-
     }
 }

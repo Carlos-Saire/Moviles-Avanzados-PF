@@ -1,7 +1,6 @@
 using System;
-using Unity.Android.Gradle;
+using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 [RequireComponent(typeof(NetworkObject))]
@@ -11,9 +10,15 @@ public class GameManager : NetworkBehaviour
 
     [Header("Player")]
     [SerializeField] private Transform playerPrefab;
-
     public static Func<Vector3> OnPositionPlayer;
 
+    private Dictionary<string, ulong> connectedPlayers = new Dictionary<string, ulong>();
+
+    [Header("Scene Manager")]
+    [SerializeField] private SceneManagerController scene;
+
+    [Header("PlayerInfoSo")]
+    [SerializeField] private PlayerInfoSO playerInfoSO;
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -89,11 +94,14 @@ public class GameManager : NetworkBehaviour
         Transform player = Instantiate(playerPrefab);
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
+        //connectedPlayers.Add(playerInfoSO.PlayerID,clientId);
+        //Debug.Log(playerInfoSO.PlayerID);
         player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.SetCameraStateClientRpc(true);
 
     }
+
     private void OnClientConnected(ulong obj)
     {
         Debug.Log("Se llamo");
@@ -104,12 +112,24 @@ public class GameManager : NetworkBehaviour
             Debug.Log("El servidor se ha conectado.");
         }
     }
+    [Rpc(SendTo.Owner)]
+    public void DisconnectClientRpc()
+    {
+        NetworkManager.Singleton.Shutdown();
+        Debug.Log($"Jugador desconectado por kick.");
+    }
     private void OnClientDisconnected(ulong obj)
     {
         if (obj == NetworkManager.ServerClientId)
         {
+            scene.LoadScene("Menu");
             NetworkManager.Singleton.Shutdown();
             Debug.Log("El servidor se ha desconectado.");
+        }
+        if (!IsServer)
+        {
+            SceneManager.LoadScene("Menu");
+            Debug.Log("Se perdio Coneccion con el Server Volviendo al Menu");
         }
     }
 }

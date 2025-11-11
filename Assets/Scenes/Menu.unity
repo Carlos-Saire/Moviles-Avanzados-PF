@@ -5833,6 +5833,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   playerPrefab: {fileID: 8640232603681150753, guid: 190d787f6c6ed7341b005eba4e2f5163, type: 3}
+  scene: {fileID: 4185425253206945885, guid: 591de6dc2ae8b8247a8677c5b6529692, type: 3}
+  playerInfoSO: {fileID: 11400000, guid: 8eb13d02a28a9404d911ee94dd9c6a7d, type: 2}
 --- !u!1 &2126233083
 GameObject:
   m_ObjectHideFlags: 0

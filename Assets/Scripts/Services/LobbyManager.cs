@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Lobbies;
 using UnityEngine;
-using Unity.Netcode;
 using System.Threading.Tasks;
 
 public class LobbyManager : MonoBehaviour
@@ -206,14 +205,7 @@ public class LobbyManager : MonoBehaviour
         {
             var playerId = currentLobby.Players[indexPlayer].Id;
             await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, currentLobby.Players[indexPlayer].Id);
-            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-            {
-                if (client.ClientId != NetworkManager.Singleton.LocalClientId)
-                {
-                    NetworkManager.Singleton.DisconnectClient(client.ClientId);
-                    Debug.Log($"Jugador {client.ClientId} desconectado por kick.");
-                }
-            }
+            GameManager.Instance.DisconnectClientRpc();
         }
         catch (LobbyServiceException e)
         {
