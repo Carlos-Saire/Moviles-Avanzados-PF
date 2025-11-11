@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 {
     public static event Action<Vector2> OnMove;
     public static event Action<Vector2> OnLook;
+    public static event Action OnAttack;
     [SerializeField] private Transform UImobile;
 
 //#if UNITY_ANDROID 
@@ -44,5 +45,12 @@ public class InputHandler : MonoBehaviour
         OnLook?.Invoke(context.ReadValue<Vector2>());
 
 //#endif
+    }
+    public void InputAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            OnAttack?.Invoke();
+        }
     }
 }
