@@ -60,7 +60,7 @@ public class RelayManager : MonoBehaviour
 
             NetworkManager.Singleton.StartClient();
 
-            SceneManager.LoadScene("Lobby");
+            SceneManager.LoadSceneAsync("Lobby");
 
         }
         catch (RelayServiceException e)
