@@ -6,6 +6,7 @@ public class AuthenticationUI : MonoBehaviour
 {
     [Header("Login")]
     [SerializeField] private Button loginButton;
+    [SerializeField] private Button anomymButton;
     [SerializeField] private TMP_Text playerName;
     [SerializeField] private Transform loginPanel;
 
@@ -36,6 +37,7 @@ public class AuthenticationUI : MonoBehaviour
         AuthenticationManager.OnDeleteAccount += HandleOnLogoutAndDeleteAccount;
 
         loginButton?.onClick.AddListener(HandleloginButton);
+        anomymButton?.onClick.AddListener(HandleAnomynButton);
         logoutButton?.onClick.AddListener(authenticationManager.InitSignOut);
 
         deleteAccountButton?.onClick.AddListener(authenticationManager.DeleteAccountAsync);
@@ -56,6 +58,7 @@ public class AuthenticationUI : MonoBehaviour
         AuthenticationManager.OnDeleteAccount -= HandleOnLogoutAndDeleteAccount;
 
         loginButton?.onClick.RemoveListener(HandleloginButton);
+        anomymButton?.onClick.RemoveListener(HandleAnomynButton);
         logoutButton?.onClick.RemoveListener(authenticationManager.InitSignOut);
 
         deleteAccountButton?.onClick.RemoveListener(authenticationManager.DeleteAccountAsync);
@@ -115,5 +118,9 @@ public class AuthenticationUI : MonoBehaviour
     private void HandleOnLogoutAndDeleteAccount()
     {
         loginPanel.gameObject.SetActive(true);
+    }
+    private void HandleAnomynButton()
+    {
+
     }
 }

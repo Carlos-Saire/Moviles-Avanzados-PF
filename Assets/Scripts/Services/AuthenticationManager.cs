@@ -107,6 +107,10 @@ public class AuthenticationManager : MonoBehaviour
 
         Debug.Log("Secion Cerrada");
     }
+    public async Task InitSignAnomyn()
+    {
+    }
+
     private async void SignedInWithUnity()
     {
         try
