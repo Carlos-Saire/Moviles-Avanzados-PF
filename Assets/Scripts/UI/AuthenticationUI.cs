@@ -121,6 +121,6 @@ public class AuthenticationUI : MonoBehaviour
     }
     private void HandleAnomynButton()
     {
-
+        authenticationManager.InitSignAnomyn();
     }
 }

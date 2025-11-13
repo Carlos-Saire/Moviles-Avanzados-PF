@@ -54,7 +54,7 @@ public class AuthenticationManager : MonoBehaviour
         PlayerAccountService.Instance.SignedOut -= SignedOutWithUnity;
     }
 
-    private async void Start()
+    private void Start()
     {
         if (AuthenticationService.Instance.IsSignedIn)
         {
@@ -66,10 +66,7 @@ public class AuthenticationManager : MonoBehaviour
             if (AuthenticationService.Instance.SessionTokenExists)
             {
 
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                Debug.Log("Hay sesión guardada. Restaurando...");
-
-                LoadPlayerInfoAsync();
+                InitSignAnomyn();
             }
             else
             {
@@ -107,8 +104,11 @@ public class AuthenticationManager : MonoBehaviour
 
         Debug.Log("Secion Cerrada");
     }
-    public async Task InitSignAnomyn()
+    public async void InitSignAnomyn()
     {
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        LoadPlayerInfoAsync();
     }
 
     private async void SignedInWithUnity()
