@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class WoodCutMiniGame : MonoBehaviour
+public class TroncoMiniGame : MonoBehaviour
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel;    
@@ -12,7 +12,7 @@ public class WoodCutMiniGame : MonoBehaviour
     public Sprite logCutSprite;
 
     [Header("Lineas a cortar")]
-    public Button[] cutLines;
+    public Image[] cutLines;
 
     private int linesLeft;
     private bool completed = false;
@@ -32,8 +32,8 @@ public class WoodCutMiniGame : MonoBehaviour
             cutLines[i].gameObject.SetActive(true);
 
             int index = i;
-            cutLines[i].onClick.RemoveAllListeners();
-            cutLines[i].onClick.AddListener(() => CutLine(index));
+            cutLines[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            cutLines[i].GetComponent<Button>().onClick.AddListener(() => CutLine(index));
         }
     }
 
