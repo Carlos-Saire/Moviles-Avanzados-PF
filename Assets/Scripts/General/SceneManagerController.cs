@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerController : MonoBehaviour
 {
-    public static event Action<SceneManagerController> OnSceneLoadProgress;
+    public static event Action<float> OnSceneLoadProgress;
     private void Reset()
     {
         gameObject.name = "SceneManagerController";
@@ -17,31 +17,16 @@ public class SceneManagerController : MonoBehaviour
     }
     public void LoadSceneAsync(string scene)
     {
-        try
-        {
-            StartCoroutine(LoadSceneCoroutine(scene));
-        }
-        catch
-        {
-            Debug.Log("Igaul fucnionas");
-        }
+        StartCoroutine(LoadSceneCoroutine(scene));
     }
     private IEnumerator LoadSceneCoroutine(string scene)
     {
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(scene);
-        asyncOp.allowSceneActivation = false;
 
         while (!asyncOp.isDone)
         {
-            Debug.Log($"Progreso: {asyncOp.progress * 100f}%");
-
-
-            if (asyncOp.progress >= 0.9f)
-            {
-                yield return new WaitForSeconds(0.5f); 
-                asyncOp.allowSceneActivation = true;
-            }
-
+            float progress = asyncOp.progress / 0.9f;
+            OnSceneLoadProgress?.Invoke(progress);
             yield return null; 
         }
     }

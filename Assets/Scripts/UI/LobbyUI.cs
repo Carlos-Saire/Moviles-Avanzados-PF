@@ -55,7 +55,6 @@ public class LobbyUI : MonoBehaviour
         buttonCreateLobby?.onClick.RemoveListener(HandlebuttonCreateLobby);
         dropdownSegurity?.onValueChanged.RemoveListener(OnDropdownCambiado);
 
-
     }
     private void Start()
     {
