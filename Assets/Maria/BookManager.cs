@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,8 @@ public class BookManager : MonoBehaviour
 
     private GameObject[] noteInstances;
     private int currentBookIndex = -1;
-
+    public int itemFounded = 0;
+    public static event Action<int> OnNoteFound;
     void Start()
     {
         openPanelBook.SetActive(false);
@@ -32,7 +34,11 @@ public class BookManager : MonoBehaviour
 
     void Update()
     {
-        
+        if(itemFounded <= objToCreate)
+        {
+            Debug.Log("Notas encontradas: " + itemFounded + " de " + objToCreate);
+            
+        }
     }
     void CloseBook()
     {
@@ -60,6 +66,8 @@ public class BookManager : MonoBehaviour
                 noteInstances[index] = Instantiate(noteInBook, noteParent.transform);
                 noteInstances[index].SetActive(true);
                 Debug.Log(index + " tiene una nota (creada).");
+                itemFounded++;
+                OnNoteFound?.Invoke(itemFounded);
             }
             else
             {
@@ -77,7 +85,7 @@ public class BookManager : MonoBehaviour
         int assigned = 0;
         while (assigned < objToCreate)
         {
-            int randomIndex = Random.Range(0, booksInLibrary.Length);
+            int randomIndex = UnityEngine.Random.Range(0, booksInLibrary.Length);
             if (!hasNote[randomIndex])
             {
                 hasNote[randomIndex] = true;
