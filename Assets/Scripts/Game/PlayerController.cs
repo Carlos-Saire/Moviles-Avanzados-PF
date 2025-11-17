@@ -52,7 +52,6 @@ public class PlayerController : NetworkBehaviour
         InputHandler.OnMove -= HandleMove;
         InputHandler.OnAttack -= HandleAttack;
     }
-
     private void Awake()
     {
         controller = GetComponent<CharacterController>();

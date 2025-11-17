@@ -7,7 +7,10 @@ public class SpawnControllerGame : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsServer) return;
+        if (IsServer)
+        {
+
+        }
 
         int index = 0;
 
