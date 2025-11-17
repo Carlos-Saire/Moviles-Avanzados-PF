@@ -119,7 +119,7 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbycode, joinLobbyByCodeOptions);
             currentLobby = lobby;
 
-            relayManager.JoinRelay(lobbycode);
+            await relayManager.JoinRelay(lobbycode);
 
 
 
@@ -145,7 +145,8 @@ public class LobbyManager : MonoBehaviour
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
 
-            relayManager.JoinRelay(relayCode);
+            await relayManager.JoinRelay(relayCode);
+
             CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 0, 0));
 
         }
