@@ -11,7 +11,7 @@ public class CombinationColorSO : ScriptableObject
         public List<Color> ingredients = new List<Color>();
 
         [Tooltip("Color resultante")]
-        public Color resultColor;
+        public List<Color> resultColors = new List<Color>();
     }
 
     [Tooltip("Lista de combinaciones ")]

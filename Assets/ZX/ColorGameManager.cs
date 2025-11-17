@@ -21,7 +21,7 @@ public class ColorGameManager : MonoBehaviour
     private readonly List<Color> selectedIngredients = new List<Color>();
     private Color targetColor;
 
-    public Action OnPotionGameCompleted;
+    public System.Action OnPotionGameCompleted;
 
     private void Awake()
     {
@@ -36,22 +36,16 @@ public class ColorGameManager : MonoBehaviour
     }
 
     // ---------------- VALIDACIÓN -------------------
-
     private void ValidateSetup()
     {
         if (potionButtons.Count != potionColors.Count)
-        {
-            Debug.LogError("PotionGameManager: El número de botones y colores no coincide.");
-        }
+            Debug.LogError("PotionGameManager: el número de botones y colores no coincide.");
 
         if (combinationsDB == null)
-        {
             Debug.LogError("PotionGameManager: No se asignó el ScriptableObject de combinaciones.");
-        }
     }
 
     // ---------------- CONFIGURACIÓN -------------------
-
     private void SetupButtons()
     {
         for (int i = 0; i < potionButtons.Count; i++)
@@ -63,15 +57,11 @@ public class ColorGameManager : MonoBehaviour
                 img.color = potionColors[i];
 
             potionButtons[i].onClick.RemoveAllListeners();
-            potionButtons[i].onClick.AddListener(() =>
-            {
-                AddIngredient(potionColors[index]);
-            });
+            potionButtons[i].onClick.AddListener(() => AddIngredient(potionColors[index]));
         }
     }
 
-    // ---------------- LÓGICA PRINCIPAL -------------------
-
+    // ---------------- LÓGICA -------------------
     private void AddIngredient(Color color)
     {
         selectedIngredients.Add(color);
@@ -80,28 +70,46 @@ public class ColorGameManager : MonoBehaviour
 
     public void MixIngredients()
     {
+        Debug.Log("===== Mezclar ingredientes =====");
+        Debug.Log($"Ingredientes seleccionados ({selectedIngredients.Count}):");
+        for (int i = 0; i < selectedIngredients.Count; i++)
+            Debug.Log($"  {i}: {selectedIngredients[i]}");
+
         Color? result = TryGetCombinationResult();
 
         if (result == null)
         {
-            mixColorImage.color = Color.black; // combinación inválida
+            mixColorImage.color = Color.black;
+            Debug.LogWarning("No se encontró una combinación válida. Resultado negro.");
             return;
         }
 
         mixColorImage.color = result.Value;
+        Debug.Log($"Resultado de la combinación: {result.Value}");
+        Debug.Log($"Color objetivo: {targetColor}");
 
         if (ColorsMatch(result.Value, targetColor))
+        {
+            Debug.Log("¡Éxito! Combinación coincide con el objetivo.");
             CompleteMiniGame();
+        }
+        else
+        {
+            Debug.Log("La combinación es válida pero no coincide con el objetivo.");
+        }
     }
 
     private Color? TryGetCombinationResult()
     {
         foreach (var combo in combinationsDB.combinations)
         {
-            if (ListsMatch(combo.ingredients, selectedIngredients))
-                return combo.resultColor;
-        }
+            if (ListsMatchFlexible(combo.ingredients, selectedIngredients))
+            {
+                if (combo.resultColors.Count > 0)
+                    return combo.resultColors[UnityEngine.Random.Range(0, combo.resultColors.Count)];
+            }
 
+        }
         return null;
     }
 
@@ -112,7 +120,6 @@ public class ColorGameManager : MonoBehaviour
     }
 
     // ---------------- UTILIDADES -------------------
-
     private void UpdateMixPreview()
     {
         if (selectedIngredients.Count == 0)
@@ -128,33 +135,61 @@ public class ColorGameManager : MonoBehaviour
     private Color AverageColor(List<Color> colors)
     {
         Color total = new Color(0, 0, 0, 0);
-
         foreach (var c in colors)
             total += c;
-
         return total / colors.Count;
     }
 
     private void GenerateNewTargetColor()
     {
-        int index = UnityEngine.Random.Range(0, combinationsDB.combinations.Count);
-        targetColor = combinationsDB.combinations[index].resultColor;
+        var validResults = combinationsDB.combinations
+            .SelectMany(c => c.resultColors)
+            .Distinct()
+            .ToList();
+
+        if (validResults.Count == 0)
+        {
+            Debug.LogError("No hay colores de resultado configurados en el ScriptableObject.");
+            return;
+        }
+
+        targetColor = validResults[UnityEngine.Random.Range(0, validResults.Count)];
         targetColorImage.color = targetColor;
+        Debug.Log($"Nuevo color objetivo generado: {targetColor}");
     }
 
-    private bool ListsMatch(List<Color> a, List<Color> b)
+    private bool ListsMatchFlexible(List<Color> comboColors, List<Color> selected, float tolerance = 0.02f)
     {
-        if (a.Count != b.Count) return false;
-        return !a.Except(b).Any();
+        if (comboColors.Count != selected.Count) return false;
+
+        List<Color> remaining = new List<Color>(selected);
+
+        foreach (var c in comboColors)
+        {
+            bool found = false;
+            for (int i = 0; i < remaining.Count; i++)
+            {
+                if (ColorsMatch(c, remaining[i], tolerance))
+                {
+                    remaining.RemoveAt(i);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
+        }
+
+        return remaining.Count == 0;
     }
 
-    private bool ColorsMatch(Color a, Color b)
+    private bool ColorsMatch(Color a, Color b, float tolerance = 0.01f)
     {
-        return a.Equals(b);
+        return Mathf.Abs(a.r - b.r) < tolerance &&
+               Mathf.Abs(a.g - b.g) < tolerance &&
+               Mathf.Abs(a.b - b.b) < tolerance;
     }
 
     // ---------------- ACCIONES UI -------------------
-
     public void ResetMix()
     {
         selectedIngredients.Clear();
@@ -166,3 +201,31 @@ public class ColorGameManager : MonoBehaviour
         miniGamePanel.SetActive(false);
     }
 }
+
+// ---------------- Comparador de Color con tolerancia -------------------
+public class ColorComparer : IEqualityComparer<Color>
+{
+    private readonly float tolerance;
+
+    public ColorComparer(float tolerance = 0.01f)
+    {
+        this.tolerance = tolerance;
+    }
+
+    public bool Equals(Color x, Color y)
+    {
+        return Mathf.Abs(x.r - y.r) < tolerance &&
+               Mathf.Abs(x.g - y.g) < tolerance &&
+               Mathf.Abs(x.b - y.b) < tolerance;
+    }
+
+    public int GetHashCode(Color obj)
+    {
+        int r = Mathf.RoundToInt(obj.r / tolerance);
+        int g = Mathf.RoundToInt(obj.g / tolerance);
+        int b = Mathf.RoundToInt(obj.b / tolerance);
+        return r * 73856093 ^ g * 19349663 ^ b * 83492791;
+    }
+}
+
+
