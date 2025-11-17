@@ -19,10 +19,15 @@ public class GameManager : NetworkBehaviour
 
     [Header("PlayerInfoSo")]
     [SerializeField] private PlayerInfoSO playerInfoSO;
+    
+    private void Reset()
+    {
+        gameObject.name = "GameManager";
+    }
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        RegisterPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
+
         if(NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
@@ -31,39 +36,16 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
-    {
-
-        if (!NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
-        {
-            Debug.LogWarning($"Cliente {clientId} no encontrado en ConnectedClients");
-            return;
-        }
-
-        if (client.PlayerObject == null)
-        {
-            Debug.LogWarning($" El PlayerObject del cliente {clientId} aún no existe. Se intentará reasignar más tarde.");
-            return;
-        }
-
-        GameObject playerGO = client.PlayerObject.gameObject;
-        playerGO.transform.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        Debug.Log($" Posición del jugador {clientId} actualizada correctamente");
-    }
-
     public override void OnDestroy()
     {
         base.OnDestroy();
+
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+            NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLoadComplete;
         }
-    }
-
-    private void Reset()
-    {
-        gameObject.name = "GameManager";
     }
 
     private void Awake()
@@ -104,12 +86,9 @@ public class GameManager : NetworkBehaviour
 
     private void OnClientConnected(ulong obj)
     {
-        Debug.Log("Se llamo");
-        
-        if (obj == NetworkManager.ServerClientId)
+        if (IsServer)
         {
-            
-            Debug.Log("El servidor se ha conectado.");
+            RegisterPlayerServerRpc(obj);
         }
     }
     [Rpc(SendTo.Owner)]
@@ -138,5 +117,25 @@ public class GameManager : NetworkBehaviour
         Debug.Log($"{ping}");
         return ping;
     }
+    private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    {
+
+        if (!NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
+        {
+            Debug.LogWarning($"Cliente {clientId} no encontrado en ConnectedClients");
+            return;
+        }
+
+        if (client.PlayerObject == null)
+        {
+            Debug.LogWarning($" El PlayerObject del cliente {clientId} aún no existe. Se intentará reasignar más tarde.");
+            return;
+        }
+
+        GameObject playerGO = client.PlayerObject.gameObject;
+        playerGO.transform.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        Debug.Log($" Posición del jugador {clientId} actualizada correctamente");
+    }
+
 }
 

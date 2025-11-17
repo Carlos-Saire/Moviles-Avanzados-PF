@@ -332,6 +332,13 @@ MonoBehaviour:
     TransitionDuration: 0.95
     TriggerNameHash: 1080829965
     TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -453240694
+    DestinationState: 964231127
+    TransitionDuration: 0.25
+    TriggerNameHash: 646380074
+    TransitionIndex: 1
   m_Animator: {fileID: 8154406291640289926}
 --- !u!114 &5055047420606665411
 MonoBehaviour:
@@ -361,6 +368,7 @@ GameObject:
   - component: {fileID: 5582255176079876325}
   - component: {fileID: 8783651587766867311}
   - component: {fileID: 3283565878789255542}
+  - component: {fileID: 6863558893673223415}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -486,6 +494,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 10
+--- !u!114 &6863558893673223415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7198709770804265203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0a7fb1ee55264a458c9a9608744d048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 3
+  sphereRadius: 0.5
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1001 &670715358736845704
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using Command;
 
 public class LobbyUIManager : MonoBehaviour
 {
     [SerializeField] private Button startGameButton;
 
+    private List<ICommand> commands;
     private void Start()
     {
         startGameButton.gameObject.SetActive(false);
@@ -20,6 +22,13 @@ public class LobbyUIManager : MonoBehaviour
 
     private void StartGame()
     {
-        NetworkManager.Singleton.SceneManager.LoadScene("Game",LoadSceneMode.Single);
+        for(int i = 0; i < commands.Count; ++i)
+        {
+            CommandQueue.Instance.AddCommand(commands[i]);
+        }
+    }
+    public void Configure(List<ICommand> list)
+    {
+        commands = list;
     }
 }
