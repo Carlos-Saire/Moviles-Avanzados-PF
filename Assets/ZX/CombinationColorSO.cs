@@ -5,15 +5,30 @@ using System.Collections.Generic;
 public class CombinationColorSO : ScriptableObject
 {
     [System.Serializable]
+    public class IngredientData
+    {
+        [Tooltip("Sprite de la poción")]
+        public Sprite sprite;
+
+        [Tooltip("Color interno")]
+        public Color colorValue;
+    }
     public class Combination
     {
-        [Tooltip("colores ingredientes")]
-        public List<Color> ingredients = new List<Color>();
+        [Tooltip("sprites + color interno")]
+        //public List<Color> ingredients = new List<Color>();
+        public List<IngredientData> ingredients = new List<IngredientData>();
+        [Tooltip("Sprite resultado final")]
+        public Sprite resultSprite;
+        [Tooltip("Color resultante preview")]
+        public Color resultColor;
 
-        [Tooltip("Color resultante")]
-        public List<Color> resultColors = new List<Color>();
+        //public List<Color> resultColors = new List<Color>();
     }
 
     [Tooltip("Lista de combinaciones ")]
     public List<Combination> combinations = new List<Combination>();
+
+    
 }
+

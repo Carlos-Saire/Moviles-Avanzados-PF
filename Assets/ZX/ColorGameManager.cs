@@ -39,10 +39,8 @@ public class ColorGameManager : MonoBehaviour
     private void ValidateSetup()
     {
         if (potionButtons.Count != potionColors.Count)
-            Debug.LogError("PotionGameManager: el número de botones y colores no coincide.");
-
         if (combinationsDB == null)
-            Debug.LogError("PotionGameManager: No se asignó el ScriptableObject de combinaciones.");
+            Debug.LogError("falta ScriptableObject");
     }
 
     // ---------------- CONFIGURACIÓN -------------------
@@ -70,8 +68,7 @@ public class ColorGameManager : MonoBehaviour
 
     public void MixIngredients()
     {
-        Debug.Log("===== Mezclar ingredientes =====");
-        Debug.Log($"Ingredientes seleccionados ({selectedIngredients.Count}):");
+        Debug.Log($"color seleccionados ({selectedIngredients.Count}):");
         for (int i = 0; i < selectedIngredients.Count; i++)
             Debug.Log($"  {i}: {selectedIngredients[i]}");
 
@@ -80,22 +77,22 @@ public class ColorGameManager : MonoBehaviour
         if (result == null)
         {
             mixColorImage.color = Color.black;
-            Debug.LogWarning("No se encontró una combinación válida. Resultado negro.");
+            Debug.LogWarning("No válido");
             return;
         }
 
         mixColorImage.color = result.Value;
-        Debug.Log($"Resultado de la combinación: {result.Value}");
+        Debug.Log($"Resultado: {result.Value}");
         Debug.Log($"Color objetivo: {targetColor}");
 
         if (ColorsMatch(result.Value, targetColor))
         {
-            Debug.Log("¡Éxito! Combinación coincide con el objetivo.");
+            Debug.Log("Ganaste");
             CompleteMiniGame();
         }
         else
         {
-            Debug.Log("La combinación es válida pero no coincide con el objetivo.");
+            Debug.Log("Siguelo intentando.");
         }
     }
 
@@ -149,13 +146,13 @@ public class ColorGameManager : MonoBehaviour
 
         if (validResults.Count == 0)
         {
-            Debug.LogError("No hay colores de resultado configurados en el ScriptableObject.");
+            Debug.LogError("No hay colores R en el ScriptableObject");
             return;
         }
 
         targetColor = validResults[UnityEngine.Random.Range(0, validResults.Count)];
         targetColorImage.color = targetColor;
-        Debug.Log($"Nuevo color objetivo generado: {targetColor}");
+        Debug.Log($"Nuevo color generado: {targetColor}");
     }
 
     private bool ListsMatchFlexible(List<Color> comboColors, List<Color> selected, float tolerance = 0.02f)
