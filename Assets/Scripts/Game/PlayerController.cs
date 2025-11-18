@@ -185,7 +185,7 @@ public class PlayerController : NetworkBehaviour
         animator.SetFloat("X", inputX, 0.1f, Time.deltaTime);
         animator.SetFloat("Z", inputZ, 0.1f, Time.deltaTime);
     }
-    [Rpc(SendTo.Server)]
+    [Rpc(SendTo.Owner)]
     private void TryKillPlayerServerRpc(Vector3 camForward, Vector3 camPosition)
     {
         Debug.Log("SERVER: TryKillPlayerServerRpc ejecutado por " + OwnerClientId);

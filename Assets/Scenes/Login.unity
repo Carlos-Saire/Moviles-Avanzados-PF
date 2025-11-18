@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 613644913}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &345630092
@@ -845,8 +845,9 @@ GameObject:
   - component: {fileID: 613644917}
   - component: {fileID: 613644916}
   - component: {fileID: 613644915}
+  - component: {fileID: 613644918}
   m_Layer: 5
-  m_Name: CancelButton (1)
+  m_Name: Confirms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -885,7 +886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -915,7 +916,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 613644916}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4185425253206945885, guid: 591de6dc2ae8b8247a8677c5b6529692, type: 3}
+        m_TargetAssemblyTypeName: SceneManagerController, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MenuSinglePlayer
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &613644916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,6 +967,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613644913}
   m_CullTransparentMesh: 1
+--- !u!114 &613644918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613644913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b33f9d26d4af77478bad81117c700de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
+  speed: 10
 --- !u!1 &659309310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,6 +1803,7 @@ GameObject:
   - component: {fileID: 1212034218}
   - component: {fileID: 1212034217}
   - component: {fileID: 1212034216}
+  - component: {fileID: 1212034219}
   m_Layer: 5
   m_Name: CancelButton
   m_TagString: Untagged
@@ -1816,7 +1844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1885,6 +1913,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212034214}
   m_CullTransparentMesh: 1
+--- !u!114 &1212034219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212034214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b33f9d26d4af77478bad81117c700de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
+  speed: 10
 --- !u!1 &1259485992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,7 +1943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1259485993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,6 +1961,8 @@ MonoBehaviour:
   panelConnected: {fileID: 1783278327}
   slider: {fileID: 1381681513}
   duration: 2.5
+  panelReiniciar: {fileID: 2139784308}
+  panelSinglePlayer: {fileID: 198442126}
   authentication: {fileID: 659309311}
 --- !u!4 &1259485994
 Transform:

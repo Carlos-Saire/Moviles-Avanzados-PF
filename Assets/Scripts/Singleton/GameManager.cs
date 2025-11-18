@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 [RequireComponent(typeof(NetworkObject))]
@@ -33,10 +35,11 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoadComplete;
         }
     }
 
+   
     public override void OnDestroy()
     {
         base.OnDestroy();
@@ -45,7 +48,7 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLoadComplete;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadComplete;
         }
     }
 
@@ -79,7 +82,7 @@ public class GameManager : NetworkBehaviour
 
         connectedPlayers.Add(clientId, player);
         //Debug.Log(playerInfoSO.PlayerID);
-        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;   
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.SetCameraStateClientRpc(true);
 
@@ -117,27 +120,50 @@ public class GameManager : NetworkBehaviour
         int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
         return ping;
     }
-    private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    private void OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        if (IsServer)
+        if (!IsServer) return;
+
+        foreach (ulong clientId in clientsCompleted)
         {
-            if (!NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
-            {
-                Debug.LogWarning($"Cliente {clientId} no encontrado en ConnectedClients");
-                return;
-            }
-
-            if (client.PlayerObject == null)
-            {
-                Debug.LogWarning($" El PlayerObject del cliente {clientId} aún no existe. Se intentará reasignar más tarde.");
-                return;
-            }
-
-            GameObject playerGO = client.PlayerObject.gameObject;
-            playerGO.transform.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-            Debug.Log($" Posición del jugador {clientId} actualizada correctamente :" + playerGO.transform.position);
+            ApplySpawnClientRpc(clientId);
         }
     }
 
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ApplySpawnClientRpc(ulong clientId)
+    {
+        StartCoroutine(WaitForPlayerAndMove(clientId));
+    }
+
+    private IEnumerator WaitForPlayerAndMove(ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId != clientId)
+            yield break;
+
+        while (NetworkManager.Singleton.LocalClient == null ||
+               NetworkManager.Singleton.LocalClient.PlayerObject == null)
+        {
+            yield return null;
+        }
+
+        var playerObj = NetworkManager.Singleton.LocalClient.PlayerObject;
+        var controller = playerObj.GetComponent<PlayerController>();
+
+        if (controller != null)
+            controller.enabled = false;
+
+        yield return null;
+
+        Vector3 targetPos = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        playerObj.transform.position = targetPos;
+
+        Debug.Log($"Player {clientId} movido correctamente a {targetPos} después del cambio de escena.");
+
+        yield return null;
+
+        if (controller != null)
+            controller.enabled = true;
+    }
 }
 
