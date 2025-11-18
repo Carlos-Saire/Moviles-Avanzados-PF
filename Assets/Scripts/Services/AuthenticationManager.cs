@@ -23,6 +23,7 @@ public class AuthenticationManager : MonoBehaviour
         gameObject.name = "AuthenticationManager";
     }
     private async void Awake()
+
     {
 
         if (UnityServices.State == ServicesInitializationState.Initialized)
@@ -78,7 +79,10 @@ public class AuthenticationManager : MonoBehaviour
             Debug.LogWarning("No se pudo restaurar la sesión: " + e.Message);
         }
     }
-
+    public bool AreServicesInitialized()
+    {
+        return UnityServices.State == ServicesInitializationState.Initialized;
+    }
     public async void EditNameAsync(string newName)
     {
         playerSo.PlayerName = await AuthenticationService.Instance.UpdatePlayerNameAsync(newName);
