@@ -863,11 +863,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: My project (7)
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: DefaultCompany
+  metroCertificateIssuer: DefaultCompany
+  metroCertificateNotAfter: 80f1f1c0cf77dd01
   metroApplicationDescription: My project (7)
   wsaImages: {}
   metroTileShortName: 

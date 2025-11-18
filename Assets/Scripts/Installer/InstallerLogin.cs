@@ -36,11 +36,18 @@ public class InstallerLogin : MonoBehaviour
     }
     private void CheckAuthentication()
     {
-
+        if (authentication.AreServicesInitialized())
+        {
+            CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
+        }
+        else
+        {
 #if UNITY_WSA_10_0
         panelSinglePlayer.gameObject.SetActive(true);
 #else
-        panelReiniciar.gameObject.SetActive(true);
+            panelReiniciar.gameObject.SetActive(true);
 #endif
+        }
+
     }
 }
