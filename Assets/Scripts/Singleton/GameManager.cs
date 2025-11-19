@@ -34,7 +34,7 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            //NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoadComplete;
+
         }
     }
 
@@ -47,7 +47,7 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
-            //NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadComplete;
+
         }
     }
 
@@ -66,28 +66,21 @@ public class GameManager : NetworkBehaviour
 
     private void Start()
     {
-        //Screen.autorotateToPortrait = false;
-        //Screen.autorotateToPortraitUpsideDown = false;
-        //Screen.autorotateToLandscapeLeft = true;
-        //Screen.autorotateToLandscapeRight = true;
-        //TouchSimulation.Enable();
-        //Screen.orientation = ScreenOrientation.AutoRotation;
+
     }
     [Rpc(SendTo.Server)]
     public void RegisterPlayerServerRpc(ulong clientId)
     {
-        //CORRECTOOOOOOOOOOOOO
-        //Transform player = Instantiate(playerPrefab);
-        //player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-
-        //connectedPlayers.Add(clientId, player);
-        //Debug.Log(playerInfoSO.PlayerID);
-        ////player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;   COMENTARRRRRRRR
-        //PlayerController controller = player.GetComponent<PlayerController>();
-        //controller.SetCameraStateClientRpc(true);
-
-
         Transform player = Instantiate(playerPrefab);
+
+        var cc = player.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+
+        Vector3 pos = OnPositionPlayer?.Invoke() ?? new Vector3(0, 5, 0);
+
+        player.position = pos;
+        player.rotation = Quaternion.identity;
+
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
         connectedPlayers[clientId] = player;
@@ -95,110 +88,10 @@ public class GameManager : NetworkBehaviour
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.SetCameraStateClientRpc(true);
 
-        // ======== FIX DEL LOBBY =========
-        //if (SceneManager.GetActiveScene().name == "Lobby")
-        //{
-        //    Vector3 pos = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        if (cc != null) StartCoroutine(ReenableCC(cc));
 
-        //    var cc = player.GetComponent<CharacterController>();
-        //    if (cc != null) cc.enabled = false;
-
-        //    player.position = pos;
-
-        //    if (cc != null) cc.enabled = true;
-
-        //    Debug.Log($"Player {clientId} spawneado en Lobby en {pos}");
-        //}
-
-
-        //Transform player = Instantiate(playerPrefab);
-        //player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-
-        //connectedPlayers.Add(clientId, player);
-
-        //PlayerController controller = player.GetComponent<PlayerController>();
-        //controller.SetCameraStateClientRpc(true);
-
-        //// -------------------------------
-        //// SOLO mover si estamos en el LOBBY
-        //// -------------------------------
-        //if (SceneManager.GetActiveScene().name == "Lobby")
-        //{
-        //    // Host también necesita posición
-        //    if (clientId == NetworkManager.Singleton.LocalClientId)
-        //    {
-        //        // Aplica spawn del lobby para el host
-        //        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        //    }
-        //    else
-        //    {
-        //        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        //    }
-        //}
-
-
-        //Transform player;
-
-        //if (clientId == NetworkManager.Singleton.LocalClientId && NetworkManager.Singleton.LocalClient.PlayerObject != null)
-        //{
-        //    // Host: usar el PlayerObject existente
-        //    player = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
-        //}
-        //else
-        //{
-        //    // Clientes: instanciar normalmente
-        //    player = Instantiate(playerPrefab);
-        //    player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-        //}
-
-        //if (!connectedPlayers.ContainsKey(clientId))
-        //    connectedPlayers.Add(clientId, player);
-
-        //PlayerController controller = player.GetComponent<PlayerController>();
-        //controller.SetCameraStateClientRpc(true);
-
-        //// SOLO mover si estamos en el LOBBY
-        //if (SceneManager.GetActiveScene().name == "Lobby")
-        //{
-        //    player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        //}
-
-
-
-        //Transform player;
-
-        //// 1. **Determinar el objeto del jugador (PlayerObject)**
-        //if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out NetworkClient client) && client.PlayerObject != null)
-        //{
-        //    // El PlayerObject ya existe (típico para el host si ya estaba en el DontDestroyOnLoad)
-        //    player = client.PlayerObject.transform;
-        //}
-        //else
-        //{
-        //    // El PlayerObject no existe, instanciar y spawnear (típico para clientes o nuevos jugadores)
-        //    player = Instantiate(playerPrefab);
-        //    player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-        //}
-
-        //// 2. **Registrar el jugador**
-        //if (!connectedPlayers.ContainsKey(clientId))
-        //    connectedPlayers.Add(clientId, player);
-
-        //// 3. **Configurar cámara y otros componentes**
-        //PlayerController controller = player.GetComponent<PlayerController>();
-        //if (controller != null)
-        //{
-        //    controller.SetCameraStateClientRpc(true);
-        //}
-
-        //// 4. **APLICAR POSICIÓN DE SPAWN SOLO EN EL LOBBY**
-        //// Llama a la lógica de spawn solo si la escena activa es "Lobby".
-        //if (SceneManager.GetActiveScene().name == "Lobby")
-        //{
-        //    // El operador ?.Invoke() llamará a GetSpawnPoint() de SpawnController.
-        //    // Solo haz esto si el cliente está conectado Y el objeto ya ha sido registrado/creado.
-        //    player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        //}
+        Debug.Log($"Player {clientId} instanciado correctamente en {pos}");
+   
     }
 
     private void OnClientConnected(ulong obj)
@@ -232,6 +125,11 @@ public class GameManager : NetworkBehaviour
     {
         int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
         return ping;
+    }
+    private IEnumerator ReenableCC(CharacterController cc)
+    {
+        yield return null;
+        cc.enabled = true;
     }
 }
 

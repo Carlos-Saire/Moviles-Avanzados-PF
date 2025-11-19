@@ -3,9 +3,7 @@ using Unity.Netcode.Components;
 using UnityEngine;
 using System.Collections;
 [RequireComponent(typeof(CharacterController))]
-//[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkTransport))]
-//[RequireComponent(typeof(NetworkRigidbody))]
 public class PlayerController : NetworkBehaviour
 {
     [Header("Movement Settings")]
@@ -35,11 +33,7 @@ public class PlayerController : NetworkBehaviour
     [Header("Attack")]
     [SerializeField] private bool isAttacking = false;
     [SerializeField] private GameObject dagger;
-    //private void Reset()
-    //{
-    //    Rigidbody rb = GetComponent<Rigidbody>();
-    //    rb.isKinematic = true;
-    //}
+
 
     private void OnEnable()
     {

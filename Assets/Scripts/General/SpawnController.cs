@@ -13,7 +13,6 @@ public class SpawnController : MonoBehaviour
     {
         GameManager.OnPositionPlayer = GetSpawnPoint;
 
-        // Subscribe early pero con check por si NetworkManager no está inicializado al Awake
         if (NetworkManager.Singleton != null)
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
         else
@@ -36,7 +35,6 @@ public class SpawnController : MonoBehaviour
     {
         if (sceneName != "Lobby") return;
 
-        // Asignaremos spawn de forma determinista según clientsCompleted (orden garantizado por el evento)
         int index = 0;
 
         Debug.Log($"[SpawnController] OnSceneLoaded Lobby. clientsCompleted count = {clientsCompleted.Count}");
@@ -61,14 +59,12 @@ public class SpawnController : MonoBehaviour
 
             Transform point = spawnPoints[index % spawnPoints.Length];
 
-            // Si el host es este server local, muévelo server-side también para coherencia visual
             if (clientId == NetworkManager.Singleton.LocalClientId)
             {
                 playerObj.transform.position = point.position;
                 playerObj.transform.rotation = point.rotation;
             }
 
-            // Llamamos al owner para que él mismo se mueva localmente
             var pc = playerObj.GetComponent<PlayerController>();
             if (pc != null)
             {
@@ -82,7 +78,6 @@ public class SpawnController : MonoBehaviour
 
             index++;
 
-            // Reactivar CC server-side (por si acaso); la reactivación final en cada cliente la hace su propio RPC
             if (cc != null)
                 StartCoroutine(ReenableCC(cc));
         }
