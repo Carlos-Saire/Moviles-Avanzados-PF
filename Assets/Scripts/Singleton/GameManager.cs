@@ -76,15 +76,39 @@ public class GameManager : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void RegisterPlayerServerRpc(ulong clientId)
     {
+        //CORRECTOOOOOOOOOOOOO
         //Transform player = Instantiate(playerPrefab);
         //player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
         //connectedPlayers.Add(clientId, player);
-        ////Debug.Log(playerInfoSO.PlayerID);
+        //Debug.Log(playerInfoSO.PlayerID);
         ////player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;   COMENTARRRRRRRR
         //PlayerController controller = player.GetComponent<PlayerController>();
         //controller.SetCameraStateClientRpc(true);
 
+
+        Transform player = Instantiate(playerPrefab);
+        player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+
+        connectedPlayers[clientId] = player;
+
+        PlayerController controller = player.GetComponent<PlayerController>();
+        controller.SetCameraStateClientRpc(true);
+
+        // ======== FIX DEL LOBBY =========
+        //if (SceneManager.GetActiveScene().name == "Lobby")
+        //{
+        //    Vector3 pos = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+
+        //    var cc = player.GetComponent<CharacterController>();
+        //    if (cc != null) cc.enabled = false;
+
+        //    player.position = pos;
+
+        //    if (cc != null) cc.enabled = true;
+
+        //    Debug.Log($"Player {clientId} spawneado en Lobby en {pos}");
+        //}
 
 
         //Transform player = Instantiate(playerPrefab);
@@ -141,40 +165,40 @@ public class GameManager : NetworkBehaviour
 
 
 
-        Transform player;
+        //Transform player;
 
-        // 1. **Determinar el objeto del jugador (PlayerObject)**
-        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out NetworkClient client) && client.PlayerObject != null)
-        {
-            // El PlayerObject ya existe (típico para el host si ya estaba en el DontDestroyOnLoad)
-            player = client.PlayerObject.transform;
-        }
-        else
-        {
-            // El PlayerObject no existe, instanciar y spawnear (típico para clientes o nuevos jugadores)
-            player = Instantiate(playerPrefab);
-            player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-        }
+        //// 1. **Determinar el objeto del jugador (PlayerObject)**
+        //if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out NetworkClient client) && client.PlayerObject != null)
+        //{
+        //    // El PlayerObject ya existe (típico para el host si ya estaba en el DontDestroyOnLoad)
+        //    player = client.PlayerObject.transform;
+        //}
+        //else
+        //{
+        //    // El PlayerObject no existe, instanciar y spawnear (típico para clientes o nuevos jugadores)
+        //    player = Instantiate(playerPrefab);
+        //    player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+        //}
 
-        // 2. **Registrar el jugador**
-        if (!connectedPlayers.ContainsKey(clientId))
-            connectedPlayers.Add(clientId, player);
+        //// 2. **Registrar el jugador**
+        //if (!connectedPlayers.ContainsKey(clientId))
+        //    connectedPlayers.Add(clientId, player);
 
-        // 3. **Configurar cámara y otros componentes**
-        PlayerController controller = player.GetComponent<PlayerController>();
-        if (controller != null)
-        {
-            controller.SetCameraStateClientRpc(true);
-        }
+        //// 3. **Configurar cámara y otros componentes**
+        //PlayerController controller = player.GetComponent<PlayerController>();
+        //if (controller != null)
+        //{
+        //    controller.SetCameraStateClientRpc(true);
+        //}
 
-        // 4. **APLICAR POSICIÓN DE SPAWN SOLO EN EL LOBBY**
-        // Llama a la lógica de spawn solo si la escena activa es "Lobby".
-        if (SceneManager.GetActiveScene().name == "Lobby")
-        {
-            // El operador ?.Invoke() llamará a GetSpawnPoint() de SpawnController.
-            // Solo haz esto si el cliente está conectado Y el objeto ya ha sido registrado/creado.
-            player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        }
+        //// 4. **APLICAR POSICIÓN DE SPAWN SOLO EN EL LOBBY**
+        //// Llama a la lógica de spawn solo si la escena activa es "Lobby".
+        //if (SceneManager.GetActiveScene().name == "Lobby")
+        //{
+        //    // El operador ?.Invoke() llamará a GetSpawnPoint() de SpawnController.
+        //    // Solo haz esto si el cliente está conectado Y el objeto ya ha sido registrado/creado.
+        //    player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        //}
     }
 
     private void OnClientConnected(ulong obj)
@@ -209,51 +233,5 @@ public class GameManager : NetworkBehaviour
         int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
         return ping;
     }
-
-    //private void OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
-    //{
-    //    if (!IsServer) return;
-
-    //    foreach (ulong clientId in clientsCompleted)
-    //    {
-    //        ApplySpawnClientRpc(clientId);
-    //    }
-    //}
-
-    //[Rpc(SendTo.ClientsAndHost)]
-    //private void ApplySpawnClientRpc(ulong clientId)
-    //{
-    //    StartCoroutine(WaitForPlayerAndMove(clientId));
-    //}
-
-    //private IEnumerator WaitForPlayerAndMove(ulong clientId)
-    //{
-    //    if (NetworkManager.Singleton.LocalClientId != clientId)
-    //        yield break;
-
-    //    while (NetworkManager.Singleton.LocalClient == null ||
-    //           NetworkManager.Singleton.LocalClient.PlayerObject == null)
-    //    {
-    //        yield return null;
-    //    }
-
-    //    var playerObj = NetworkManager.Singleton.LocalClient.PlayerObject;
-    //    var controller = playerObj.GetComponent<PlayerController>();
-
-    //    if (controller != null)
-    //        controller.enabled = false;
-
-    //    yield return null;
-
-    //    //Vector3 targetPos = OnPositionPlayer?.Invoke() ?? Vector3.zero; COMENTARRRRRR
-    //    //playerObj.transform.position = targetPos;
-
-    //    //Debug.Log($"Player {clientId} movido correctamente a {targetPos} después del cambio de escena.");
-
-    //    yield return null;
-
-    //    if (controller != null)
-    //        controller.enabled = true;
-    //}
 }
 

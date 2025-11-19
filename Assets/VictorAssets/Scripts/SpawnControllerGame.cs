@@ -15,7 +15,6 @@ public class SpawnControllerGame : MonoBehaviour
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
     }
-
     private void OnSceneLoaded(string sceneName, LoadSceneMode mode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
 

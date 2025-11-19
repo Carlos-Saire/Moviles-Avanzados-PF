@@ -215,4 +215,23 @@ public class PlayerController : NetworkBehaviour
             Debug.Log("SERVER: SphereCast NO impactó con nada");
         }
     }
+    [Rpc(SendTo.Owner)]
+    public void SetPositionClientRpc(Vector3 newPosition)
+    {
+        Debug.Log($"[SetPositionClientRpc] Owner {OwnerClientId} recibido posicion {newPosition}");
+
+        var cc = GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+
+        transform.position = newPosition;
+
+        if (cc != null)
+            StartCoroutine(ReactivateCCNextFrame(cc));
+    }
+
+    private IEnumerator ReactivateCCNextFrame(CharacterController cc)
+    {
+        yield return null;
+        cc.enabled = true;
+    }
 }
