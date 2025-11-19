@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Unity.Netcode;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,23 +16,16 @@ public class SceneManagerController : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
-    public void LoadSceneAsync(string scene)
-    {
-        StartCoroutine(LoadSceneCoroutine(scene));
-    }
-    private IEnumerator LoadSceneCoroutine(string scene)
-    {
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(scene);
-
-        while (!asyncOp.isDone)
-        {
-            float progress = asyncOp.progress / 0.9f;
-            OnSceneLoadProgress?.Invoke(progress);
-            yield return null; 
-        }
-    }
     public void LoadScene(string scene, LoadSceneMode mode)
     {
         NetworkManager.Singleton.SceneManager.LoadScene(scene,mode);
+    }
+    public void Exit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;   
+#else
+    Application.Quit();                    
+#endif
     }
 }
