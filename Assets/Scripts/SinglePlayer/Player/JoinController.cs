@@ -4,33 +4,43 @@ using UnityEngine.InputSystem;
 
 public class JoinController : MonoBehaviour
 {
-    public PlayerInputManager inputManager;
-
-    [Header("Prefabs de Jugadores")]
     public GameObject playerPrefab;
 
-    private List<PlayerInput> jugadores = new List<PlayerInput>();
+    private List<GameObject> jugadores = new List<GameObject>();
+    private List<InputDevice> dispositivosUsados = new List<InputDevice>();
 
-    void Awake()
+    private void Reset()
     {
-        inputManager.enabled = false; 
+        gameObject.name  ="JoinController";
     }
     private void Start()
     {
-        
+        int cantidad = PlayerPrefs.GetInt("JugadoresSeleccionados", 1);
+
+        for (int i = 0; i < cantidad; ++i)
+        {
+            CrearJugador();
+        }
     }
+
     public void CrearJugador()
     {
-        PlayerInput jugador = PlayerInput.Instantiate(
-            playerPrefab,
-            jugadores.Count,         
-            null,
-            -1,
-            Keyboard.current          
-        );
-
-        jugadores.Add(jugador);
+        GameObject go =Instantiate(playerPrefab);
+        jugadores.Add(go);
         ActualizarSplitScreen();
+    }
+
+    private InputDevice ObtenerSiguienteGamepadLibre()
+    {
+        foreach (var pad in Gamepad.all)
+        {
+            if (!dispositivosUsados.Contains(pad))
+            {
+                return pad;
+            }
+        }
+
+        return null; 
     }
 
     private void ActualizarSplitScreen()
@@ -43,28 +53,35 @@ public class JoinController : MonoBehaviour
 
             if (cam == null)
             {
-                Debug.LogWarning("El prefab no contiene cámara. Agrégale una al jugador.");
+                Debug.LogError("Jugador " + i + " no tiene cámara en el prefab.");
                 continue;
             }
+
+            cam.depth = i;
 
             switch (cantidad)
             {
                 case 1:
-                    cam.rect = new Rect(0, 0, 1, 1);
+                    cam.rect = new Rect(0f, 0f, 1f, 1f);
                     break;
 
                 case 2:
                     cam.rect = (i == 0)
-                        ? new Rect(0, 0.5f, 1, 0.5f)   
-                        : new Rect(0, 0, 1, 0.5f);     
+                        ? new Rect(0f, 0f, 0.5f, 1f)
+                        : new Rect(0.5f, 0f, 0.5f, 1f);
                     break;
 
                 case 3:
-                case 4:
-                    if (i == 0) cam.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                    if (i == 0) cam.rect = new Rect(0f, 0f, 0.5f, 1f);
                     if (i == 1) cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-                    if (i == 2) cam.rect = new Rect(0, 0, 0.5f, 0.5f);
-                    if (i == 3) cam.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+                    if (i == 2) cam.rect = new Rect(0.5f, 0f, 0.5f, 0.5f);
+                    break;
+
+                case 4:
+                    if (i == 0) cam.rect = new Rect(0f, 0.5f, 0.5f, 0.5f);
+                    if (i == 1) cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                    if (i == 2) cam.rect = new Rect(0f, 0f, 0.5f, 0.5f);
+                    if (i == 3) cam.rect = new Rect(0.5f, 0f, 0.5f, 0.5f);
                     break;
             }
         }
