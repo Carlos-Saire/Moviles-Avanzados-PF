@@ -4,7 +4,7 @@ using Unity.Netcode;
 using System.Collections.Generic;
 using Command;
 
-public class LobbyUIManager : MonoBehaviour
+public class StartGameHost : MonoBehaviour
 {
     [SerializeField] private Button startGameButton;
 

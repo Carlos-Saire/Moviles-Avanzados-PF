@@ -11,6 +11,7 @@ public class SpawnController : MonoBehaviour
     {
         gameObject.name = "SpawnController";
     }
+
     private void OnEnable()
     {
         GameManager.OnPositionPlayer += GetSpawnPoint;

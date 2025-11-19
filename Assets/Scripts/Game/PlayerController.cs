@@ -3,9 +3,9 @@ using Unity.Netcode.Components;
 using UnityEngine;
 using System.Collections;
 [RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkTransport))]
-[RequireComponent(typeof(NetworkRigidbody))]
+//[RequireComponent(typeof(NetworkRigidbody))]
 public class PlayerController : NetworkBehaviour
 {
     [Header("Movement Settings")]
@@ -35,11 +35,11 @@ public class PlayerController : NetworkBehaviour
     [Header("Attack")]
     [SerializeField] private bool isAttacking = false;
     [SerializeField] private GameObject dagger;
-    private void Reset()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-    }
+    //private void Reset()
+    //{
+    //    Rigidbody rb = GetComponent<Rigidbody>();
+    //    rb.isKinematic = true;
+    //}
 
     private void OnEnable()
     {
@@ -68,6 +68,9 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
+        if (IsOwner)
+            Debug.Log("POS: " + transform.position);
+        
         if (!IsOwner) return;
         Move();
 
