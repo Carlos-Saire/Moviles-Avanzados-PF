@@ -3,6 +3,7 @@ using Command;
 using UnityEngine.UI;
 using System.Collections;
 using System.Net.NetworkInformation;
+using System;
 public class InstallerLogin : MonoBehaviour
 {
     [SerializeField] private CanvasGroup logo;
@@ -18,8 +19,20 @@ public class InstallerLogin : MonoBehaviour
     [SerializeField] private Transform panelReiniciar;
     [SerializeField] private Transform panelSinglePlayer;
 
+    [SerializeField] private Button reiniciar;
+
+    [SerializeField] private CanvasGroup fade;
+
     [Header("AuthenticationManager")]
     [SerializeField] private AuthenticationManager authentication;
+    private void OnEnable()
+    {
+        reiniciar?.onClick.AddListener(reiniciarPress);
+    }
+    private void OnDisable()
+    {
+        reiniciar?.onClick.RemoveListener(reiniciarPress);
+    }
     private void Start()
     {
         Invoke("BeginAnimation", 1);
@@ -50,4 +63,10 @@ public class InstallerLogin : MonoBehaviour
         }
 
     }
+    private void reiniciarPress()
+    {
+        CommandQueue.Instance.AddCommand(new CanvasFadeCommand(fade, 1, 0.5f));
+        CommandQueue.Instance.AddCommand(new LoadSceneCommand("Login"));
+    }
+
 }
