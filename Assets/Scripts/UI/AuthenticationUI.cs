@@ -39,7 +39,7 @@ public class AuthenticationUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        AuthenticationManager.OnSignIn += HandleOnSignIn;
+        //AuthenticationManager.OnSignIn += HandleOnSignIn;
         AuthenticationManager.OnLogout += HandleOnLogoutAndDeleteAccount;
         AuthenticationManager.OnNameUpdated += HandleOnNameUpdated;
         AuthenticationManager.OnPlayerSignedIn += HandlePlayerSignedIn;
@@ -62,7 +62,7 @@ public class AuthenticationUI : MonoBehaviour
 
     private void OnDisable()
     {
-        AuthenticationManager.OnSignIn -= HandleOnSignIn;
+        //AuthenticationManager.OnSignIn -= HandleOnSignIn;
         AuthenticationManager.OnLogout -= HandleOnLogoutAndDeleteAccount;
         AuthenticationManager.OnNameUpdated -= HandleOnNameUpdated;
         AuthenticationManager.OnPlayerSignedIn -= HandlePlayerSignedIn;

@@ -1,9 +1,7 @@
 using UnityEngine;
 using Command;
 using UnityEngine.UI;
-using System.Collections;
-using System.Net.NetworkInformation;
-using System;
+
 public class InstallerLogin : MonoBehaviour
 {
     [SerializeField] private CanvasGroup logo;
@@ -24,7 +22,7 @@ public class InstallerLogin : MonoBehaviour
     [SerializeField] private CanvasGroup fade;
 
     [Header("AuthenticationManager")]
-    [SerializeField] private AuthenticationManager authentication;
+    [SerializeField] private UnityServicesManager unityServices;
     private void OnEnable()
     {
         reiniciar?.onClick.AddListener(reiniciarPress);
@@ -44,14 +42,14 @@ public class InstallerLogin : MonoBehaviour
         CommandQueue.Instance.AddCommand(new SetActiveCommand(panelConnected.gameObject,true));
         CommandQueue.Instance.AddCommand(new SetActiveCommand(intro.gameObject, false));
 #if !UNITY_WSA_10_0
-        authentication.InitializeServices();
+        unityServices.InitializeServices();
 #endif
         CommandQueue.Instance.AddCommand(new SliderCommand(slider, duration));
         CommandQueue.Instance.AddCommand(new GenericCommad(CheckAuthentication));
     }
     private void CheckAuthentication()
     {
-        if (authentication.AreServicesInitialized())
+        if (unityServices.AreServicesInitialized())
         {
             CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
         }

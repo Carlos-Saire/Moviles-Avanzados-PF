@@ -10,7 +10,7 @@ public class AuthenticationManager : MonoBehaviour
     private PlayerInfo playerInfo;
     [SerializeField] private PlayerInfoSO playerSo;
 
-    public static event Action<string> OnSignIn;
+    public static event Action OnSignIn;
     public static event Action OnLogout;
 
     public static event Action OnDeleteAccount;
@@ -25,10 +25,11 @@ public class AuthenticationManager : MonoBehaviour
     private async void Awake()
 
     {
+        await UnityServices.InitializeAsync();
 
         //if (UnityServices.State == ServicesInitializationState.Initialized)
         //{
-            
+
         //    if (AuthenticationService.Instance.IsSignedIn)
         //    {
         //        Debug.Log("Unity Services ya están inicializados");
@@ -78,20 +79,7 @@ public class AuthenticationManager : MonoBehaviour
     //        Debug.LogWarning("No se pudo restaurar la sesión: " + e.Message);
     //    }
     //}
-    public async void InitializeServices()
-    {
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            Debug.Log("No hay conexión a internet. No se pueden inicializar Unity Services.");
-            return;
-        }
-        await UnityServices.InitializeAsync();
-        Debug.Log("Se Inicializaron los servicios");
-    }
-    public bool AreServicesInitialized()
-    {
-        return UnityServices.State == ServicesInitializationState.Initialized;
-    }
+
     public async void EditNameAsync(string newName)
     {
         playerSo.PlayerName = await AuthenticationService.Instance.UpdatePlayerNameAsync(newName);
@@ -181,7 +169,7 @@ public class AuthenticationManager : MonoBehaviour
             playerSo.PlayerName = await AuthenticationService.Instance.GetPlayerNameAsync();
             Debug.Log("Se optuvo nombre del player");
 
-            OnSignIn?.Invoke(playerSo.PlayerName);
+            OnSignIn?.Invoke();
             Debug.Log("Se lanza el evento con valor: " + playerSo.PlayerName);
         }
         catch(Exception e)
