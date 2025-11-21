@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 public class AuthenticationManager : MonoBehaviour
 {
+
     private PlayerInfo playerInfo;
     [SerializeField] private PlayerInfoSO playerSo;
 
@@ -22,63 +23,37 @@ public class AuthenticationManager : MonoBehaviour
     {
         gameObject.name = "AuthenticationManager";
     }
-    private async void Awake()
-
+    public void InitializeAsync()
     {
-        await UnityServices.InitializeAsync();
-
-        //if (UnityServices.State == ServicesInitializationState.Initialized)
-        //{
-
-        //    if (AuthenticationService.Instance.IsSignedIn)
-        //    {
-        //        Debug.Log("Unity Services ya están inicializados");
-        //        OnNameUpdated?.Invoke(playerSo.PlayerName);
-        //        Debug.Log("Se restablecio se mando el nombre del Player: " + playerSo.PlayerName);
-        //        OnPlayerSignedIn.Invoke();
-        //        Debug.Log("El jugador ya ha iniciado sesión anteriormente.");
-        //    }
-        //}
-        //else
-        //{
-        //    await UnityServices.InitializeAsync();
-        //    Debug.Log("Unity Services se inicializaron ahora");
-        //}
-
-        //PlayerAccountService.Instance.SignedIn += SignedInWithUnity;
-        //PlayerAccountService.Instance.SignedOut += SignedOutWithUnity;
+        PlayerAccountService.Instance.SignedIn += SignedInWithUnity;
+        PlayerAccountService.Instance.SignedOut += SignedOutWithUnity;
     }
-
-
-    //private void OnDestroy()
-    //{
-    //    PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
-    //    PlayerAccountService.Instance.SignedOut -= SignedOutWithUnity;
-    //}
-    //private void Start()
-    //{
-    //    if (AuthenticationService.Instance.IsSignedIn)
-    //    {
-    //        return;
-    //    }
-
-    //    try
-    //    {
-    //        if (AuthenticationService.Instance.SessionTokenExists)
-    //        {
-
-    //            InitSignAnomyn();
-    //        }
-    //        else
-    //        {
-    //            Debug.Log(" No hay sesión previa guardada, debes iniciar sesión.");
-    //        }
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Debug.LogWarning("No se pudo restaurar la sesión: " + e.Message);
-    //    }
-    //}
+    private void OnDestroy()
+    {
+        PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
+        PlayerAccountService.Instance.SignedOut -= SignedOutWithUnity;
+    }
+    public bool CheckSession()
+    {
+        try
+        {
+            if (AuthenticationService.Instance.SessionTokenExists)
+            {
+                InitSignAnomyn();  
+                return true;      
+            }
+            else
+            {
+                Debug.Log("No previous session found. You need to sign in.");
+                return false;       
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Could not restore session: " + e.Message);
+            return false;          
+        }
+    }
 
     public async void EditNameAsync(string newName)
     {

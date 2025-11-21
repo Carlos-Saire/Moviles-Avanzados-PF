@@ -3,6 +3,12 @@ using Unity.Services.Core;
 
 public class UnityServicesManager : MonoBehaviour
 {
+    [Header("AuthenticationManager")]
+    [SerializeField] private AuthenticationManager authenticationManager;
+    private void Reset()
+    {
+        gameObject.name = "UnityServicesManager";
+    }
     public async void InitializeServices()
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -11,6 +17,7 @@ public class UnityServicesManager : MonoBehaviour
             return;
         }
         await UnityServices.InitializeAsync();
+        authenticationManager.InitializeAsync();
         Debug.Log("Se Inicializaron los servicios");
     }
     public bool AreServicesInitialized()

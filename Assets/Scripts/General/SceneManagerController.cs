@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerController : MonoBehaviour
 {
-    public static event Action<float> OnSceneLoadProgress;
     private void Reset()
     {
         gameObject.name = "SceneManagerController";

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Command;
 using UnityEngine.UI;
+using System;
 
 public class InstallerLogin : MonoBehaviour
 {
@@ -21,15 +22,27 @@ public class InstallerLogin : MonoBehaviour
 
     [SerializeField] private CanvasGroup fade;
 
-    [Header("AuthenticationManager")]
+    [Header("UnityServicesManager")]
     [SerializeField] private UnityServicesManager unityServices;
+
+    [Header("UnityServicesManager")]
+    [SerializeField] private AuthenticationManager authenticationManager;
     private void OnEnable()
     {
         reiniciar?.onClick.AddListener(reiniciarPress);
+        AuthenticationManager.OnSignIn += SignIn;
     }
+
+
+
     private void OnDisable()
     {
         reiniciar?.onClick.RemoveListener(reiniciarPress);
+        AuthenticationManager.OnSignIn -= SignIn;
+    }
+    private void Awake()
+    {
+        unityServices.InitializeServices();
     }
     private void Start()
     {
@@ -42,7 +55,6 @@ public class InstallerLogin : MonoBehaviour
         CommandQueue.Instance.AddCommand(new SetActiveCommand(panelConnected.gameObject,true));
         CommandQueue.Instance.AddCommand(new SetActiveCommand(intro.gameObject, false));
 #if !UNITY_WSA_10_0
-        unityServices.InitializeServices();
 #endif
         CommandQueue.Instance.AddCommand(new SliderCommand(slider, duration));
         CommandQueue.Instance.AddCommand(new GenericCommad(CheckAuthentication));
@@ -51,7 +63,11 @@ public class InstallerLogin : MonoBehaviour
     {
         if (unityServices.AreServicesInitialized())
         {
-            CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
+            if (authenticationManager.CheckSession())
+            {
+                return;
+            }
+            CommandQueue.Instance.AddCommand(new LoadSceneCommand("Login"));
         }
         else
         {
@@ -66,7 +82,12 @@ public class InstallerLogin : MonoBehaviour
     private void reiniciarPress()
     {
         CommandQueue.Instance.AddCommand(new CanvasFadeCommand(fade, 1, 0.5f));
-        CommandQueue.Instance.AddCommand(new LoadSceneCommand("Login"));
+        CommandQueue.Instance.AddCommand(new LoadSceneCommand("Intro"));
+    }
+    private async void SignIn()
+    {
+        await CloudSaveManager.Instance.LoadProfileAsync();
+        CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
     }
 
 }

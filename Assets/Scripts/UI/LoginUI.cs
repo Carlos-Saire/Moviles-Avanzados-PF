@@ -3,9 +3,16 @@ using Command;
 public class LoginUI : MonoBehaviour
 {
     [Header("Panels")]
+    [SerializeField] private Transform welcomePanel;
+
+    [Header("Panels")]
     [SerializeField] private Transform panelLogin;
     [SerializeField] private Transform panelEstate;
 
+    [Header("PlayerInfoSO")]
+    [SerializeField] private PlayerInfoSO playerInfoSO;
+
+    [Header("AuthenticationManager")]
     [SerializeField] private AuthenticationManager authentication;
     private void Reset()
     {
@@ -31,11 +38,19 @@ public class LoginUI : MonoBehaviour
     }
     private void PressPanel()
     {
-        panelLogin.gameObject.SetActive(false);
         panelEstate.gameObject.SetActive(true);
+        panelLogin.gameObject.SetActive(false);
     }
-    private void SignIn()
+    private async void SignIn()
     {
-        CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
+        bool isFirstTimePlayer =  await CloudSaveManager.Instance.IsFirstTimePlayer(playerInfoSO.PlayerID);
+        if (isFirstTimePlayer)
+        {
+            welcomePanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
+        }
     }
 }

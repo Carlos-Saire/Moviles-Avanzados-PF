@@ -20,7 +20,7 @@ public class ProfileImageSelector : MonoBehaviour
     }
     private void ButtonPress()
     {
-        if(SelectedButton != null)
+        if(SelectedButton != null&& SelectedButton != button)
             SelectedButton.gameObject.transform.localScale = Vector3.one;
 
         if (SelectedButton != button)

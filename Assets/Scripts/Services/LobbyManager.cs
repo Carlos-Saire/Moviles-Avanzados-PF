@@ -58,10 +58,6 @@ public class LobbyManager : MonoBehaviour
             RemovePlayerAsync();
         }
     }
-    public void A()
-    {
-        ListLobbies();
-    }
     public async void CreateLobby(string lobbyName, int maxPlayers,bool isPrivate)
     {
         try
@@ -187,7 +183,7 @@ public class LobbyManager : MonoBehaviour
             currentLobby = lobby;
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
-            relayManager.JoinRelay(relayCode);
+            await relayManager.JoinRelay(relayCode);
         }
         catch (LobbyServiceException e)
         {

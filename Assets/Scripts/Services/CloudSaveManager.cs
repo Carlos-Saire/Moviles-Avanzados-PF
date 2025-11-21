@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.CloudSave;
-using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 public class CloudSaveManager : MonoBehaviour
@@ -21,7 +21,7 @@ public class CloudSaveManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public async void SaveProfile(PlayerJson profile)
+    private async void SaveProfile(PlayerJson profile)
     {
         string json = JsonUtility.ToJson(profile);
 
@@ -56,5 +56,53 @@ public class CloudSaveManager : MonoBehaviour
             Debug.LogError("Error checking player profile: " + ex.Message);
             return true;
         }
+    }
+    public async Task LoadProfileAsync()
+    {
+        try
+        {
+            var keys = new HashSet<string> { playerInfoSO.PlayerID };
+            var result = await CloudSaveService.Instance.Data.Player.LoadAsync(keys);
+
+            if (!result.ContainsKey(playerInfoSO.PlayerID))
+            {
+                Debug.LogWarning("No profile found in Cloud Save.");
+                return;
+            }
+
+            string json = result[playerInfoSO.PlayerID].Value.GetAsString();
+
+            Debug.Log("Loaded JSON: " + json);
+
+            PlayerJson loadedProfile = JsonUtility.FromJson<PlayerJson>(json);
+
+            if (loadedProfile == null)
+            {
+                Debug.LogError("JSON could not be deserialized.");
+                return;
+            }
+
+            playerInfoSO.PlayerDescription = loadedProfile.description;
+            playerInfoSO.Playerbirthday = loadedProfile.birthday;
+            playerInfoSO.PlayerIndexProfile = loadedProfile.profileIndex;
+
+            Debug.Log("Profile loaded successfully!");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error loading profile: " + e.Message);
+        }
+
+
+    }
+    private void OnApplicationQuit()
+    {
+        PlayerJson profile = new PlayerJson
+        {
+            description = playerInfoSO.PlayerDescription,
+            birthday = playerInfoSO.Playerbirthday,
+            profileIndex = playerInfoSO.PlayerIndexProfile
+        };
+        SaveProfile(profile);
     }
 }
