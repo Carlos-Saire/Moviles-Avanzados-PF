@@ -43,7 +43,9 @@ public class InstallerLogin : MonoBehaviour
         CommandQueue.Instance.AddCommand(new CanvasFadeCommand(logo, 0, 1f));
         CommandQueue.Instance.AddCommand(new SetActiveCommand(panelConnected.gameObject,true));
         CommandQueue.Instance.AddCommand(new SetActiveCommand(intro.gameObject, false));
+#if !UNITY_WSA_10_0
         authentication.InitializeServices();
+#endif
         CommandQueue.Instance.AddCommand(new SliderCommand(slider, duration));
         CommandQueue.Instance.AddCommand(new GenericCommad(CheckAuthentication));
     }
