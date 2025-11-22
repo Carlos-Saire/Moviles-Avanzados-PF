@@ -9,6 +9,10 @@ public class CloudSaveManager : MonoBehaviour
     [SerializeField] private PlayerInfoSO playerInfoSO;
 
     public static CloudSaveManager Instance;
+    private void Reset()
+    {
+        gameObject.name = "CloudSaveManager";
+    }
     private void Awake()
     {
         if (Instance == null)
@@ -21,8 +25,15 @@ public class CloudSaveManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private async void SaveProfile(PlayerJson profile)
+    public async Task SaveProfile()
     {
+        PlayerJson profile = new PlayerJson
+        {
+            description = playerInfoSO.PlayerDescription,
+            birthday = playerInfoSO.Playerbirthday,
+            profileIndex = playerInfoSO.PlayerIndexProfile
+        };
+
         string json = JsonUtility.ToJson(profile);
 
         var data = new Dictionary<string, object>
@@ -95,14 +106,22 @@ public class CloudSaveManager : MonoBehaviour
 
 
     }
-    private void OnApplicationQuit()
+
+    public async Task DeleteProfileAsync()
     {
-        PlayerJson profile = new PlayerJson
+        try
         {
-            description = playerInfoSO.PlayerDescription,
-            birthday = playerInfoSO.Playerbirthday,
-            profileIndex = playerInfoSO.PlayerIndexProfile
-        };
-        SaveProfile(profile);
+            await CloudSaveService.Instance.Data.Player.DeleteAllAsync();
+
+            Debug.Log("Perfil eliminado de Cloud Save!");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error eliminando perfil: " + ex.Message);
+        }
+    }
+    private async void OnApplicationQuit()
+    {
+        await SaveProfile();
     }
 }

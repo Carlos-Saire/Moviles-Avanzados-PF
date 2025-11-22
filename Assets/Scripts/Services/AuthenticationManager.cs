@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 public class AuthenticationManager : MonoBehaviour
 {
-
     private PlayerInfo playerInfo;
     [SerializeField] private PlayerInfoSO playerSo;
 
@@ -16,9 +15,10 @@ public class AuthenticationManager : MonoBehaviour
 
     public static event Action OnDeleteAccount;
 
-    public static event Action<string> OnNameUpdated;
+    public static event Action OnNameUpdated;
     public static event Action OnPlayerSignedIn;
 
+    public static AuthenticationManager Instance;
     private void Reset()
     {
         gameObject.name = "AuthenticationManager";
@@ -32,6 +32,18 @@ public class AuthenticationManager : MonoBehaviour
     {
         PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
         PlayerAccountService.Instance.SignedOut -= SignedOutWithUnity;
+    }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public bool CheckSession()
     {
@@ -58,7 +70,7 @@ public class AuthenticationManager : MonoBehaviour
     public async void EditNameAsync(string newName)
     {
         playerSo.PlayerName = await AuthenticationService.Instance.UpdatePlayerNameAsync(newName);
-        OnNameUpdated?.Invoke(playerSo.PlayerName);
+        OnNameUpdated?.Invoke();
         Debug.Log("Edit name");
     }
     public async void DeleteAccountAsync()

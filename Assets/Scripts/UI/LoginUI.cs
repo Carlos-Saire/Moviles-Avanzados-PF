@@ -12,8 +12,6 @@ public class LoginUI : MonoBehaviour
     [Header("PlayerInfoSO")]
     [SerializeField] private PlayerInfoSO playerInfoSO;
 
-    [Header("AuthenticationManager")]
-    [SerializeField] private AuthenticationManager authentication;
     private void Reset()
     {
         gameObject.name = "LoginUI";    
@@ -28,12 +26,12 @@ public class LoginUI : MonoBehaviour
     }
     public void LoginPress()
     {
-        authentication.InitSignIn();
+        AuthenticationManager.Instance.InitSignIn();
         PressPanel();
     }
     public void AnonimPress()
     {
-        authentication.InitSignAnomyn();
+        AuthenticationManager.Instance.InitSignAnomyn();
         PressPanel();
     }
     private void PressPanel()
