@@ -49,6 +49,9 @@ GameObject:
   - component: {fileID: 6050507512023107058}
   - component: {fileID: 6714051642796791300}
   - component: {fileID: 5055047420606665411}
+  - component: {fileID: -8838997126061162274}
+  - component: {fileID: -8904122731459185720}
+  - component: {fileID: -643828261399886306}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -263,8 +266,6 @@ MonoBehaviour:
   model: {fileID: 2867220136921911548}
   animator: {fileID: 8154406291640289926}
   playerCamera: {fileID: 135580505436712981}
-  isAttacking: 0
-  dagger: {fileID: 400738733649147609}
 --- !u!114 &6714051642796791300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +310,59 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   IsDead:
     m_InternalValue: 0
+--- !u!114 &-8838997126061162274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924724677019760313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87815baf6a6cb5d49a94328b748f200f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8904122731459185720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924724677019760313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0425c251caf824ca62931149c42710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  dagger: {fileID: 919132149155446097, guid: c8b2b65160f314643b0c42ca0740daa2, type: 3}
+--- !u!54 &-643828261399886306
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924724677019760313}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &7198709770804265203
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,16 +583,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: daga
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c8b2b65160f314643b0c42ca0740daa2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8b2b65160f314643b0c42ca0740daa2, type: 3}
---- !u!1 &400738733649147609 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c8b2b65160f314643b0c42ca0740daa2, type: 3}
-  m_PrefabInstance: {fileID: 670715358736845704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1064086934287412323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c8b2b65160f314643b0c42ca0740daa2, type: 3}

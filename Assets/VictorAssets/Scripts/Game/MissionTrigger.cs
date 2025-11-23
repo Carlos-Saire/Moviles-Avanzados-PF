@@ -1,40 +1,31 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class MissionTrigger : MonoBehaviour
 {
     public GameObject missionPanel;
 
-    private bool playerInside;
-    private PlayerController currentPlayer;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.TryGetComponent(out PlayerController player))
-            return;
-
-        playerInside = true;
-        currentPlayer = player;
-
-        if (player.IsOwner)
-            player.SetNearMission(this);
+        if (other.TryGetComponent<PlayerController>(out var player))
+        {
+            Debug.Log($"[MissionTrigger] OnTriggerEnter detectado por player Owner={player.OwnerClientId} IsOwner(local)= {player.IsOwner} onClient={NetworkManager.Singleton.LocalClientId}");
+            player.SetNearMission(this); 
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.TryGetComponent(out PlayerController player))
-            return;
-
-        playerInside = false;
-        currentPlayer = null;
-
-        if (player.IsOwner)
-            player.SetNearMission(null);
+        if (other.TryGetComponent<PlayerController>(out var player))
+        {
+            Debug.Log($"[MissionTrigger] OnTriggerExit detectado por player Owner={player.OwnerClientId} IsOwner(local)= {player.IsOwner} onClient={NetworkManager.Singleton.LocalClientId}");
+            player.SetNearMission(null); 
+        }
     }
 
     public void StartMission(PlayerController player)
     {
-        if (!playerInside)
-            return;
+        Debug.Log("Misión iniciada por " + player.OwnerClientId);
 
         missionPanel.SetActive(true);
         player.FreezePlayer(true);

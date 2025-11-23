@@ -64,5 +64,7 @@ public class TroncoMiniGame : MonoBehaviour
 
         if (currentPlayer != null)
             currentPlayer.FreezePlayer(false);
+
+        VideoGameManager.Instance.AddFireServerRpc(20f);
     }
 }
