@@ -15,6 +15,12 @@ public class SymbolOrderMiniGame : MonoBehaviour
 
     private bool completed = false;
 
+    private PlayerController currentPlayer;
+
+    public void SetPlayer(PlayerController player)
+    {
+        currentPlayer = player;
+    }
     public void CheckOrder()
     {
         for (int i = 0; i < playerSlots.Length; i++)
@@ -43,5 +49,8 @@ public class SymbolOrderMiniGame : MonoBehaviour
     {
         yield return new WaitForSeconds(2.5f);
         missionPanel.SetActive(false);
+
+        if (currentPlayer != null)
+            currentPlayer.FreezePlayer(false);
     }
 }

@@ -17,6 +17,11 @@ public class TroncoMiniGame : MonoBehaviour
     private int linesLeft;
     private bool completed = false;
 
+    private PlayerController currentPlayer;
+    public void SetPlayer(PlayerController pc)
+    {
+        currentPlayer = pc;
+    }
     private void OnEnable()
     {
         ResetMission();
@@ -55,5 +60,9 @@ public class TroncoMiniGame : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         missionPanel.SetActive(false);
+
+
+        if (currentPlayer != null)
+            currentPlayer.FreezePlayer(false);
     }
 }

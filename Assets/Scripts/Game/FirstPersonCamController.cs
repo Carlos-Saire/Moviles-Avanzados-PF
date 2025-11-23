@@ -35,6 +35,7 @@ public class FirstPersonCamController : MonoBehaviour
     }
     private void Update()
     {
+        if (player != null && player.IsFrozen) return;
         MoveLook();
     }
     private void HandleLook(Vector2 direction)

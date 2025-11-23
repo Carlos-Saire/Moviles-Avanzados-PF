@@ -1,7 +1,8 @@
+using System.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.Android;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(NetworkTransport))]
 public class PlayerController : NetworkBehaviour
@@ -34,23 +35,30 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private bool isAttacking = false;
     [SerializeField] private GameObject dagger;
 
+    public bool IsFrozen { get; private set; } = false;
 
+    private MissionTrigger nearMission;
+    public void SetNearMission(MissionTrigger mission)
+    {
+        nearMission = mission;
+    }
     private void OnEnable()
     {
         InputHandler.OnMove += HandleMove;
         InputHandler.OnAttack += HandleAttack;
+        InputHandler.OnInteract += HandleInteract;
     }
 
     private void OnDisable()
     {
         InputHandler.OnMove -= HandleMove;
         InputHandler.OnAttack -= HandleAttack;
+        InputHandler.OnInteract -= HandleInteract;
     }
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
     }
-
     private void Start()
     {
         if (playerCamera == null)
@@ -59,14 +67,41 @@ public class PlayerController : NetworkBehaviour
         if (dagger != null)
             dagger.SetActive(false);
     }
+    public void FreezePlayer(bool state)
+    {
+        IsFrozen = state;
 
+        playerCamera.gameObject.SetActive(!state);
+
+        direction = Vector2.zero;
+        inputX = 0;
+        inputZ = 0;
+
+        animator.SetFloat("X", 0);
+        animator.SetFloat("Z", 0);
+
+        ForceIdleAnimationServerRpc();
+    }
+    [Rpc(SendTo.Server)]
+    private void ForceIdleAnimationServerRpc()
+    {
+        animator.SetFloat("X", 0);
+        animator.SetFloat("Z", 0);
+        ForceIdleAnimationClientRpc();
+    }
+
+    [Rpc(SendTo.NotServer)]
+    private void ForceIdleAnimationClientRpc()
+    {
+        animator.SetFloat("X", 0);
+        animator.SetFloat("Z", 0);
+    }
     private void Update()
     {
-        if (IsOwner)
-            Debug.Log("POS: " + transform.position);
         
         if (!IsOwner) return;
-        Move();
+
+        if (IsFrozen) return;
 
         if (isAttacking)
             return;
@@ -99,19 +134,14 @@ public class PlayerController : NetworkBehaviour
         inputX = direction.x;
         inputZ = direction.y;
     }
-    private void Move()
+    private void HandleInteract()
     {
-        Vector3 camForward = playerCamera.forward;
-        Vector3 camRight = playerCamera.right;
-        camForward.y = 0;
-        camRight.y = 0;
+        if (!IsOwner) return;
 
-        moveDirection = (camRight * direction.x + camForward * direction.y).normalized;
-        move = moveDirection * moveSpeed * Time.deltaTime;
-        //controller.Move(move);
-
-        velocity.y += gravity * Time.deltaTime;
-        //controller.Move(velocity * Time.deltaTime);
+        if (nearMission != null)
+        {
+            nearMission.StartMission(this);
+        }
     }
     #region Attack
     private void HandleAttack()
