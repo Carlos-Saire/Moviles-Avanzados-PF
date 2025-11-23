@@ -1,55 +1,72 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class BookManager : MonoBehaviour
 {
+    [Header("Panel de la misión")]
+    [SerializeField] GameObject missionPanel;  
+
     int objToCreate = 4;
     [SerializeField] Button[] booksInLibrary;
     [SerializeField] GameObject openPanelBook;
     [SerializeField] GameObject noteInBook;
     [SerializeField] GameObject noteParent;
     [SerializeField] Button closeBook;
-    private bool[] hasNote;
 
+    private bool[] hasNote;
     private GameObject[] noteInstances;
+
     private int currentBookIndex = -1;
     public int itemFounded = 0;
+
     public static event Action<int> OnNoteFound;
+
+    private PlayerController currentPlayer;  
+
+    public void SetPlayer(PlayerController player)
+    {
+        currentPlayer = player;
+    }
+
     void Start()
     {
+        missionPanel.SetActive(false);
         openPanelBook.SetActive(false);
+
         hasNote = new bool[booksInLibrary.Length];
-       
         noteInstances = new GameObject[booksInLibrary.Length];
+
         GetRandomNote();
-        for (int i =  0;  i < booksInLibrary.Length; i++)
+
+        for (int i = 0; i < booksInLibrary.Length; i++)
         {
             int k = i;
-           booksInLibrary[i].onClick.AddListener(() => SetActive(k));
+            booksInLibrary[i].onClick.AddListener(() => SetActive(k));
         }
+
         closeBook.onClick.AddListener(() => CloseBook());
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if(itemFounded <= objToCreate)
-        {
-            Debug.Log("Notas encontradas: " + itemFounded + " de " + objToCreate);
-            
-        }
+        itemFounded = 0;
+        currentBookIndex = -1;
+        missionPanel.SetActive(true);
     }
+
     void CloseBook()
     {
         if (currentBookIndex != -1 && noteInstances[currentBookIndex] != null)
         {
             noteInstances[currentBookIndex].SetActive(false);
         }
+
         currentBookIndex = -1;
         openPanelBook?.SetActive(false);
-       
     }
+
     void SetActive(int index)
     {
         if (currentBookIndex != -1 && noteInstances[currentBookIndex] != null)
@@ -57,29 +74,48 @@ public class BookManager : MonoBehaviour
 
         openPanelBook.SetActive(true);
         currentBookIndex = index;
+
         if (hasNote[index])
         {
-
             if (noteInstances[index] == null)
             {
-
                 noteInstances[index] = Instantiate(noteInBook, noteParent.transform);
                 noteInstances[index].SetActive(true);
-                Debug.Log(index + " tiene una nota (creada).");
+
                 itemFounded++;
                 OnNoteFound?.Invoke(itemFounded);
+
+                Debug.Log($"Libro {index} tiene nota. Notas encontradas {itemFounded}/{objToCreate}");
             }
             else
             {
                 noteInstances[index].SetActive(true);
-                Debug.Log(index + " tiene una nota (reutilizada).");
             }
         }
         else
         {
-            Debug.Log(index + " está vacío.");
+            Debug.Log($"Libro {index} está vacío.");
         }
-    }    
+
+        if (itemFounded >= objToCreate)
+        {
+            Debug.Log("MISIÓN COMPLETADA: Encontraste todas las notas!");
+            StartCoroutine(FinishMission());
+        }
+    }
+
+    IEnumerator FinishMission()
+    {
+        yield return new WaitForSeconds(2.5f);
+
+        missionPanel.SetActive(false);
+
+        if (currentPlayer != null)
+            currentPlayer.FreezePlayer(false);
+
+        VideoGameManager.Instance.AddFireServerRpc(20f);
+    }
+
     void GetRandomNote()
     {
         int assigned = 0;
@@ -92,6 +128,7 @@ public class BookManager : MonoBehaviour
                 assigned++;
             }
         }
-          
+
+        Debug.Log("Notas asignadas aleatoriamente.");
     }
 }

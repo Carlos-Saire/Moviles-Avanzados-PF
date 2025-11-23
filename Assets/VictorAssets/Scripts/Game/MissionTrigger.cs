@@ -30,7 +30,13 @@ public class MissionTrigger : MonoBehaviour
         missionPanel.SetActive(true);
         player.FreezePlayer(true);
 
-        missionPanel.GetComponentInChildren<TroncoMiniGame>()?.SetPlayer(player);
-        missionPanel.GetComponentInChildren<SymbolOrderMiniGame>()?.SetPlayer(player);
+        // TROCO
+        missionPanel.GetComponentInChildren<TroncoMiniGame>(true)?.SetPlayer(player);
+
+        // SIMBOLOS
+        missionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true)?.SetPlayer(player);
+
+        // LIBROS 
+        missionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
     }
 }
