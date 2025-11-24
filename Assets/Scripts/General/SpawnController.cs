@@ -1,35 +1,97 @@
-using UnityEngine;
-using Unity.Netcode;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnController : MonoBehaviour
 {
-    [Header("Spawn Points")]
-    [SerializeField] private Transform[] spawnPointArray;
-    private int currentIndexArrayPosition;
-    private void Reset()
-    {
-        gameObject.name = "SpawnController";
-    }
-    private void OnEnable()
-    {
-        GameManager.OnPositionPlayer += GetSpawnPoint;
-    }
-    private void OnDisable()
-    {
-        GameManager.OnPositionPlayer -= GetSpawnPoint;
-    }
-    public Vector3 GetSpawnPoint()
-    {
+    [SerializeField] private Transform[] spawnPoints;
 
-        if (currentIndexArrayPosition < spawnPointArray.Length)
-        {
-            ++currentIndexArrayPosition;
-            return spawnPointArray[currentIndexArrayPosition-1].position;
-        }
+    private void Awake()
+    {
+        GameManager.OnPositionPlayer = GetSpawnPoint;
+
+        if (NetworkManager.Singleton != null)
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
         else
+            StartCoroutine(SubscribeWhenReady());
+    }
+
+    private IEnumerator SubscribeWhenReady()
+    {
+        while (NetworkManager.Singleton == null) yield return null;
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        if (NetworkManager.Singleton != null)
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(string sceneName, LoadSceneMode mode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        if (sceneName != "Lobby") return;
+
+        int index = 0;
+
+        Debug.Log($"[SpawnController] OnSceneLoaded Lobby. clientsCompleted count = {clientsCompleted.Count}");
+
+        foreach (ulong clientId in clientsCompleted)
         {
-            throw new Exception("Fuera De los limites");
+            if (!NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var netClient))
+            {
+                Debug.LogWarning($"[SpawnController] Cliente {clientId} no está en ConnectedClients.");
+                continue;
+            }
+
+            var playerObj = netClient.PlayerObject;
+            if (playerObj == null)
+            {
+                Debug.LogWarning($"[SpawnController] PlayerObject null para client {clientId}");
+                continue;
+            }
+
+            var cc = playerObj.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+
+            Transform point = spawnPoints[index % spawnPoints.Length];
+
+            if (clientId == NetworkManager.Singleton.LocalClientId)
+            {
+                playerObj.transform.position = point.position;
+                playerObj.transform.rotation = point.rotation;
+            }
+
+            var pc = playerObj.GetComponent<PlayerController>();
+            if (pc != null)
+            {
+                Debug.Log($"[SpawnController] Llamando SetPositionClientRpc a owner {clientId} pos {point.position}");
+                pc.SetPositionClientRpc(point.position);
+            }
+            else
+            {
+                Debug.LogWarning($"[SpawnController] PlayerController no encontrado en PlayerObject de {clientId}");
+            }
+
+            index++;
+
+            if (cc != null)
+                StartCoroutine(ReenableCC(cc));
         }
+    }
+
+    private IEnumerator ReenableCC(CharacterController cc)
+    {
+        yield return null;
+        cc.enabled = true;
+    }
+
+    private Vector3 GetSpawnPoint()
+    {
+        int index = UnityEngine.Random.Range(0, spawnPoints.Length);
+        return spawnPoints[index].position;
     }
 }

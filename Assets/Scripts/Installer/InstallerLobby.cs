@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 public class InstallerLobby : MonoBehaviour
 {
-    [SerializeField] private LobbyUIManager startGame;
+    [SerializeField] private StartGameHost startGame;
 
     [SerializeField] private CanvasGroup canvasFade;
 
