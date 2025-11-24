@@ -34,7 +34,7 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoadComplete;
+
         }
     }
 
@@ -47,7 +47,7 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadComplete;
+
         }
     }
 
@@ -66,25 +66,32 @@ public class GameManager : NetworkBehaviour
 
     private void Start()
     {
-        //Screen.autorotateToPortrait = false;
-        //Screen.autorotateToPortraitUpsideDown = false;
-        //Screen.autorotateToLandscapeLeft = true;
-        //Screen.autorotateToLandscapeRight = true;
-        //TouchSimulation.Enable();
-        //Screen.orientation = ScreenOrientation.AutoRotation;
+
     }
     [Rpc(SendTo.Server)]
     public void RegisterPlayerServerRpc(ulong clientId)
     {
         Transform player = Instantiate(playerPrefab);
+
+        var cc = player.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+
+        Vector3 pos = OnPositionPlayer?.Invoke() ?? new Vector3(0, 5, 0);
+
+        player.position = pos;
+        player.rotation = Quaternion.identity;
+
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
-        connectedPlayers.Add(clientId, player);
-        //Debug.Log(playerInfoSO.PlayerID);
-        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;   
+        connectedPlayers[clientId] = player;
+
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.SetCameraStateClientRpc(true);
 
+        if (cc != null) StartCoroutine(ReenableCC(cc));
+
+        Debug.Log($"Player {clientId} instanciado correctamente en {pos}");
+   
     }
 
     private void OnClientConnected(ulong obj)
@@ -119,50 +126,10 @@ public class GameManager : NetworkBehaviour
         int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
         return ping;
     }
-    private void OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    private IEnumerator ReenableCC(CharacterController cc)
     {
-        if (!IsServer) return;
-
-        foreach (ulong clientId in clientsCompleted)
-        {
-            ApplySpawnClientRpc(clientId);
-        }
-    }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void ApplySpawnClientRpc(ulong clientId)
-    {
-        StartCoroutine(WaitForPlayerAndMove(clientId));
-    }
-
-    private IEnumerator WaitForPlayerAndMove(ulong clientId)
-    {
-        if (NetworkManager.Singleton.LocalClientId != clientId)
-            yield break;
-
-        while (NetworkManager.Singleton.LocalClient == null ||
-               NetworkManager.Singleton.LocalClient.PlayerObject == null)
-        {
-            yield return null;
-        }
-
-        var playerObj = NetworkManager.Singleton.LocalClient.PlayerObject;
-        var controller = playerObj.GetComponent<PlayerController>();
-
-        if (controller != null)
-            controller.enabled = false;
-
         yield return null;
-
-        Vector3 targetPos = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        playerObj.transform.position = targetPos;
-
-        Debug.Log($"Player {clientId} movido correctamente a {targetPos} después del cambio de escena.");
-
-        yield return null;
-
-        if (controller != null)
-            controller.enabled = true;
+        cc.enabled = true;
     }
 }
 
