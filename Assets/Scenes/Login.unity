@@ -1595,10 +1595,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Authentication '
+  m_text: Log In
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d246b260e9d2438479334ad3ea4bb68f, type: 2}
+  m_sharedMaterial: {fileID: 3028066700039546354, guid: d246b260e9d2438479334ad3ea4bb68f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2476,8 +2476,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Anonym
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d246b260e9d2438479334ad3ea4bb68f, type: 2}
+  m_sharedMaterial: {fileID: 3028066700039546354, guid: d246b260e9d2438479334ad3ea4bb68f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2870,7 +2870,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -533238819, guid: d0e408530b6686b4d859e5e0d5a49a2e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e4093c92324d0048ae1272957b6b1ec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4079,7 +4079,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -533238819, guid: d0e408530b6686b4d859e5e0d5a49a2e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e4093c92324d0048ae1272957b6b1ec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4801,15 +4801,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.108287625, g: 0.2066218, b: 0.85660374, a: 0.74509805}
+  m_Color: {r: 0, g: 0.040153503, b: 1, a: 0.9254902}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 5366d2ad47650574292ab564dc20bfae, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6141,7 +6141,6 @@ MonoBehaviour:
   panelLogin: {fileID: 1504415892}
   panelEstate: {fileID: 462003273}
   playerInfoSO: {fileID: 11400000, guid: 8eb13d02a28a9404d911ee94dd9c6a7d, type: 2}
-  authentication: {fileID: 888691812}
 --- !u!4 &1911156515
 Transform:
   m_ObjectHideFlags: 0
