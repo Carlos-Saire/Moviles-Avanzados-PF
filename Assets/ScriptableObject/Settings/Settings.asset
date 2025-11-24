@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58a3bc647e70774b8c7225eb3b51e7e, type: 3}
-  m_Name: UnityPlayerAccountSettings
+  m_Script: {fileID: 11500000, guid: 570f59d00ddad2a43bc04ad540a2b931, type: 3}
+  m_Name: Settings
   m_EditorClassIdentifier: 
-  clientId: 7d5f1a81-e085-4f77-9606-c8eb98b0a863
-  scopeMask: 7
-  useCustomDeepLinkUri: 0
-  customScheme: 
-  customHost: 
+  mainMixer: {fileID: 24100000, guid: f15095cba8f3ffd4c826f4a394ce7814, type: 2}
+  masterKey: master
+  musicKey: music
+  sfxKey: sfx
+  masterVolume: 0
+  musicVolume: 0
+  sfxVolume: 0
