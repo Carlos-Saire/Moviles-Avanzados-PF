@@ -37,6 +37,6 @@ public class MissionTrigger : MonoBehaviour
         missionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true)?.SetPlayer(player);
 
         // LIBROS 
-        missionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
+        //missionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
     }
 }
