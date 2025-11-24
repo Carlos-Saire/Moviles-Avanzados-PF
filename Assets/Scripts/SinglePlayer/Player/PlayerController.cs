@@ -14,19 +14,21 @@ namespace SinglePlayer
         private Vector3 velocity;
         private Animator animator;
         private Vector2 input;
-        private void OnEnable()
-        {
-            InputHandler.OnMove+=Move;
-        }
-        private void OnDisable()
-        {
-            InputHandler.OnMove -= Move;
-        }
+
+        private InputHandler inputHandler;
+        
+       
         private void Awake()
         {
             animator = GetComponent<Animator>();    
             controller = GetComponent<CharacterController>();
             mainCamera = Camera.main.transform;
+            inputHandler = GetComponentInChildren<InputHandler>();
+            inputHandler.OnMoveSinglePLayer += Move;
+        }
+        private void OnDestroy()
+        {
+            inputHandler.OnMoveSinglePLayer -= Move;
         }
         private void Update()
         {

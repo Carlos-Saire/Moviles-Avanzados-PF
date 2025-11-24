@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 1903510008}
   - component: {fileID: 1903510010}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: JoinController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

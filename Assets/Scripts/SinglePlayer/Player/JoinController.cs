@@ -6,8 +6,13 @@ public class JoinController : MonoBehaviour
 {
     public GameObject playerPrefab;
 
-    private List<PlayerInput> jugadores = new List<PlayerInput>();
+    private List<GameObject> jugadores = new List<GameObject>();
+    private List<InputDevice> dispositivosUsados = new List<InputDevice>();
 
+    private void Reset()
+    {
+        gameObject.name  ="JoinController";
+    }
     private void Start()
     {
         int cantidad = PlayerPrefs.GetInt("JugadoresSeleccionados", 1);
@@ -20,16 +25,22 @@ public class JoinController : MonoBehaviour
 
     public void CrearJugador()
     {
-        PlayerInput jugador = PlayerInput.Instantiate(
-            playerPrefab,
-            jugadores.Count,
-            null,
-            -1,
-            Keyboard.current
-        );
-
-        jugadores.Add(jugador);
+        GameObject go =Instantiate(playerPrefab);
+        jugadores.Add(go);
         ActualizarSplitScreen();
+    }
+
+    private InputDevice ObtenerSiguienteGamepadLibre()
+    {
+        foreach (var pad in Gamepad.all)
+        {
+            if (!dispositivosUsados.Contains(pad))
+            {
+                return pad;
+            }
+        }
+
+        return null; 
     }
 
     private void ActualizarSplitScreen()
@@ -46,7 +57,7 @@ public class JoinController : MonoBehaviour
                 continue;
             }
 
-            cam.depth = i; 
+            cam.depth = i;
 
             switch (cantidad)
             {
@@ -56,14 +67,14 @@ public class JoinController : MonoBehaviour
 
                 case 2:
                     cam.rect = (i == 0)
-                        ? new Rect(0f, 0f, 0.5f, 1f)    
-                        : new Rect(0.5f, 0f, 0.5f, 1f); 
+                        ? new Rect(0f, 0f, 0.5f, 1f)
+                        : new Rect(0.5f, 0f, 0.5f, 1f);
                     break;
 
                 case 3:
-                    if (i == 0) cam.rect = new Rect(0f, 0f, 0.5f, 1f);  
-                    if (i == 1) cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f); 
-                    if (i == 2) cam.rect = new Rect(0.5f, 0f, 0.5f, 0.5f); 
+                    if (i == 0) cam.rect = new Rect(0f, 0f, 0.5f, 1f);
+                    if (i == 1) cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                    if (i == 2) cam.rect = new Rect(0.5f, 0f, 0.5f, 0.5f);
                     break;
 
                 case 4:

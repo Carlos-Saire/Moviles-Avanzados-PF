@@ -1563,7 +1563,7 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4662c6e5-5317-4135-9fbd-5ef0bfa2d463
     m_ActionName: UI/Select
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: XBOX
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1

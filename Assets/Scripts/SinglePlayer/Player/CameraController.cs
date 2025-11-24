@@ -8,19 +8,22 @@ namespace SinglePlayer
         public float sensitivity = 2f;
 
         private float rotationX = 0f;
-        [SerializeField] private Transform playerBody;
         private Vector2 inputCamera;
-        private void OnEnable()
+
+        private InputHandler inputHandler;
+
+        [SerializeField] private Transform playerBody;
+        private void Awake()
         {
-            InputHandler.OnLook += Move;
+            inputHandler = GetComponentInParent<InputHandler>();
+            inputHandler.OnLookSinglePLayer += Move;
         }
-        private void OnDisable()
+        private void OnDestroy()
         {
-            InputHandler.OnLook -= Move;
+            inputHandler.OnLookSinglePLayer -= Move;
         }
         private void Start()
         {
-            playerBody = transform.parent;
             Cursor.lockState = CursorLockMode.Locked;
         }
         private void Update()

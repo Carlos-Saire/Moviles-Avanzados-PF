@@ -14,6 +14,7 @@ public class LobbyManager : MonoBehaviour
 
     [Header("Lobby")]
     private Lobby currentLobby;
+    public  Lobby CurrentLobby => currentLobby;
 
     [Header("Panels")]
     [SerializeField] private CanvasGroup cargandoPanel;
@@ -57,10 +58,6 @@ public class LobbyManager : MonoBehaviour
         {
             RemovePlayerAsync();
         }
-    }
-    public void A()
-    {
-        ListLobbies();
     }
     public async void CreateLobby(string lobbyName, int maxPlayers,bool isPrivate)
     {
@@ -115,14 +112,15 @@ public class LobbyManager : MonoBehaviour
             {
                 Player = GetPlayer()
             };
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 1, 0));
 
             Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbycode, joinLobbyByCodeOptions);
             currentLobby = lobby;
 
-            await relayManager.JoinRelay(lobbycode);
+            string relayCode = lobby.Data["RelayJoinCode"].Value;
 
-
-
+            await relayManager.JoinRelay(relayCode);
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 0, 0));
         }
         catch (LobbyServiceException e)
         {
@@ -187,7 +185,7 @@ public class LobbyManager : MonoBehaviour
             currentLobby = lobby;
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
-            relayManager.JoinRelay(relayCode);
+            await relayManager.JoinRelay(relayCode);
         }
         catch (LobbyServiceException e)
         {
