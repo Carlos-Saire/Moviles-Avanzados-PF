@@ -1972,8 +1972,8 @@ MonoBehaviour:
   panelConnected: {fileID: 1783278327}
   slider: {fileID: 1381681513}
   duration: 2.5
-  panelReiniciar: {fileID: 2139784308}
-  panelSinglePlayer: {fileID: 198442126}
+  panelReiniciar: {fileID: 0}
+  panelSinglePlayer: {fileID: 0}
   reiniciar: {fileID: 0}
   fade: {fileID: 0}
   unityServices: {fileID: 1108786455}
