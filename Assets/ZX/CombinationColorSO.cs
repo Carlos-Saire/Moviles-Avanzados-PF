@@ -16,14 +16,14 @@ public class CombinationColorSO : ScriptableObject
     public class Combination
     {
         [Tooltip("sprites + color interno")]
-        //public List<Color> ingredients = new List<Color>();
-        public List<IngredientData> ingredients = new List<IngredientData>();
-        [Tooltip("Sprite resultado final")]
-        public Sprite resultSprite;
-        [Tooltip("Color resultante preview")]
+        public List<Color> ingredients = new List<Color>();
+        //public List<IngredientData> ingredients = new List<IngredientData>();
+        //[Tooltip("Sprite resultado final")]
+        //public Sprite resultSprite;
+        //[Tooltip("Color resultante preview")]
         public Color resultColor;
 
-        //public List<Color> resultColors = new List<Color>();
+        public List<Color> resultColors = new List<Color>();
     }
 
     [Tooltip("Lista de combinaciones ")]

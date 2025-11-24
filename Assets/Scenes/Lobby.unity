@@ -1088,7 +1088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &425850235
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1102,7 +1102,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1642595975}
-  - {fileID: 207257431}
   - {fileID: 1441590156}
   - {fileID: 398886880}
   - {fileID: 1118009746}
@@ -1128,7 +1127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combinationsDB: {fileID: 11400000, guid: 9805acf251e09c84aa886fa5a9bd2366, type: 2}
   targetColorImage: {fileID: 1642595976}
-  mixColorImage: {fileID: 207257432}
+  mixColorImage: {fileID: 0}
   miniGamePanel: {fileID: 1663078957}
   potionButtons:
   - {fileID: 1661461156}
@@ -1641,7 +1640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &638093349
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1932,7 +1931,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1079066555}
-  m_Father: {fileID: 1149767357}
+  m_Father: {fileID: 989659169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -2063,7 +2062,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1518881730}
-  m_Father: {fileID: 1149767357}
+  m_Father: {fileID: 989659169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3011,6 +3010,9 @@ RectTransform:
   - {fileID: 2017217946}
   - {fileID: 1012597034}
   - {fileID: 238152807}
+  - {fileID: 425850235}
+  - {fileID: 638093349}
+  - {fileID: 1149767357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3624,10 +3626,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 768103773}
-  - {fileID: 712558968}
-  - {fileID: 1722017332}
+  m_Children: []
   m_Father: {fileID: 989659169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5402,7 +5401,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1149767357}
+  m_Father: {fileID: 989659169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
