@@ -19,6 +19,8 @@ public class VivoxManager : MonoBehaviour
     }
     private async void Awake()
     {
+
+
         currentChannelId = OnCodeloby?.Invoke();
         Debug.Log("se optuvo el codigo :" + currentChannelId);
         
@@ -127,5 +129,9 @@ public class VivoxManager : MonoBehaviour
     private void HandleMessageReceived(VivoxMessage message)
     {
         OnMessageReceived?.Invoke(message.MessageText);
+    }
+    public bool IsMicrophoneOn()
+    {
+        return VivoxService.Instance.IsInputDeviceMuted;
     }
 }

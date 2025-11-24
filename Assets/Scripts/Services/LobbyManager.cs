@@ -3,6 +3,7 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Lobbies;
 using UnityEngine;
 using System.Threading.Tasks;
+using Command;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class LobbyManager : MonoBehaviour
 
     [Header("Lobby")]
     private Lobby currentLobby;
+
+    [Header("Panels")]
+    [SerializeField] private CanvasGroup cargandoPanel;
+    [SerializeField] private CanvasGroup conectandoPanel;
 
     [Header("Relay")]
     [SerializeField] private RelayManager relayManager;
@@ -53,10 +58,6 @@ public class LobbyManager : MonoBehaviour
             RemovePlayerAsync();
         }
     }
-    public void A()
-    {
-        ListLobbies();
-    }
     public async void CreateLobby(string lobbyName, int maxPlayers,bool isPrivate)
     {
         try
@@ -66,7 +67,7 @@ public class LobbyManager : MonoBehaviour
                 IsPrivate = isPrivate,
                 Player = GetPlayer(),
             };
-
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(cargandoPanel, 1, 0));
             currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
 
 
@@ -82,6 +83,7 @@ public class LobbyManager : MonoBehaviour
             });
 
             currentLobby = lobby;
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(cargandoPanel, 0, 0));
 
         }
         catch (LobbyServiceException e)
@@ -113,7 +115,7 @@ public class LobbyManager : MonoBehaviour
             Lobby lobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbycode, joinLobbyByCodeOptions);
             currentLobby = lobby;
 
-            relayManager.JoinRelay(lobbycode);
+            await relayManager.JoinRelay(lobbycode);
 
 
 
@@ -132,13 +134,16 @@ public class LobbyManager : MonoBehaviour
             {
                 Player = GetPlayer()
             };
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 1, 0));
 
             Lobby lobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyID, joinLobbyByCodeOptions);
             currentLobby = lobby;
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
 
-            relayManager.JoinRelay(relayCode);
+            await relayManager.JoinRelay(relayCode);
+
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 0, 0));
 
         }
         catch (LobbyServiceException e)
@@ -178,7 +183,7 @@ public class LobbyManager : MonoBehaviour
             currentLobby = lobby;
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
-            relayManager.JoinRelay(relayCode);
+            await relayManager.JoinRelay(relayCode);
         }
         catch (LobbyServiceException e)
         {

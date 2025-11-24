@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d62df00592cd2f4fbc48897e360666e, type: 3}
   m_Name: PlayerInfoSO
   m_EditorClassIdentifier: 
+  profileImages:
+  - {fileID: 21300000, guid: 7c23185c083c26447a9d433b4e049e68, type: 3}
+  - {fileID: 21300000, guid: 32105400607ad414fb38b947fd87a0a3, type: 3}
+  - {fileID: 21300000, guid: 95009dbe28c0ec241a258fd9870b948d, type: 3}

@@ -45,14 +45,12 @@ public class RelayManager : MonoBehaviour
         }
     }
 
-    public async void JoinRelay(string joinCode)
+    public async Task JoinRelay(string joinCode)
     {
         try
         {
 
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
-
-            Debug.Log(joinCode);
 
             RelayServerData relayServerData = joinAllocation.ToRelayServerData("dtls");
 
@@ -60,7 +58,7 @@ public class RelayManager : MonoBehaviour
 
             NetworkManager.Singleton.StartClient();
 
-            SceneManager.LoadSceneAsync("Lobby");
+            SceneManager.LoadScene("Lobby");
 
         }
         catch (RelayServiceException e)

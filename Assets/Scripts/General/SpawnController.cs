@@ -2,8 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using System;
 
-[RequireComponent(typeof(NetworkObject))]
-public class SpawnController : NetworkBehaviour
+public class SpawnController : MonoBehaviour
 {
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPointArray;
@@ -26,7 +25,6 @@ public class SpawnController : NetworkBehaviour
         if (currentIndexArrayPosition < spawnPointArray.Length)
         {
             ++currentIndexArrayPosition;
-            Debug.Log(currentIndexArrayPosition - 1);
             return spawnPointArray[currentIndexArrayPosition-1].position;
         }
         else

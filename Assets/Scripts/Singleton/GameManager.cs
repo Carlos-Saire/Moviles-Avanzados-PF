@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,58 +14,41 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private Transform playerPrefab;
     public static Func<Vector3> OnPositionPlayer;
 
-    private Dictionary<string, ulong> connectedPlayers = new Dictionary<string, ulong>();
+    private Dictionary<ulong, Transform> connectedPlayers = new Dictionary<ulong, Transform>();
 
     [Header("Scene Manager")]
     [SerializeField] private SceneManagerController scene;
 
     [Header("PlayerInfoSo")]
     [SerializeField] private PlayerInfoSO playerInfoSO;
+    
+    private void Reset()
+    {
+        gameObject.name = "GameManager";
+    }
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        RegisterPlayerServerRpc(NetworkManager.Singleton.LocalClientId);
+
         if(NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoadComplete;
         }
     }
 
-    private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
-    {
-
-        if (!NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
-        {
-            Debug.LogWarning($"Cliente {clientId} no encontrado en ConnectedClients");
-            return;
-        }
-
-        if (client.PlayerObject == null)
-        {
-            Debug.LogWarning($" El PlayerObject del cliente {clientId} aún no existe. Se intentará reasignar más tarde.");
-            return;
-        }
-
-        GameObject playerGO = client.PlayerObject.gameObject;
-        playerGO.transform.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-        Debug.Log($" Posición del jugador {clientId} actualizada correctamente");
-    }
-
+   
     public override void OnDestroy()
     {
         base.OnDestroy();
+
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadComplete;
         }
-    }
-
-    private void Reset()
-    {
-        gameObject.name = "GameManager";
     }
 
     private void Awake()
@@ -94,9 +79,9 @@ public class GameManager : NetworkBehaviour
         Transform player = Instantiate(playerPrefab);
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
-        //connectedPlayers.Add(playerInfoSO.PlayerID,clientId);
+        connectedPlayers.Add(clientId, player);
         //Debug.Log(playerInfoSO.PlayerID);
-        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;   
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.SetCameraStateClientRpc(true);
 
@@ -104,12 +89,9 @@ public class GameManager : NetworkBehaviour
 
     private void OnClientConnected(ulong obj)
     {
-        Debug.Log("Se llamo");
-        
-        if (obj == NetworkManager.ServerClientId)
+        if (IsServer)
         {
-            
-            Debug.Log("El servidor se ha conectado.");
+            RegisterPlayerServerRpc(obj);
         }
     }
     [Rpc(SendTo.Owner)]
@@ -135,8 +117,52 @@ public class GameManager : NetworkBehaviour
     public int CalculatePing()
     {
         int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
-        Debug.Log($"{ping}");
         return ping;
+    }
+    private void OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        if (!IsServer) return;
+
+        foreach (ulong clientId in clientsCompleted)
+        {
+            ApplySpawnClientRpc(clientId);
+        }
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void ApplySpawnClientRpc(ulong clientId)
+    {
+        StartCoroutine(WaitForPlayerAndMove(clientId));
+    }
+
+    private IEnumerator WaitForPlayerAndMove(ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId != clientId)
+            yield break;
+
+        while (NetworkManager.Singleton.LocalClient == null ||
+               NetworkManager.Singleton.LocalClient.PlayerObject == null)
+        {
+            yield return null;
+        }
+
+        var playerObj = NetworkManager.Singleton.LocalClient.PlayerObject;
+        var controller = playerObj.GetComponent<PlayerController>();
+
+        if (controller != null)
+            controller.enabled = false;
+
+        yield return null;
+
+        Vector3 targetPos = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        playerObj.transform.position = targetPos;
+
+        Debug.Log($"Player {clientId} movido correctamente a {targetPos} después del cambio de escena.");
+
+        yield return null;
+
+        if (controller != null)
+            controller.enabled = true;
     }
 }
 
