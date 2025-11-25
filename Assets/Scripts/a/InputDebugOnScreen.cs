@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
 
 public class InputDebugOnScreen : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class InputDebugOnScreen : MonoBehaviour
 
     private List<string> logs = new List<string>();
     private Vector2 scroll;
-
+    //deteccion
+    private bool canReadInput = true;
+    public float inputDelay = 0.25f;
     private void OnEnable()
     {
         if (submitAction != null)
@@ -31,21 +34,49 @@ public class InputDebugOnScreen : MonoBehaviour
 
     private void OnSubmit(InputAction.CallbackContext ctx)
     {
-        AddLog($"SUBMIT  Device: {ctx.control.device.displayName}, Control: {ctx.control.name}");
+        if (!canReadInput) return;
+        StartCoroutine(InputCooldown());
+
+        LogInput($"SUBMIT  Device: {ctx.control.device.displayName}, Button: {ctx.control.name}");
     }
 
     private void OnNavigate(InputAction.CallbackContext ctx)
     {
-        AddLog($"NAVIGATE  Device: {ctx.control.device.displayName}, Control: {ctx.control.name}");
+        if (!canReadInput) return;
+        StartCoroutine(InputCooldown());
+
+        Vector2 nav = ctx.ReadValue<Vector2>();
+
+        // Limpieza  
+        if (Mathf.Abs(nav.x) < 0.5f) nav.x = 0;
+        if (Mathf.Abs(nav.y) < 0.5f) nav.y = 0;
+
+        if (Mathf.Abs(nav.x) > Mathf.Abs(nav.y))
+            nav.y = 0;
+        else
+            nav.x = 0;
+
+        LogInput($"NAVIGATE {nav} Device: {ctx.control.device.displayName}");
     }
 
-    private void AddLog(string msg)
+    
+    private IEnumerator InputCooldown()
     {
-        logs.Add(msg + "   [" + System.DateTime.Now.ToLongTimeString() + "]");
-        if (logs.Count > 20)
-            logs.RemoveAt(0); // mantener limpio
+        canReadInput = false;
+        yield return new WaitForSeconds(inputDelay);
+        canReadInput = true;
     }
 
+    private void LogInput(string msg)
+    {
+        string finalMsg = $"{msg}  [{System.DateTime.Now.ToLongTimeString()}]";
+
+        logs.Add(finalMsg);
+        if (logs.Count > 20)
+            logs.RemoveAt(0);
+
+        Debug.Log(finalMsg);
+    }
     private void OnGUI()
     {
         GUIStyle style = new GUIStyle(GUI.skin.label);
