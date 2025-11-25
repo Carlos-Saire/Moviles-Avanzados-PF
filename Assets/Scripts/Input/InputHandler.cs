@@ -15,6 +15,15 @@ public class InputHandler : MonoBehaviour
     public static event Action OnInteract;
     [SerializeField] private Transform UImobile;
 
+#if UNITY_ANDROID|| UNITY_IOS
+    private float _width;
+    private float _currentPrees;
+    private void Start()
+    {
+        _width = Screen.width / 2;
+        UImobile.gameObject.SetActive(true);
+    }
+#endif
     public void InputMove(InputAction.CallbackContext context)
     {
         OnMove?.Invoke(context.ReadValue<Vector2>());
@@ -23,7 +32,24 @@ public class InputHandler : MonoBehaviour
     }
     public void InputLook(InputAction.CallbackContext context)
     {
+#if UNITY_ANDROID
+        if (_width < _currentPrees)
+        {
+            OnLook?.Invoke(context.ReadValue<Vector2>());
+        }
+#else
         OnLook?.Invoke(context.ReadValue<Vector2>());
+#endif
+    }
+    public void InputPress(InputAction.CallbackContext context)
+    {
+#if UNITY_ANDROID
+
+        if (context.performed)
+        {
+            _currentPrees = Touchscreen.current.primaryTouch.position.ReadValue().x;
+        }
+#endif
     }
     public void InputAttack(InputAction.CallbackContext context)
     {
