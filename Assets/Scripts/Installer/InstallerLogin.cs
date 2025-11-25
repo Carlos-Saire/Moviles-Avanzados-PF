@@ -50,6 +50,8 @@ public class InstallerLogin : MonoBehaviour
     {
         Invoke("BeginAnimation", 1);
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 #if UNITY_ANDROID
         RequestMicrophonePermission();
         ConfigScreen();

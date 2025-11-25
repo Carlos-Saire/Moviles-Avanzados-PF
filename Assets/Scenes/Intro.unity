@@ -1954,7 +1954,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1259485993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1972,9 +1972,9 @@ MonoBehaviour:
   panelConnected: {fileID: 1783278327}
   slider: {fileID: 1381681513}
   duration: 2.5
-  panelReiniciar: {fileID: 0}
-  panelSinglePlayer: {fileID: 0}
-  reiniciar: {fileID: 0}
+  panelReiniciar: {fileID: 2139784308}
+  panelSinglePlayer: {fileID: 198442126}
+  reiniciar: {fileID: 1982291432}
   fade: {fileID: 0}
   unityServices: {fileID: 1108786455}
   authenticationManager: {fileID: 659309311}
