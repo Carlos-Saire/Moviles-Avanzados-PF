@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "name": "InputSystem_Actions",
+    "name": "MainInput",
     "maps": [
         {
             "name": "Player",
@@ -89,12 +89,12 @@
                 },
                 {
                     "name": "TouchPress",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "7e9a99fd-f4dc-431a-b1af-c7518ddc5fa1",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -508,7 +508,7 @@
                 {
                     "name": "",
                     "id": "63fba7db-fde0-42bb-ae99-29f7fc97fce7",
-                    "path": "<Touchscreen>/Press",
+                    "path": "<Touchscreen>/primaryTouch/startPosition",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",

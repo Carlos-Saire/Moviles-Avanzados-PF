@@ -32,6 +32,7 @@ public class InputHandler : MonoBehaviour
     }
     public void InputLook(InputAction.CallbackContext context)
     {
+        Debug.Log(context.ReadValue<Vector2>());
 #if UNITY_ANDROID
         if (_width < _currentPrees)
         {
