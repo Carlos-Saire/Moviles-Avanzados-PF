@@ -1,7 +1,9 @@
 using UnityEngine;
 using Command;
 using UnityEngine.UI;
-using System;
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class InstallerLogin : MonoBehaviour
 {
@@ -47,6 +49,11 @@ public class InstallerLogin : MonoBehaviour
     private void Start()
     {
         Invoke("BeginAnimation", 1);
+
+#if UNITY_ANDROID
+        RequestMicrophonePermission();
+        ConfigScreen();
+#endif
     }
     private void BeginAnimation()
     {
@@ -89,5 +96,31 @@ public class InstallerLogin : MonoBehaviour
         await CloudSaveManager.Instance.LoadProfileAsync();
         CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
     }
+#if UNITY_ANDROID
 
+    private void RequestMicrophonePermission()
+    {
+        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            Permission.RequestUserPermission(Permission.Microphone);
+        }
+    }
+    private void ConfigScreen()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+
+        Screen.autorotateToPortrait = false;
+        Screen.autorotateToPortraitUpsideDown = false;
+
+        Screen.autorotateToLandscapeLeft = true;
+        Screen.autorotateToLandscapeRight = true;
+
+        Screen.orientation = ScreenOrientation.AutoRotation;
+
+        int w = Screen.currentResolution.width;
+        int h = Screen.currentResolution.height;
+
+        Screen.SetResolution((int)(w * 0.7f), (int)(h * 0.7f), true);
+    }
+#endif
 }

@@ -181,11 +181,21 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+            QuickJoinLobbyOptions joinLobbyByCodeOptions = new QuickJoinLobbyOptions
+            {
+                Player = GetPlayer()
+            };
+
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 1, 0));
+
+            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync(joinLobbyByCodeOptions);
             currentLobby = lobby;
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
+
             await relayManager.JoinRelay(relayCode);
+
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 0, 0));
         }
         catch (LobbyServiceException e)
         {
