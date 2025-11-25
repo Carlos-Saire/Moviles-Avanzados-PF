@@ -10,87 +10,67 @@ public class AuthenticationManager : MonoBehaviour
     private PlayerInfo playerInfo;
     [SerializeField] private PlayerInfoSO playerSo;
 
-    public static event Action<string> OnSignIn;
+    public static event Action OnSignIn;
     public static event Action OnLogout;
 
     public static event Action OnDeleteAccount;
 
-    public static event Action<string> OnNameUpdated;
+    public static event Action OnNameUpdated;
     public static event Action OnPlayerSignedIn;
 
+    public static AuthenticationManager Instance;
     private void Reset()
     {
         gameObject.name = "AuthenticationManager";
     }
-    private async void Awake()
-
+    public void InitializeAsync()
     {
-
-        //if (UnityServices.State == ServicesInitializationState.Initialized)
-        //{
-            
-        //    if (AuthenticationService.Instance.IsSignedIn)
-        //    {
-        //        Debug.Log("Unity Services ya están inicializados");
-        //        OnNameUpdated?.Invoke(playerSo.PlayerName);
-        //        Debug.Log("Se restablecio se mando el nombre del Player: " + playerSo.PlayerName);
-        //        OnPlayerSignedIn.Invoke();
-        //        Debug.Log("El jugador ya ha iniciado sesión anteriormente.");
-        //    }
-        //}
-        //else
-        //{
-        //    await UnityServices.InitializeAsync();
-        //    Debug.Log("Unity Services se inicializaron ahora");
-        //}
-
-        //PlayerAccountService.Instance.SignedIn += SignedInWithUnity;
-        //PlayerAccountService.Instance.SignedOut += SignedOutWithUnity;
+        PlayerAccountService.Instance.SignedIn += SignedInWithUnity;
+        PlayerAccountService.Instance.SignedOut += SignedOutWithUnity;
+    }
+    private void OnDestroy()
+    {
+        PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
+        PlayerAccountService.Instance.SignedOut -= SignedOutWithUnity;
+    }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public bool CheckSession()
+    {
+        try
+        {
+            if (AuthenticationService.Instance.SessionTokenExists)
+            {
+                InitSignAnomyn();  
+                return true;      
+            }
+            else
+            {
+                Debug.Log("No previous session found. You need to sign in.");
+                return false;       
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Could not restore session: " + e.Message);
+            return false;          
+        }
     }
 
-
-    //private void OnDestroy()
-    //{
-    //    PlayerAccountService.Instance.SignedIn -= SignedInWithUnity;
-    //    PlayerAccountService.Instance.SignedOut -= SignedOutWithUnity;
-    //}
-    //private void Start()
-    //{
-    //    if (AuthenticationService.Instance.IsSignedIn)
-    //    {
-    //        return;
-    //    }
-
-    //    try
-    //    {
-    //        if (AuthenticationService.Instance.SessionTokenExists)
-    //        {
-
-    //            InitSignAnomyn();
-    //        }
-    //        else
-    //        {
-    //            Debug.Log(" No hay sesión previa guardada, debes iniciar sesión.");
-    //        }
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Debug.LogWarning("No se pudo restaurar la sesión: " + e.Message);
-    //    }
-    //}
-    public async void InitializeServices()
-    {
-        await UnityServices.InitializeAsync();
-        Debug.Log("Se Inicializaron los servicios");
-    }
-    public bool AreServicesInitialized()
-    {
-        return UnityServices.State == ServicesInitializationState.Initialized;
-    }
     public async void EditNameAsync(string newName)
     {
         playerSo.PlayerName = await AuthenticationService.Instance.UpdatePlayerNameAsync(newName);
-        OnNameUpdated?.Invoke(playerSo.PlayerName);
+        OnNameUpdated?.Invoke();
         Debug.Log("Edit name");
     }
     public async void DeleteAccountAsync()
@@ -176,7 +156,7 @@ public class AuthenticationManager : MonoBehaviour
             playerSo.PlayerName = await AuthenticationService.Instance.GetPlayerNameAsync();
             Debug.Log("Se optuvo nombre del player");
 
-            OnSignIn?.Invoke(playerSo.PlayerName);
+            OnSignIn?.Invoke();
             Debug.Log("Se lanza el evento con valor: " + playerSo.PlayerName);
         }
         catch(Exception e)

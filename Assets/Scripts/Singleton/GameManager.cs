@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -33,10 +34,11 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
+
         }
     }
 
+   
     public override void OnDestroy()
     {
         base.OnDestroy();
@@ -45,7 +47,7 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
-            NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnLoadComplete;
+
         }
     }
 
@@ -64,25 +66,32 @@ public class GameManager : NetworkBehaviour
 
     private void Start()
     {
-        //Screen.autorotateToPortrait = false;
-        //Screen.autorotateToPortraitUpsideDown = false;
-        //Screen.autorotateToLandscapeLeft = true;
-        //Screen.autorotateToLandscapeRight = true;
-        //TouchSimulation.Enable();
-        //Screen.orientation = ScreenOrientation.AutoRotation;
+
     }
     [Rpc(SendTo.Server)]
     public void RegisterPlayerServerRpc(ulong clientId)
     {
         Transform player = Instantiate(playerPrefab);
+
+        var cc = player.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+
+        Vector3 pos = OnPositionPlayer?.Invoke() ?? new Vector3(0, 5, 0);
+
+        player.position = pos;
+        player.rotation = Quaternion.identity;
+
         player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
 
-        connectedPlayers.Add(clientId, player);
-        //Debug.Log(playerInfoSO.PlayerID);
-        player.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
+        connectedPlayers[clientId] = player;
+
         PlayerController controller = player.GetComponent<PlayerController>();
         controller.SetCameraStateClientRpc(true);
 
+        if (cc != null) StartCoroutine(ReenableCC(cc));
+
+        Debug.Log($"Player {clientId} instanciado correctamente en {pos}");
+   
     }
 
     private void OnClientConnected(ulong obj)
@@ -117,27 +126,10 @@ public class GameManager : NetworkBehaviour
         int ping = (NetworkManager.Singleton.LocalTime - NetworkManager.Singleton.ServerTime).Tick;
         return ping;
     }
-    private void OnLoadComplete(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
+    private IEnumerator ReenableCC(CharacterController cc)
     {
-        if (IsServer)
-        {
-            if (!NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
-            {
-                Debug.LogWarning($"Cliente {clientId} no encontrado en ConnectedClients");
-                return;
-            }
-
-            if (client.PlayerObject == null)
-            {
-                Debug.LogWarning($" El PlayerObject del cliente {clientId} aún no existe. Se intentará reasignar más tarde.");
-                return;
-            }
-
-            GameObject playerGO = client.PlayerObject.gameObject;
-            playerGO.transform.position = OnPositionPlayer?.Invoke() ?? Vector3.zero;
-            Debug.Log($" Posición del jugador {clientId} actualizada correctamente :" + playerGO.transform.position);
-        }
+        yield return null;
+        cc.enabled = true;
     }
-
 }
 
