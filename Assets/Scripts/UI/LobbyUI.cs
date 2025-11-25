@@ -33,7 +33,6 @@ public class LobbyUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        lobbyListButton?.onClick.AddListener(HandleButtonLobbyList);
 
         buttonOpenPanelCreateLobby?.onClick.AddListener(HandleButtonOpenLobby);
         buttonNext?.onClick.AddListener(HandleButtonNext);
@@ -46,8 +45,6 @@ public class LobbyUI : MonoBehaviour
 
     private void OnDisable()
     {
-        lobbyListButton?.onClick.RemoveListener(HandleButtonLobbyList);
-
         buttonOpenPanelCreateLobby?.onClick.RemoveListener(HandleButtonOpenLobby);
         buttonNext?.onClick.RemoveListener(HandleButtonNext);
         buttonPrevious?.onClick.RemoveListener(HandleButtonPrevious);
@@ -68,7 +65,7 @@ public class LobbyUI : MonoBehaviour
         newLobby.localScale = Vector3.one;
         newLobby.GetComponent<LobbyInfo>().UpdateInformation(lobby);
     }
-    private async void HandleButtonLobbyList()
+    public async void HandleButtonLobbyList()
     {
         QueryResponse lobbies = await LobbyManager.instance.ListLobbies();
 
@@ -102,8 +99,7 @@ public class LobbyUI : MonoBehaviour
         currentNumberPlayersText.text = maxPlayers.ToString();
         CheckButtonCreateLobby();
     }
-
-    private void HandleButtonNext()
+    public void HandleButtonNext()
     {
         ++maxPlayers;
         currentNumberPlayersText.text = maxPlayers.ToString();
@@ -134,5 +130,8 @@ public class LobbyUI : MonoBehaviour
         isPrivate = arg0 == 1;
         Debug.Log("Valor booleano: " + isPrivate);
     }
-
+    public void QuickJoinLobby()
+    {
+        LobbyManager.instance.QuickJoinLobby();
+    }
 }
