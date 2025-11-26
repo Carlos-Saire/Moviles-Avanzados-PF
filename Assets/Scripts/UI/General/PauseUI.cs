@@ -1,8 +1,8 @@
 using UnityEngine;
 using Command;
-using System.Threading.Tasks;
 using UnityEngine.UI;
-public class PauseUI : MonoBehaviour
+using Unity.Netcode;
+public class PauseUI : NetworkBehaviour
 {
     [Header("Panels")]
     [SerializeField] private Transform panel;
@@ -58,4 +58,5 @@ public class PauseUI : MonoBehaviour
             Cursor.visible = false;
         }
     }
+
 }
