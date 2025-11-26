@@ -2308,7 +2308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -23.999695, y: 0}
+  m_AnchoredPosition: {x: -23.999756, y: 0}
   m_SizeDelta: {x: -393.0261, y: -221.0772}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &468018659
@@ -4247,7 +4247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c93f3736f5b0454b89bcba98e3e8b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1030894738}
+  agent: {fileID: 1030894738}
   range: 50
   centerPlane: {fileID: 1670125320362704192, guid: 4f2ab3c86f93c7e4eaea1f22364157f1, type: 3}
   doubleClon: {fileID: 2924724677019760313, guid: 22c0d2a0358353b449f394738d9f0910, type: 3}

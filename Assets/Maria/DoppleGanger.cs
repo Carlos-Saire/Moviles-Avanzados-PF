@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class DoppleGanger: navMeshMovement
 {
-    private Transform target;
+    public Transform target;
 
+   
     private void Start()
     {
         
