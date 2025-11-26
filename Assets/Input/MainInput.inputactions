@@ -95,6 +95,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Open",
+                    "type": "Button",
+                    "id": "1f043856-3bd0-412d-bfe6-21b215298f0e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Clouse",
+                    "type": "Button",
+                    "id": "e32dd943-58b7-4282-97de-178f027a887d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -513,6 +531,28 @@
                     "processors": "",
                     "groups": ";Touch",
                     "action": "TouchPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a965093-7b15-4dd7-a774-3054de2dd07d",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Open",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa4c52db-fb22-42b6-b2d6-ddcd774462d7",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Clouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1040,6 +1080,54 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Lobby",
+            "id": "350d8e78-64f0-4cfb-844c-596794fab795",
+            "actions": [
+                {
+                    "name": "OpenText",
+                    "type": "Button",
+                    "id": "7daac7a7-ec17-42ac-81fd-62c9b6c6118f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ClouseText",
+                    "type": "Button",
+                    "id": "f89123ff-a6ac-43d8-916d-05ed0a9caea0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "31077fec-b09f-4fc8-b21a-6d8e717b6827",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Gamepad;Touch;Joystick;XR;XBOX",
+                    "action": "OpenText",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54490999-f541-4681-b2c2-69c6356518c2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Gamepad;Touch;XR;Joystick;XBOX",
+                    "action": "ClouseText",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

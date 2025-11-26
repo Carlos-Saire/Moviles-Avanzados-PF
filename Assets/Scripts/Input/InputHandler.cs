@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 [RequireComponent(typeof(PlayerInput))]
 public class InputHandler : MonoBehaviour
 {
@@ -13,8 +14,11 @@ public class InputHandler : MonoBehaviour
 
     public static event Action OnAttack;
     public static event Action OnInteract;
+    public static event Action OnOpen;
+    public static event Action onClouse;
     [SerializeField] private Transform UImobile;
 
+    private bool IsMove;
 #if UNITY_ANDROID|| UNITY_IOS
     private float _width;
     private float _currentPrees;
@@ -31,6 +35,9 @@ public class InputHandler : MonoBehaviour
     }
     private void Update()
     {
+
+        if (!IsMove) return;
+
         if (Touchscreen.current == null) return;
 
         // Leemos TODOS los dedos
@@ -84,12 +91,16 @@ public class InputHandler : MonoBehaviour
 #endif
     public void InputMove(InputAction.CallbackContext context)
     {
+        if (!IsMove) return;
+
         OnMove?.Invoke(context.ReadValue<Vector2>());
         OnMoveSinglePLayer?.Invoke(context.ReadValue<Vector2>());
         Debug.Log("Move :" + context.ReadValue<Vector2>());
     }
     public void InputLook(InputAction.CallbackContext context)
     {
+        if (!IsMove) return;
+
 #if UNITY_ANDROID
         if (_width < _currentPrees)
         {
@@ -101,6 +112,8 @@ public class InputHandler : MonoBehaviour
     }
     public void InputPress(InputAction.CallbackContext context)
     {
+        if (!IsMove) return;
+
 #if UNITY_ANDROID
 
         if (context.performed)
@@ -111,6 +124,8 @@ public class InputHandler : MonoBehaviour
     }
     public void InputAttack(InputAction.CallbackContext context)
     {
+        if (!IsMove) return;
+
         if (context.performed)
         {
             OnAttack?.Invoke();
@@ -118,9 +133,29 @@ public class InputHandler : MonoBehaviour
     }
     public void InputInteract(InputAction.CallbackContext context)
     {
+        if (!IsMove) return;
+
         if (context.started)
         {
             OnInteract?.Invoke();
+        }
+    }
+    public void OpenInput(InputAction.CallbackContext context)
+    {
+        Debug.Log("Open");
+        if (context.performed)
+        {
+            IsMove = false;
+            OnOpen?.Invoke();
+        }
+    }
+    public void ClouseInput(InputAction.CallbackContext context)
+    {
+        Debug.Log("Clouse");
+        if (context.performed)
+        {
+            IsMove = true;
+            onClouse?.Invoke();
         }
     }
 }

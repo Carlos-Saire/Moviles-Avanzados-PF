@@ -34,9 +34,6 @@ public class InstallerLogin : MonoBehaviour
         reiniciar?.onClick.AddListener(reiniciarPress);
         AuthenticationManager.OnSignIn += SignIn;
     }
-
-
-
     private void OnDisable()
     {
         reiniciar?.onClick.RemoveListener(reiniciarPress);
@@ -50,8 +47,8 @@ public class InstallerLogin : MonoBehaviour
     {
         Invoke("BeginAnimation", 1);
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
 #if UNITY_ANDROID
         RequestMicrophonePermission();
         ConfigScreen();

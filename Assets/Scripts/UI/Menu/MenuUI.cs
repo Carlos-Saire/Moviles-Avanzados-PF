@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Command;
-using System.Threading.Tasks;
 public class MenuUI : MonoBehaviour
 {
     [Header("Panels")]
@@ -34,6 +33,9 @@ public class MenuUI : MonoBehaviour
     private void Start()
     {
         UpdateInfo();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     private void UpdateInfo()
     {
