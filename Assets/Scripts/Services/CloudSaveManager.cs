@@ -98,6 +98,8 @@ public class CloudSaveManager : MonoBehaviour
             playerInfoSO.PlayerIndexProfile = loadedProfile.profileIndex;
 
             Debug.Log("Profile loaded successfully!");
+
+            await Task.Delay(0);
         }
         catch (Exception e)
         {

@@ -4,6 +4,7 @@ using Unity.Services.Lobbies;
 using UnityEngine;
 using System.Threading.Tasks;
 using Command;
+using Unity.Netcode;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -181,11 +182,21 @@ public class LobbyManager : MonoBehaviour
     {
         try
         {
-            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+            QuickJoinLobbyOptions joinLobbyByCodeOptions = new QuickJoinLobbyOptions
+            {
+                Player = GetPlayer()
+            };
+
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 1, 0));
+
+            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync(joinLobbyByCodeOptions);
             currentLobby = lobby;
 
             string relayCode = lobby.Data["RelayJoinCode"].Value;
+
             await relayManager.JoinRelay(relayCode);
+
+            CommandQueue.Instance.AddCommand(new CanvasFadeCommand(conectandoPanel, 0, 0));
         }
         catch (LobbyServiceException e)
         {
@@ -219,8 +230,9 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
-    public async void RemovePlayerAsync()
+    public async Task RemovePlayerAsync()
     {
+        GameManager.Instance.DisconnectClientRpc();
         await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerSO.PlayerID);
     }
     public async Task RefreshLobby()
