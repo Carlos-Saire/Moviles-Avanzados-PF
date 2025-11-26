@@ -9,6 +9,7 @@ public class Search : navMeshMovement
     }
     private void OnTriggerEnter(Collider other)
     {
+        // get numbr of players, compare< tthe generate a new one
         if (other.tag == "Player")
         {
             Debug.Log("Collide player type");

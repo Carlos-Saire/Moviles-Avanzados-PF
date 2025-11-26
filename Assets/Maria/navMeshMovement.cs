@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 abstract public class navMeshMovement : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent enemy;
-    [SerializeField] private float range;
-    [SerializeField] private Transform centerPlane;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected float range;
+    [SerializeField] protected Transform centerPlane;
 
     void Start()
     {
@@ -15,13 +15,13 @@ abstract public class navMeshMovement : MonoBehaviour
     }
     void Update()
     {
-        if(enemy.remainingDistance <= enemy.stoppingDistance)
+        if(agent.remainingDistance <= agent.stoppingDistance)
         {
             Vector3 target;
             if (RandomPoint(centerPlane.position ,range,out target))
             {
                 Debug.DrawRay(target, Vector2.up, Color.magenta, 0.8f);
-                enemy.SetDestination(target);
+                agent.SetDestination(target);
             }
         }
         //RandomPoint();
