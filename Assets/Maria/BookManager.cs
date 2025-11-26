@@ -28,7 +28,10 @@ public class BookManager : MonoBehaviour
     {
         currentPlayer = pc;
     }
-
+    private void OnEnable()
+    {
+        ResetMission();
+    }
     void Start()
     {
         openPanelBook.SetActive(false);
@@ -110,6 +113,26 @@ public class BookManager : MonoBehaviour
         completed = true;
         Debug.Log("Todas las notas encontradas! Misión completada.");
         StartCoroutine(ClosePanel());
+    }
+    private void ResetMission()
+    {
+        completed = false;
+        itemFounded = 0; 
+
+        for (int i = 0; i < noteInstances.Length; i++)
+        {
+            if (noteInstances[i] != null)
+            {
+                Destroy(noteInstances[i]);
+                noteInstances[i] = null;
+            }
+        }
+
+        hasNote = new bool[booksInLibrary.Length];
+
+        GetRandomNote();
+
+        CloseBook();
     }
 
     private IEnumerator ClosePanel()

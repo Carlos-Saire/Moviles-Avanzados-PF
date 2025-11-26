@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MissionTrigger : MonoBehaviour
 {
-    public GameObject missionPanel;
+    [SerializeField] private string missionType;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,16 +27,29 @@ public class MissionTrigger : MonoBehaviour
     {
         Debug.Log("Misión iniciada por " + player.OwnerClientId);
 
-        missionPanel.SetActive(true);
-        player.FreezePlayer(true);
+        GameObject currentMissionPanel = null;
+        if (MissionPanelManager.Instance != null)
+        {
+            currentMissionPanel = MissionPanelManager.Instance.GetPanel(missionType);
+        }
 
-        // TROCO
-        missionPanel.GetComponentInChildren<TroncoMiniGame>(true)?.SetPlayer(player);
+        if (currentMissionPanel != null)
+        {
+            currentMissionPanel.SetActive(true);
+            player.FreezePlayer(true);
 
-        // SIMBOLOS
-        missionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true)?.SetPlayer(player);
+            // TRONCO
+            currentMissionPanel.GetComponentInChildren<TroncoMiniGame>(true)?.SetPlayer(player);
 
-        // LIBROS 
-        missionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
+            // SIMBOLOS
+            currentMissionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true)?.SetPlayer(player);
+
+            // LIBROS 
+            currentMissionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
+        }
+        else
+        {
+            Debug.LogError($"[MissionTrigger] ERROR: No se pudo obtener el panel para el tipo: {missionType}.");
+        }
     }
 }
