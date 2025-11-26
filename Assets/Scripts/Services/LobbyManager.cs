@@ -4,6 +4,7 @@ using Unity.Services.Lobbies;
 using UnityEngine;
 using System.Threading.Tasks;
 using Command;
+using Unity.Netcode;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -229,8 +230,9 @@ public class LobbyManager : MonoBehaviour
             Debug.Log(e);
         }
     }
-    public async void RemovePlayerAsync()
+    public async Task RemovePlayerAsync()
     {
+        GameManager.Instance.DisconnectClientRpc();
         await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerSO.PlayerID);
     }
     public async Task RefreshLobby()

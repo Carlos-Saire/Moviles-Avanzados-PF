@@ -18,7 +18,7 @@ public class InputHandler : MonoBehaviour
     public static event Action onClouse;
     [SerializeField] private Transform UImobile;
 
-    private bool IsMove;
+    static public bool IsMove = true;
 #if UNITY_ANDROID|| UNITY_IOS
     private float _width;
     private float _currentPrees;

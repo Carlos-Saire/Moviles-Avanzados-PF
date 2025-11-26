@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-[RequireComponent(typeof(PlayerInput))]
+using static UnityEngine.Rendering.DebugUI;
 public class LobbyTextVivoxUI : MonoBehaviour
 {
     [SerializeField] Transform panel;
+
     private void Reset()
     {
         gameObject.name = "LobbyTextVivoxUI";
@@ -41,6 +40,7 @@ public class LobbyTextVivoxUI : MonoBehaviour
     }
     private void Clouse()
     {
+        if (!panel.gameObject.activeSelf) return;
         panel.gameObject.SetActive(false);
         CursorVisibility(false);
     }
