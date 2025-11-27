@@ -101,8 +101,7 @@ public class GameManager : NetworkBehaviour
             RegisterPlayerServerRpc(obj);
         }
     }
-    [Rpc(SendTo.Owner)]
-    public void DisconnectClientRpc()
+    public void DisconnectClient()
     {
         NetworkManager.Singleton.Shutdown();
         Debug.Log($"Jugador desconectado por kick.");

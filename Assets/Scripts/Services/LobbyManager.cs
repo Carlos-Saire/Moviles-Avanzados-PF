@@ -223,7 +223,14 @@ public class LobbyManager : MonoBehaviour
         {
             var playerId = currentLobby.Players[indexPlayer].Id;
             await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, currentLobby.Players[indexPlayer].Id);
-            GameManager.Instance.DisconnectClientRpc();
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.ClientId != NetworkManager.Singleton.LocalClientId)
+                {
+                    NetworkManager.Singleton.DisconnectClient(client.ClientId);
+                    Debug.Log($"Jugador {client.ClientId} desconectado por kick.");
+                }
+            }
         }
         catch (LobbyServiceException e)
         {
@@ -232,7 +239,7 @@ public class LobbyManager : MonoBehaviour
     }
     public async Task RemovePlayerAsync()
     {
-        GameManager.Instance.DisconnectClientRpc();
+        GameManager.Instance.DisconnectClient();
         await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerSO.PlayerID);
     }
     public async Task RefreshLobby()

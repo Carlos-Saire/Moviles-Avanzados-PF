@@ -142,6 +142,7 @@ public class InputHandler : MonoBehaviour
     }
     public void OpenInput(InputAction.CallbackContext context)
     {
+
         Debug.Log("Open");
         if (context.performed)
         {

@@ -53,7 +53,10 @@ public class KickUI : NetworkBehaviour
             RectTransform newPrefab = Instantiate(prefabInformationKick);
             newPrefab.SetParent(contentKickPlayer);
             newPrefab.localScale = Vector3.one;
-            newPrefab.GetComponent<KickInfo>().SetInformation(players[i], i);
+
+            bool isHost = players[i].Id == LobbyManager.instance.CurrentLobby.HostId;
+
+            newPrefab.GetComponent<KickInfo>().SetInformation(players[i], i, isHost);
         }
     }
 }
