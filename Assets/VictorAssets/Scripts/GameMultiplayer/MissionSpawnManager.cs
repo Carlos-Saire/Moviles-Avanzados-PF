@@ -43,7 +43,27 @@ public class MissionSpawnManager : NetworkBehaviour
             InitializeMissions();
         }
     }
+    public void CleanUpAllActiveMissions()
+    {
+        if (!IsServer) return; 
 
+        Debug.Log("Limpiando todas las misiones activas...");
+
+        List<NetworkObject> missionsToDestroy = new List<NetworkObject>(activeMissions.Values);
+
+        activeMissions.Clear();
+        availableSpawnPoints.Clear();
+
+        availableSpawnPoints = new List<Transform>(spawnPoints);
+
+        foreach (var netObj in missionsToDestroy)
+        {
+            if (netObj != null)
+            {
+                netObj.Despawn(true);
+            }
+        }
+    }
     private void InitializeMissions()
     {
         List<GameObject> missionPrefabs = new List<GameObject>
