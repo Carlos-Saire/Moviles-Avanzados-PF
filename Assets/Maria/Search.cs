@@ -23,7 +23,8 @@ public class Search : navMeshMovement
         {
             Debug.Log("Collide player type");
        
-            GameObject doublePlayer = Instantiate(doubleClon);
+            GameObject doublePlayer = Instantiate(doubleClon,other.transform);
+            clonsCreated++;
 
             Debug.Log("ola ");
         }

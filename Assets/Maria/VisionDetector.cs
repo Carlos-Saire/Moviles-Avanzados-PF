@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class VisionDetector : MonoBehaviour
@@ -8,7 +9,8 @@ public class VisionDetector : MonoBehaviour
     public LayerMask obstacleMask;           // qué bloquea la visión
 
     public Transform eyePoint;               // posición desde donde mira el jugador
-
+    public event Action<bool> OnDoppleWatched;
+    bool hasWached = false;
     private void Update()
     {
         DetectTargets();
@@ -33,8 +35,11 @@ public class VisionDetector : MonoBehaviour
                 if (!Physics.Raycast(eyePoint.position, dirToTarget, dist, obstacleMask))
                 {
                     Debug.Log("Jugador vio al Doppelganger!");
+                    hasWached = true;
+                    OnDoppleWatched?.Invoke(hasWached);
                 }
             }
+            else { hasWached = false; }
         }
     }
 
