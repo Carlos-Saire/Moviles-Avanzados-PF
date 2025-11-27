@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections; 
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections; 
+using Unity.Netcode;
 
-public class BookManager : MonoBehaviour
+public class BookManager : NetworkBehaviour
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel; 
 
-    private PlayerController currentPlayer; 
+    private PlayerController currentPlayer;
+    private NetworkObject missionObject;
+
     private bool completed = false; 
 
     int objToCreate = 4;
@@ -23,7 +26,10 @@ public class BookManager : MonoBehaviour
     private int currentBookIndex = -1;
     public int itemFounded = 0;
     public static event Action<int> OnNoteFound;
-
+    public void SetMissionObject(NetworkObject missionObj)
+    {
+        missionObject = missionObj;
+    }
     public void SetPlayer(PlayerController pc)
     {
         currentPlayer = pc;
@@ -137,7 +143,9 @@ public class BookManager : MonoBehaviour
 
     private IEnumerator ClosePanel()
     {
-        yield return new WaitForSeconds(2.5f);
+        MissionUIFeedback.Instance?.ShowMissionCompleted();
+
+        yield return new WaitForSeconds(2f);
 
         if (missionPanel != null)
         {
@@ -153,5 +161,9 @@ public class BookManager : MonoBehaviour
         {
             VideoGameManager.Instance.AddFireServerRpc(20f); 
         }
+
+        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
+        NetworkObjectReference missionRef = missionObject;
+        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
     }
 }

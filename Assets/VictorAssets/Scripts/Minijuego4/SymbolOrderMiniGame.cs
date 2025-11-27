@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
-public class SymbolOrderMiniGame : MonoBehaviour
+using Unity.Netcode;
+public class SymbolOrderMiniGame : NetworkBehaviour
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel;
 
     [Header("Slots correctos (arriba)")]
-    public Image[] correctOrder;   
+    public Image[] correctOrder;
 
     [Header("Slots del jugador (abajo)")]
     public Transform[] playerSlots;
 
     [Header("Objetos para Reiniciar")]
-    [SerializeField] private GameObject symbolPrefab;      
-    [SerializeField] private Transform initialSymbolContainer; 
+    [SerializeField] private GameObject symbolPrefab;
+    [SerializeField] private Transform initialSymbolContainer;
     [SerializeField] private Canvas rootCanvas;
     private bool completed = false;
 
@@ -23,12 +23,16 @@ public class SymbolOrderMiniGame : MonoBehaviour
     [SerializeField] private Transform[] initialSymbolPositions;
 
     private PlayerController currentPlayer;
-
+    private NetworkObject missionObject;
+    public void SetMissionObject(NetworkObject missionObj)
+    {
+        missionObject = missionObj;
+    }
     public void SetPlayer(PlayerController player)
     {
         currentPlayer = player;
     }
-    private void OnEnable() 
+    private void OnEnable()
     {
         ResetMission();
     }
@@ -100,12 +104,18 @@ public class SymbolOrderMiniGame : MonoBehaviour
     }
     private IEnumerator ClosePanel()
     {
-        yield return new WaitForSeconds(2.5f);
+        MissionUIFeedback.Instance?.ShowMissionCompleted();
+
+        yield return new WaitForSeconds(2f);
         missionPanel.SetActive(false);
 
         if (currentPlayer != null)
             currentPlayer.FreezePlayer(false);
 
         VideoGameManager.Instance.AddFireServerRpc(20f);
+
+        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
+        NetworkObjectReference missionRef = missionObject;
+        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
     }
 }

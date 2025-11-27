@@ -66,13 +66,22 @@ public class PlayerController : NetworkBehaviour
         animator.SetFloat("X", 0);
         animator.SetFloat("Z", 0);
 
+        Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = state;
+
         ForceIdleAnimationServerRpc();
     }
 
     private void Update()
     {
         if (!IsOwner) return;
-        if (IsFrozen) return;
+
+        if (IsFrozen)
+        {
+            animator.SetFloat("X", 0);
+            animator.SetFloat("Z", 0);
+            return;
+        }
 
         Vector3 camForward = playerCamera.forward;
         Vector3 camRight = playerCamera.right;

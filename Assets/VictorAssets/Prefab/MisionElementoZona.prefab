@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4085963997421928296}
   - component: {fileID: 8876668283946626563}
   - component: {fileID: 1668396408128326914}
+  - component: {fileID: 3451703832965576542}
   m_Layer: 0
   m_Name: MisionElementoZona
   m_TagString: Untagged
@@ -123,6 +124,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionType: Simbolos
+--- !u!114 &3451703832965576542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669194569826104639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1157470320
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1001 &2660321028368781886
 PrefabInstance:
   m_ObjectHideFlags: 0

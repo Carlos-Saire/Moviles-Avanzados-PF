@@ -4,7 +4,11 @@ using UnityEngine;
 public class MissionTrigger : MonoBehaviour
 {
     [SerializeField] private string missionType;
-
+    private NetworkObject missionNetObject;
+    private void Awake()
+    {
+        missionNetObject = GetComponent<NetworkObject>(); 
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<PlayerController>(out var player))
@@ -39,13 +43,28 @@ public class MissionTrigger : MonoBehaviour
             player.FreezePlayer(true);
 
             // TRONCO
-            currentMissionPanel.GetComponentInChildren<TroncoMiniGame>(true)?.SetPlayer(player);
+            var tronco = currentMissionPanel.GetComponentInChildren<TroncoMiniGame>(true);
+            if (tronco != null)
+            {
+                tronco.SetPlayer(player);
+                tronco.SetMissionObject(missionNetObject);
+            }
 
             // SIMBOLOS
-            currentMissionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true)?.SetPlayer(player);
+            var sym = currentMissionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true);
+            if (sym != null)
+            {
+                sym.SetPlayer(player);
+                sym.SetMissionObject(missionNetObject);
+            }
 
-            // LIBROS 
-            currentMissionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
+            // LIBROS
+            var book = currentMissionPanel.GetComponentInChildren<BookManager>(true);
+            if (book != null)
+            {
+                book.SetPlayer(player);
+                book.SetMissionObject(missionNetObject);
+            }
         }
         else
         {
