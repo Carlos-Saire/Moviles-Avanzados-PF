@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,7 +46,6 @@ public class GameManager : NetworkBehaviour
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
-
         }
     }
 
@@ -100,11 +98,6 @@ public class GameManager : NetworkBehaviour
         {
             RegisterPlayerServerRpc(obj);
         }
-    }
-    public void DisconnectClient()
-    {
-        NetworkManager.Singleton.Shutdown();
-        Debug.Log($"Jugador desconectado por kick.");
     }
     private void OnClientDisconnected(ulong obj)
     {

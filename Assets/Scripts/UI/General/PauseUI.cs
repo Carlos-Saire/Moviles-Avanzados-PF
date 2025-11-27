@@ -42,7 +42,29 @@ public class PauseUI : NetworkBehaviour
     }
     public async void ExitPress()
     {
+        if (IsHost)
+        {
+            Debug.Log("Saliendo como HOST...");
+
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.ClientId != NetworkManager.Singleton.LocalClientId)
+                {
+                    NetworkManager.Singleton.DisconnectClient(client.ClientId);
+                }
+            }
+
+            NetworkManager.Singleton.Shutdown();
+        }
+        else
+        {
+            Debug.Log("Saliendo como CLIENTE...");
+
+            NetworkManager.Singleton.Shutdown();
+        }
+
         await LobbyManager.instance.RemovePlayerAsync();
+
         CommandQueue.Instance.AddCommand(new LoadSceneCommand("Menu"));
     }
     private void CursorVisibility(bool value)

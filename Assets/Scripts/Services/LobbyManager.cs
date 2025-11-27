@@ -239,7 +239,6 @@ public class LobbyManager : MonoBehaviour
     }
     public async Task RemovePlayerAsync()
     {
-        GameManager.Instance.DisconnectClient();
         await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerSO.PlayerID);
     }
     public async Task RefreshLobby()
