@@ -11,6 +11,7 @@ public class VisionDetector : MonoBehaviour
     public Transform eyePoint;               // posición desde donde mira el jugador
     public event Action<bool> OnDoppleWatched;
     bool hasWached = false;
+    public GameObject back;
     private void Update()
     {
         DetectTargets();

@@ -25,6 +25,7 @@ public class PlayerController : NetworkBehaviour
     private float inputX;
     private float inputZ;
 
+
     public bool IsFrozen { get; private set; } = false;
 
     private PlayerInteraction playerInteraction;
@@ -68,7 +69,14 @@ public class PlayerController : NetworkBehaviour
 
         ForceIdleAnimationServerRpc();
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("El player chocó con: " + other.name);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("El player chocó con: " + collision.gameObject.name);
+    }
     private void Update()
     {
         if (!IsOwner) return;

@@ -399,10 +399,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c513eb0237a8294fb58f2a91c36d4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
+  agent: {fileID: 6571265432931941225}
   range: 50
   centerPlane: {fileID: 1670125320362704192, guid: 4f2ab3c86f93c7e4eaea1f22364157f1, type: 3}
   target: {fileID: 0}
+  isWatched: 0
 --- !u!1 &7198709770804265203
 GameObject:
   m_ObjectHideFlags: 0
