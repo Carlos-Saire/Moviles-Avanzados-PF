@@ -5,6 +5,7 @@ public class Search : navMeshMovement
     [SerializeField] GameObject doubleClon;
     [SerializeField] GameObject conteiner;
     [SerializeField] VisionDetector visionRef;
+    [SerializeField] GameObject[] positionRef;
    
     bool canSpawn = false;
     [SerializeField] int maxPlayers;
@@ -16,8 +17,14 @@ public class Search : navMeshMovement
     }
     private void Start()
     {
-        maxPlayers = GameManager.Instance.GetPlayersConected()+1;
-        Debug.Log("NUMB" + maxPlayers);
+        maxPlayers = GameManager.Instance.GetPlayersConected();
+        Debug.Log("NUMB OF PLAYERS" + maxPlayers);
+        for(int i = 0; i< maxPlayers; i++)
+        {
+            //positionRef[i].transform.parent = conteiner.transform;
+            GameObject doublePlayer = Instantiate(doubleClon, positionRef[i].transform.position, Quaternion.identity, conteiner.transform);
+          
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -26,11 +33,15 @@ public class Search : navMeshMovement
         {
             Debug.Log("Collide player type");
             Vector3 spawnPos = other.transform.position - other.transform.forward * 6f;
-            GameObject doublePlayer = Instantiate(doubleClon, spawnPos,Quaternion.identity, conteiner.transform);
-            clonsCreated++;
-            doublePlayer.GetComponent<DoppleGanger>().SetTarget(other.gameObject.transform.position);//works
-            Debug.Log("playerBack ");
+           // GameObject doublePlayer = Instantiate(doubleClon, spawnPos,Quaternion.identity, conteiner.transform);
+           // clonsCreated++;
+           // doublePlayer.GetComponent<DoppleGanger>().SetTarget(other.gameObject.transform.position);//works
+           
         }
+    }
+    private void Update()
+    {
+        CallRandomMovement();
     }
 }
 

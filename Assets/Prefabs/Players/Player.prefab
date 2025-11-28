@@ -300,7 +300,6 @@ MonoBehaviour:
   model: {fileID: 2867220136921911548}
   animator: {fileID: 8154406291640289926}
   playerCamera: {fileID: 135580505436712981}
-  back: {fileID: 1612930790118093870}
 --- !u!114 &6714051642796791300
 MonoBehaviour:
   m_ObjectHideFlags: 0

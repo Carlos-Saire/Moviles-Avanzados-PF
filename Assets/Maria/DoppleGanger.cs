@@ -6,67 +6,75 @@ public class DoppleGanger: navMeshMovement
 
     private VisionDetector playerVision;
     public bool isWatched = false;
-    private void Start()
-    {
-        Debug.Log("dopple created");
-    }
-    private void OnTriggerEnter(UnityEngine.Collider other)
-    {
-        // get numbr of players, compare< tthe generate a new one
-        if (other.tag == "Player")
-        {
-            target = other.transform;
-            playerVision = other.GetComponent<VisionDetector>();
-            if (playerVision != null)
-            {
-                playerVision.OnDoppleWatched += HandleBeingWatched;
-            }
-            Debug.Log("trigger");
-        }
-        if (other.tag == "Player" && other.gameObject != target.gameObject)
-        {
-            Debug.Log("escondete");
-        }
-        if (other.tag == "DoppleGanger")
-        {
-            Physics.IgnoreCollision(other, GetComponent<Collider>());
-        }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject. tag == "Player")
-        {
-            //target = other.transform;
-            playerVision = collision.gameObject.GetComponent<VisionDetector>();
-            if (playerVision != null)
-            {
-                playerVision.OnDoppleWatched += HandleBeingWatched;
-            }
-            Debug.Log("collision");
-        }
-    }
+
+    public float fleeDistance = 4f;  // Distancia que intentará retroceder si lo ven
+
     private void Update()
     {
-
-    }
-    public void SetTarget(Vector3 position)
-    {
-        //target.position = position; 
-        //Vector3 offsetPos = target.position - target.forward * 1.5f;
-        agent.SetDestination(position);
-    }
-    private void HandleBeingWatched(bool watched)
-    {
-        isWatched = watched;
-        if (watched)
+        if (target == null)
         {
-            Debug.Log("El jugador vio al Doppelganger → detengo IA");
-            agent.isStopped = true;
+            CallRandomMovement();
+          
+        }
+
+        if (!isWatched)
+        {
+            // si NO es visto → perseguir normalmente
+            agent.isStopped = false;
+            agent.SetDestination(target.position);
         }
         else
         {
-            Debug.Log("Jugador dejó de mirar → continúo persiguiendo");
-            agent.isStopped = false;
+            // si es visto → actuar normal y alejarse un poco
+            ActNaturalAndRetreat();
+        }
+    }
+
+    private void ActNaturalAndRetreat()
+    {
+        // Evita persecución
+        agent.isStopped = false;
+
+        // Dirección opuesta al jugador
+        Vector3 dir = (transform.position - target.position).normalized;
+
+        // Punto al que intenta ir
+        Vector3 retreatPos = transform.position + dir * fleeDistance;
+
+        agent.SetDestination(retreatPos);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Doppelganger detectó al jugador y establece objetivo de persecución");
+            target = other.transform;
+            playerVision = other.GetComponent<VisionDetector>();
+
+
+            if (playerVision != null)
+                playerVision.OnDoppleWatched += HandleBeingWatched;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        { 
+            target = null;
+        }
+        }
+    private void HandleBeingWatched(bool watched)
+    {
+        isWatched = watched;
+
+        if (watched)
+        {
+            Debug.Log("Doppelganger fue visto → se hace el loco y retrocede");
+        }
+        else
+        {
+            Debug.Log("Jugador ya no lo ve → retoma persecución");
         }
     }
 

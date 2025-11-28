@@ -77,6 +77,10 @@ public class PlayerController : NetworkBehaviour
     {
         Debug.Log("El player chocó con: " + collision.gameObject.name);
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log("El player stay collider: " + collision.gameObject.name);
+    }
     private void Update()
     {
         if (!IsOwner) return;

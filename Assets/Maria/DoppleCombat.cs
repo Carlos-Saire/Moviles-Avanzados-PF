@@ -12,7 +12,6 @@ public class DoppleCombat : NetworkBehaviour
     public float attackCooldown = 2f;
     private bool canAttack = true;
 
-
     private void Awake()
     {
         dopple = GetComponent<DoppleGanger>();
@@ -21,9 +20,9 @@ public class DoppleCombat : NetworkBehaviour
 
     private void Update()
     {
+        if (!IsServer) return; // IA solo en servidor
         if (dopple.target == null) return;
 
-        // Solo ataca si NO está siendo visto
         if (!dopple.isWatched)
         {
             float dist = Vector3.Distance(transform.position, dopple.target.position);
@@ -41,23 +40,22 @@ public class DoppleCombat : NetworkBehaviour
 
         animator.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(0.4f); // tiempo hasta el daño real
+        yield return new WaitForSeconds(0.4f);
 
-        TryKillTargetServerRpc();
+        TryKillTarget(); // directo, ya estamos en el server
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
     }
 
-    [Rpc(SendTo.Server)]
-    private void TryKillTargetServerRpc()
+    private void TryKillTarget()
     {
         if (dopple.target == null) return;
 
         var targetPlayer = dopple.target.GetComponent<PlayerHealth>();
-        if (targetPlayer != null)
-        {
-            targetPlayer.KillServerRpc();
-        }
+        if (targetPlayer == null) return;
+        if (targetPlayer.IsDead.Value) return;
+
+        targetPlayer.KillServerRpc();
     }
 }

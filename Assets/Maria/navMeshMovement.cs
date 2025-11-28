@@ -15,10 +15,14 @@ abstract public class navMeshMovement : MonoBehaviour
     }
     void Update()
     {
-        if(agent.remainingDistance <= agent.stoppingDistance)
+       
+    }
+    protected void CallRandomMovement()
+    {
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             Vector3 target;
-            if (RandomPoint(centerPlane.position ,range,out target))
+            if (RandomPoint(centerPlane.position, range, out target))
             {
                 Debug.DrawRay(target, Vector2.up, Color.magenta, 0.8f);
                 agent.SetDestination(target);
