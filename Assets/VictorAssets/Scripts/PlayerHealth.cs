@@ -24,6 +24,7 @@ public class PlayerHealth : NetworkBehaviour
         KillClientRpc(NetworkObjectId);
 
         StartCoroutine(DespawnAfterDelay());
+        Debug.Log("died");
     }
 
     private IEnumerator DespawnAfterDelay()

@@ -22,6 +22,7 @@ public class DoppleHealth : NetworkBehaviour
         IsDead.Value = true;
 
         KillClientRpc(NetworkObjectId);
+    Debug.Log("Dopple died");
 
         StartCoroutine(DespawnAfterDelay());
     }

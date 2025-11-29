@@ -1829,7 +1829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9105618163840358935, guid: da1ea815b0723d043b162fb410c4df5b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: da1ea815b0723d043b162fb410c4df5b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2775,7 +2775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -23.999634, y: 0}
+  m_AnchoredPosition: {x: -23.999512, y: 0}
   m_SizeDelta: {x: -393.0261, y: -221.0772}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &468018659
@@ -5092,7 +5092,7 @@ MonoBehaviour:
   agent: {fileID: 1030894738}
   range: 20
   centerPlane: {fileID: 1670125320362704192, guid: 4f2ab3c86f93c7e4eaea1f22364157f1, type: 3}
-  doubleClon: {fileID: 2924724677019760313, guid: 22c0d2a0358353b449f394738d9f0910, type: 3}
+  doubleClon: {fileID: 1460414169}
   conteiner: {fileID: 153885944}
   visionRef: {fileID: 4906615420145583078, guid: 190d787f6c6ed7341b005eba4e2f5163, type: 3}
   positionRef:
@@ -6569,6 +6569,11 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &1460414169 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 301281468819617315, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
+  m_PrefabInstance: {fileID: 4061621274174130400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &1499542220
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9612,7 +9617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1753348411169749109, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.59944
+      value: 11.72
       objectReference: {fileID: 0}
     - target: {fileID: 1753348411169749109, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9650,14 +9655,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2088778011572770093, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
-      propertyPath: target
-      value: 
+    - target: {fileID: 2323549955055067970, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2018002808
       objectReference: {fileID: 0}
-    - target: {fileID: 2088778011572770093, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
-      propertyPath: centerPlane
-      value: 
-      objectReference: {fileID: 6658214596258789949, guid: da1ea815b0723d043b162fb410c4df5b, type: 3}
+    - target: {fileID: 2323549955055067970, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 4091066668
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

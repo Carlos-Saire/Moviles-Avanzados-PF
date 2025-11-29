@@ -20,15 +20,17 @@ public class DoppleCombat : NetworkBehaviour
 
     private void Update()
     {
+        Debug.Log("DoppleCombat Update called");
         if (!IsServer) return; // IA solo en servidor
         if (dopple.target == null) return;
-
+        Debug.Log("Dopple checking attack conditions");
         if (!dopple.isWatched)
         {
             float dist = Vector3.Distance(transform.position, dopple.target.position);
 
             if (dist <= attackRange && canAttack)
             {
+                Debug.Log("Dopple starts attack");
                 StartCoroutine(AttackRoutine());
             }
         }
@@ -38,14 +40,15 @@ public class DoppleCombat : NetworkBehaviour
     {
         canAttack = false;
 
-        animator.SetTrigger("Attack");
+       // animator.SetTrigger("Attack");
 
         yield return new WaitForSeconds(0.4f);
 
         TryKillTarget(); // directo, ya estamos en el server
-
+        Debug.Log("Dopple can attack again");
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+        
     }
 
     private void TryKillTarget()
