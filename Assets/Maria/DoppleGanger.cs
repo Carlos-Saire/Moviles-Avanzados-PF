@@ -14,7 +14,7 @@ public class DoppleGanger: navMeshMovement
         if (target == null)
         {
             CallRandomMovement();
-          
+            return;
         }
 
         if (!isWatched)
@@ -26,7 +26,8 @@ public class DoppleGanger: navMeshMovement
         else
         {
             // si es visto → actuar normal y alejarse un poco
-            ActNaturalAndRetreat();
+            CallRandomMovement();
+           // ActNaturalAndRetreat();
         }
     }
 
