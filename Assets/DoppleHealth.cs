@@ -1,18 +1,18 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using System.Collections;
 
-public class PlayerHealth : NetworkBehaviour
+public class DoppleHealth : NetworkBehaviour
 {
     public NetworkVariable<bool> IsDead = new NetworkVariable<bool>(false);
 
     private Animator animator;
-    private PlayerController controller;
+    private DoppleGanger dopple;
 
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        controller = GetComponent<PlayerController>();
+        dopple = GetComponent<DoppleGanger>();
     }
 
     [Rpc(SendTo.Server)]
@@ -22,19 +22,17 @@ public class PlayerHealth : NetworkBehaviour
         IsDead.Value = true;
 
         KillClientRpc(NetworkObjectId);
+    Debug.Log("Dopple died");
 
         StartCoroutine(DespawnAfterDelay());
-        Debug.Log("died");
     }
 
     private IEnumerator DespawnAfterDelay()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
 
         if (NetworkObject != null && NetworkObject.IsSpawned)
-        {
             NetworkObject.Despawn(true);
-        }
     }
 
     [Rpc(SendTo.Everyone)]
@@ -43,10 +41,9 @@ public class PlayerHealth : NetworkBehaviour
         if (NetworkObjectId != targetId)
             return;
 
-        controller.enabled = false;
-
-        if (controller.playerCamera != null)
-            controller.playerCamera.gameObject.SetActive(false);
+        // Detener movimiento del dopple
+        if (dopple != null)
+            dopple.enabled = false;
 
         animator.SetTrigger("Death");
     }

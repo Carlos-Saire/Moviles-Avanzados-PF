@@ -123,5 +123,9 @@ public class GameManager : NetworkBehaviour
         yield return null;
         cc.enabled = true;
     }
+    public int GetPlayersConected()
+    {
+        return connectedPlayers.Count;
+    }
 }
 
