@@ -29,12 +29,13 @@ public class PlayerController : NetworkBehaviour
     public bool IsFrozen { get; private set; } = false;
 
     private PlayerInteraction playerInteraction;
-
+    private PlayerHealth playerHealth;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInteraction = GetComponent<PlayerInteraction>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Start()
@@ -87,7 +88,7 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
-
+        if (playerHealth != null && playerHealth.IsDead.Value) return;
         if (IsFrozen)
         {
             animator.SetFloat("X", 0);

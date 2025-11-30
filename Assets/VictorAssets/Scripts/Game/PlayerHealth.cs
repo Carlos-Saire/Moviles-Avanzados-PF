@@ -9,6 +9,17 @@ public class PlayerHealth : NetworkBehaviour
     private Animator animator;
     private PlayerController controller;
 
+    private GameObject deathUIPanel;
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+        {
+            deathUIPanel.SetActive(false);
+        }
+    }
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -22,19 +33,7 @@ public class PlayerHealth : NetworkBehaviour
         IsDead.Value = true;
 
         KillClientRpc(NetworkObjectId);
-
-        StartCoroutine(DespawnAfterDelay());
-        Debug.Log("died");
-    }
-
-    private IEnumerator DespawnAfterDelay()
-    {
-        yield return new WaitForSeconds(2.5f);
-
-        if (NetworkObject != null && NetworkObject.IsSpawned)
-        {
-            NetworkObject.Despawn(true);
-        }
+        Debug.Log("Player died");
     }
 
     [Rpc(SendTo.Everyone)]
@@ -45,9 +44,19 @@ public class PlayerHealth : NetworkBehaviour
 
         controller.enabled = false;
 
-        if (controller.playerCamera != null)
+        if (IsOwner && controller.playerCamera != null)
+        {
             controller.playerCamera.gameObject.SetActive(false);
 
+            if (deathUIPanel != null)
+                deathUIPanel.SetActive(true);
+        }
+
         animator.SetTrigger("Death");
+
+        if (IsOwner && DeathUIManager.Instance != null)
+        {
+            DeathUIManager.Instance.ShowDeathScreen();
+        }
     }
 }

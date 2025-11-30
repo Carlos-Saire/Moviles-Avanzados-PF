@@ -939,11 +939,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: e4bf0ee1-310c-4b26-a0d5-8a6386cbd419
+  cloudProjectId: 42785d62-23d3-4967-bb35-3344595a32e6
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Moviles Avanzados PF
-  organizationId: unity_0e371f3589f55be3200b
+  projectName: My project (7)
+  organizationId: unity_546aca1a7866794bb31f
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

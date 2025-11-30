@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCombat : NetworkBehaviour
 {
@@ -31,6 +32,12 @@ public class PlayerCombat : NetworkBehaviour
         if (!IsOwner) return;
         if (player.IsFrozen) return;
         if (isAttacking) return;
+
+        if (player.GetComponent<PlayerHealth>().IsDead.Value)
+            return;
+
+        if (SceneManager.GetActiveScene().name != "Game")
+            return;
 
         isAttacking = true;
         animator.SetBool("IsAttacking", true);
@@ -68,19 +75,29 @@ public class PlayerCombat : NetworkBehaviour
             dagger.SetActive(false);
     }
 
-    [Rpc(SendTo.Owner)]
+    [Rpc(SendTo.Server)]
     private void TryKillPlayerServerRpc(Vector3 camForward, Vector3 camPosition)
     {
-        float range = 2f;
-        float radius = 1f;
+        if (SceneManager.GetActiveScene().name != "Game")
+            return;
 
-        if (Physics.SphereCast(camPosition, radius, camForward, out RaycastHit hit, range))
+        float attackRange = 2f;
+        float attackRadius = 1.2f;
+
+        Collider[] hits = Physics.OverlapSphere(camPosition + camForward * 1f, attackRadius);
+
+        foreach (Collider col in hits)
         {
-            if (hit.collider.TryGetComponent<PlayerController>(out PlayerController target))
+            if (col.TryGetComponent<PlayerController>(out PlayerController target))
             {
                 if (target != player && target.TryGetComponent<PlayerHealth>(out PlayerHealth hp))
                 {
-                    hp.KillServerRpc();
+                    float dist = Vector3.Distance(player.transform.position, target.transform.position);
+                    if (dist <= attackRange)
+                    {
+                        hp.KillServerRpc();
+                        break; 
+                    }
                 }
             }
         }
