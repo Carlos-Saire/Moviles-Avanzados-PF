@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class MissionTrigger : MonoBehaviour
 {
-    public GameObject missionPanel;
-
+    [SerializeField] private string missionType;
+    private NetworkObject missionNetObject;
+    private void Awake()
+    {
+        missionNetObject = GetComponent<NetworkObject>(); 
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<PlayerController>(out var player))
@@ -27,16 +31,44 @@ public class MissionTrigger : MonoBehaviour
     {
         Debug.Log("Misión iniciada por " + player.OwnerClientId);
 
-        missionPanel.SetActive(true);
-        player.FreezePlayer(true);
+        GameObject currentMissionPanel = null;
+        if (MissionPanelManager.Instance != null)
+        {
+            currentMissionPanel = MissionPanelManager.Instance.GetPanel(missionType);
+        }
 
-        // TROCO
-        missionPanel.GetComponentInChildren<TroncoMiniGame>(true)?.SetPlayer(player);
+        if (currentMissionPanel != null)
+        {
+            currentMissionPanel.SetActive(true);
+            player.FreezePlayer(true);
 
-        // SIMBOLOS
-        missionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true)?.SetPlayer(player);
+            // TRONCO
+            var tronco = currentMissionPanel.GetComponentInChildren<TroncoMiniGame>(true);
+            if (tronco != null)
+            {
+                tronco.SetPlayer(player);
+                tronco.SetMissionObject(missionNetObject);
+            }
 
-        // LIBROS 
-        //missionPanel.GetComponentInChildren<BookManager>(true)?.SetPlayer(player);
+            // SIMBOLOS
+            var sym = currentMissionPanel.GetComponentInChildren<SymbolOrderMiniGame>(true);
+            if (sym != null)
+            {
+                sym.SetPlayer(player);
+                sym.SetMissionObject(missionNetObject);
+            }
+
+            // LIBROS
+            var book = currentMissionPanel.GetComponentInChildren<BookManager>(true);
+            if (book != null)
+            {
+                book.SetPlayer(player);
+                book.SetMissionObject(missionNetObject);
+            }
+        }
+        else
+        {
+            Debug.LogError($"[MissionTrigger] ERROR: No se pudo obtener el panel para el tipo: {missionType}.");
+        }
     }
 }

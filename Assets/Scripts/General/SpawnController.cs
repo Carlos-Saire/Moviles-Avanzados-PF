@@ -59,21 +59,19 @@ public class SpawnController : MonoBehaviour
 
             Transform point = spawnPoints[index % spawnPoints.Length];
 
-            if (clientId == NetworkManager.Singleton.LocalClientId)
-            {
-                playerObj.transform.position = point.position;
-                playerObj.transform.rotation = point.rotation;
-            }
+            playerObj.transform.position = point.position;
+            playerObj.transform.rotation = point.rotation;
 
             var pc = playerObj.GetComponent<PlayerController>();
             if (pc != null)
             {
-                Debug.Log($"[SpawnController] Llamando SetPositionClientRpc a owner {clientId} pos {point.position}");
                 pc.SetPositionClientRpc(point.position);
             }
-            else
+
+            if (clientId == NetworkManager.Singleton.LocalClientId)
             {
-                Debug.LogWarning($"[SpawnController] PlayerController no encontrado en PlayerObject de {clientId}");
+                playerObj.transform.position = point.position;
+                playerObj.transform.rotation = point.rotation;
             }
 
             index++;

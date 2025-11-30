@@ -68,7 +68,7 @@ public class SymbolDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         miniGame.CheckOrder();
     }
 
-    private void ResetToOrigin()
+    public void ResetToOrigin()
     {
         transform.SetParent(originalParent);
         rectTransform.anchoredPosition = originalAnchoredPos;

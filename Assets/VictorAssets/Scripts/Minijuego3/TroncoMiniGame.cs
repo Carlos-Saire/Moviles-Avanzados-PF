@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
-public class TroncoMiniGame : MonoBehaviour
+using Unity.Netcode;
+public class TroncoMiniGame : NetworkBehaviour, IMiniGame
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel;    
@@ -10,6 +10,7 @@ public class TroncoMiniGame : MonoBehaviour
     [Header("Tronco")]
     public Image logImage;
     public Sprite logCutSprite;
+    private Sprite originalLogSprite;
 
     [Header("Lineas a cortar")]
     public Image[] cutLines;
@@ -18,6 +19,15 @@ public class TroncoMiniGame : MonoBehaviour
     private bool completed = false;
 
     private PlayerController currentPlayer;
+    private NetworkObject missionObject;
+    private void Awake()
+    {
+        originalLogSprite = logImage.sprite;
+    }
+    public void SetMissionObject(NetworkObject missionObj)
+    {
+        missionObject = missionObj;
+    }
     public void SetPlayer(PlayerController pc)
     {
         currentPlayer = pc;
@@ -31,6 +41,8 @@ public class TroncoMiniGame : MonoBehaviour
     {
         linesLeft = cutLines.Length;
         completed = false;
+
+        logImage.sprite = originalLogSprite;
 
         for (int i = 0; i < cutLines.Length; i++)
         {
@@ -58,7 +70,9 @@ public class TroncoMiniGame : MonoBehaviour
 
     private IEnumerator CloseMissionPanel()
     {
-        yield return new WaitForSeconds(3f);
+        MissionUIFeedback.Instance?.ShowMissionCompleted();
+
+        yield return new WaitForSeconds(2f);
         missionPanel.SetActive(false);
 
 
@@ -66,5 +80,9 @@ public class TroncoMiniGame : MonoBehaviour
             currentPlayer.FreezePlayer(false);
 
         VideoGameManager.Instance.AddFireServerRpc(20f);
+
+        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
+        NetworkObjectReference missionRef = missionObject;
+        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
     }
 }

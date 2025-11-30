@@ -29,6 +29,7 @@ public class PlayerCombat : NetworkBehaviour
     private void HandleAttack()
     {
         if (!IsOwner) return;
+        if (player.IsFrozen) return;
         if (isAttacking) return;
 
         isAttacking = true;

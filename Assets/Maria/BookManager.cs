@@ -1,10 +1,19 @@
-﻿
-using System;
+﻿using System;
+using System.Collections; 
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 
-public class BookManager : MonoBehaviour
+public class BookManager : NetworkBehaviour
 {
+    [Header("Panel de la misión")]
+    public GameObject missionPanel; 
+
+    private PlayerController currentPlayer;
+    private NetworkObject missionObject;
+
+    private bool completed = false; 
+
     int objToCreate = 4;
     [SerializeField] Button[] booksInLibrary;
     [SerializeField] GameObject openPanelBook;
@@ -17,29 +26,34 @@ public class BookManager : MonoBehaviour
     private int currentBookIndex = -1;
     public int itemFounded = 0;
     public static event Action<int> OnNoteFound;
+    public void SetMissionObject(NetworkObject missionObj)
+    {
+        missionObject = missionObj;
+    }
+    public void SetPlayer(PlayerController pc)
+    {
+        currentPlayer = pc;
+    }
+    private void OnEnable()
+    {
+        ResetMission();
+    }
     void Start()
     {
         openPanelBook.SetActive(false);
         hasNote = new bool[booksInLibrary.Length];
-       
+
         noteInstances = new GameObject[booksInLibrary.Length];
         GetRandomNote();
-        for (int i =  0;  i < booksInLibrary.Length; i++)
+        for (int i = 0; i < booksInLibrary.Length; i++)
         {
             int k = i;
-           booksInLibrary[i].onClick.AddListener(() => SetActive(k));
+            booksInLibrary[i].onClick.AddListener(() => SetActive(k));
         }
         closeBook.onClick.AddListener(() => CloseBook());
     }
 
-    void Update()
-    {
-        if(itemFounded <= objToCreate)
-        {
-            Debug.Log("Notas encontradas: " + itemFounded + " de " + objToCreate);
-            
-        }
-    }
+
     void CloseBook()
     {
         if (currentBookIndex != -1 && noteInstances[currentBookIndex] != null)
@@ -48,10 +62,12 @@ public class BookManager : MonoBehaviour
         }
         currentBookIndex = -1;
         openPanelBook?.SetActive(false);
-       
     }
+
     void SetActive(int index)
     {
+        if (completed) return; 
+
         if (currentBookIndex != -1 && noteInstances[currentBookIndex] != null)
             noteInstances[currentBookIndex].SetActive(false);
 
@@ -59,15 +75,19 @@ public class BookManager : MonoBehaviour
         currentBookIndex = index;
         if (hasNote[index])
         {
-
             if (noteInstances[index] == null)
             {
-
                 noteInstances[index] = Instantiate(noteInBook, noteParent.transform);
                 noteInstances[index].SetActive(true);
                 Debug.Log(index + " tiene una nota (creada).");
+
                 itemFounded++;
                 OnNoteFound?.Invoke(itemFounded);
+
+                if (itemFounded >= objToCreate)
+                {
+                    MissionCompleted();
+                }
             }
             else
             {
@@ -79,7 +99,8 @@ public class BookManager : MonoBehaviour
         {
             Debug.Log(index + " está vacío.");
         }
-    }    
+    }
+
     void GetRandomNote()
     {
         int assigned = 0;
@@ -92,6 +113,57 @@ public class BookManager : MonoBehaviour
                 assigned++;
             }
         }
-          
+    }
+    private void MissionCompleted()
+    {
+        completed = true;
+        Debug.Log("Todas las notas encontradas! Misión completada.");
+        StartCoroutine(ClosePanel());
+    }
+    private void ResetMission()
+    {
+        completed = false;
+        itemFounded = 0; 
+
+        for (int i = 0; i < noteInstances.Length; i++)
+        {
+            if (noteInstances[i] != null)
+            {
+                Destroy(noteInstances[i]);
+                noteInstances[i] = null;
+            }
+        }
+
+        hasNote = new bool[booksInLibrary.Length];
+
+        GetRandomNote();
+
+        CloseBook();
+    }
+
+    private IEnumerator ClosePanel()
+    {
+        MissionUIFeedback.Instance?.ShowMissionCompleted();
+
+        yield return new WaitForSeconds(2f);
+
+        if (missionPanel != null)
+        {
+            missionPanel.SetActive(false);
+        }
+
+        CloseBook();
+
+        if (currentPlayer != null)
+            currentPlayer.FreezePlayer(false); 
+
+        if (VideoGameManager.Instance != null)
+        {
+            VideoGameManager.Instance.AddFireServerRpc(20f); 
+        }
+
+        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
+        NetworkObjectReference missionRef = missionObject;
+        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
     }
 }
