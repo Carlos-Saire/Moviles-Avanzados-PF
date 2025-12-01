@@ -54,6 +54,10 @@ public class SpawnController : MonoBehaviour
                 continue;
             }
 
+            var health = playerObj.GetComponent<PlayerHealth>();
+            if (health != null)
+                health.ResetPlayer();
+
             var cc = playerObj.GetComponent<CharacterController>();
             if (cc != null) cc.enabled = false;
 

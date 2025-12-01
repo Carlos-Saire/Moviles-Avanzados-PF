@@ -59,4 +59,20 @@ public class PlayerHealth : NetworkBehaviour
             DeathUIManager.Instance.ShowDeathScreen();
         }
     }
+    public void ResetPlayer()
+    {
+        IsDead.Value = false;
+
+        if (controller != null)
+            controller.enabled = true;
+
+        if (IsOwner && controller.playerCamera != null)
+            controller.playerCamera.gameObject.SetActive(true);
+
+        if (IsOwner && deathUIPanel != null)
+            deathUIPanel.SetActive(false);
+
+        if (animator != null)
+            animator.Rebind();
+    }
 }
