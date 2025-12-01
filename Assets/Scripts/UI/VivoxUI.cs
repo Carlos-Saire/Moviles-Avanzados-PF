@@ -17,10 +17,10 @@ public class VivoxUI : MonoBehaviour
     [SerializeField] private Image image;
     private bool isMuted;
 
+    [Header("Microphone")]
 
     [Header("VivoxManager")]
     [SerializeField] private VivoxManager vivoxManager;
-
     private void Reset()
     {
         gameObject.name = "VivoxUI";
