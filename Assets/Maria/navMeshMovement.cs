@@ -8,6 +8,7 @@ abstract public class navMeshMovement : MonoBehaviour
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected float range;
     [SerializeField] protected Transform centerPlane;
+    protected bool isWalking;
 
     void Start()
     {
@@ -15,7 +16,22 @@ abstract public class navMeshMovement : MonoBehaviour
     }
     void Update()
     {
-       
+        
+        //animator.SetBool("isWalking", isWalking);
+    }
+    bool HasReachedDestination()
+    {
+        if (!agent.pathPending)
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;   // LLEGÓ
+                }
+            }
+        }
+        return false;  // TODAVÍA MOVIÉNDOSE
     }
     protected void CallRandomMovement()
     {
@@ -25,8 +41,11 @@ abstract public class navMeshMovement : MonoBehaviour
             if (RandomPoint(centerPlane.position, range, out target))
             {
                 Debug.DrawRay(target, Vector2.up, Color.magenta, 0.8f);
+            
                 agent.SetDestination(target);
+                
             }
+         
         }
         //RandomPoint();
     }

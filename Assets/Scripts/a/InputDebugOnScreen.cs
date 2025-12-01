@@ -10,7 +10,7 @@ public class InputDebugOnScreen : MonoBehaviour
 
     private List<string> logs = new List<string>();
     private Vector2 scroll;
-  
+
     private void OnEnable()
     {
         if (submitAction != null)
@@ -36,27 +36,14 @@ public class InputDebugOnScreen : MonoBehaviour
 
     private void OnNavigate(InputAction.CallbackContext ctx)
     {
-        Vector2 dir = ctx.ReadValue<Vector2>();
-        string direccion = "";
-
-        if (dir.y > 0.5f) direccion = "UP";
-        else if (dir.y < -0.5f) direccion = "DOWN";
-        else if (dir.x > 0.5f) direccion = "RIGHT";
-        else if (dir.x < -0.5f) direccion = "LEFT";
-        else direccion = "CENTER";
-
-        AddLog($"NAVIGATE REAL: {direccion}   RAW: {ctx.control.name}");
+        AddLog($"NAVIGATE  Device: {ctx.control.device.displayName}, Control: {ctx.control.name}");
     }
-
 
     private void AddLog(string msg)
     {
-        logs.Add(msg + " [" + System.DateTime.Now.ToLongTimeString() + "]");
-        if (logs.Count > 20) 
+        logs.Add(msg + "   [" + System.DateTime.Now.ToLongTimeString() + "]");
+        if (logs.Count > 20)
             logs.RemoveAt(0); // mantener limpio
-
-        Debug.Log(msg);
-
     }
 
     private void OnGUI()
@@ -76,4 +63,3 @@ public class InputDebugOnScreen : MonoBehaviour
         GUILayout.EndArea();
     }
 }
-

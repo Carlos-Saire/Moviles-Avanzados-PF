@@ -16,12 +16,16 @@ public class DoppleCombat : NetworkBehaviour
     {
         dopple = GetComponent<DoppleGanger>();
         animator = GetComponentInChildren<Animator>();
+        Debug.Log("a");
     }
-
+    private void Start()
+    {
+        Debug.Log("starts");
+    }
     private void Update()
     {
         Debug.Log("DoppleCombat Update called");
-        if (!IsServer) return; // IA solo en servidor
+       // if (!IsServer) return; // IA solo en servidor
         if (dopple.target == null) return;
         Debug.Log("Dopple checking attack conditions");
         if (!dopple.isWatched)
@@ -40,8 +44,8 @@ public class DoppleCombat : NetworkBehaviour
     {
         canAttack = false;
 
-       // animator.SetTrigger("Attack");
-
+       animator.SetTrigger("Attack");
+         Debug.Log("AttackRoutine IE");
         yield return new WaitForSeconds(0.4f);
 
         TryKillTarget(); // directo, ya estamos en el server
@@ -49,6 +53,14 @@ public class DoppleCombat : NetworkBehaviour
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
         
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Attack")
+        {
+            //Debug.Log("collision player doppleganger");
+           // animator.SetTrigger("Attack");
+        }
     }
 
     private void TryKillTarget()

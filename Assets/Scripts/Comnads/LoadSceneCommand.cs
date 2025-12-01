@@ -39,12 +39,10 @@ public class LoadSceneCommand : ICommand
     private void LoadSceneLocal()
     {
         SceneManager.LoadScene(_sceneName, _loadSceneMode);
-        InputHandler.IsMove = true;
     }
 
     private void LoadSceneNetwork()
     {
         NetworkManager.Singleton.SceneManager.LoadScene(_sceneName, _loadSceneMode);
-        InputHandler.IsMove = true;
     }
 }

@@ -53,11 +53,11 @@ public class LobbyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private async void OnDestroy()
+    private void OnDestroy()
     {
         if (currentLobby != null)
         {
-            await RemovePlayerAsync();
+            RemovePlayerAsync();
         }
     }
     public async void CreateLobby(string lobbyName, int maxPlayers,bool isPrivate)
@@ -93,43 +93,6 @@ public class LobbyManager : MonoBehaviour
             Debug.LogException(e);
         }
     }
-    public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate, string gameMode)
-{
-    try
-    {
-        CreateLobbyOptions options = new CreateLobbyOptions
-        {
-            IsPrivate = isPrivate,
-            Player = GetPlayer(),
-            Data = new Dictionary<string, DataObject>
-            {
-                { "GameMode", new DataObject(DataObject.VisibilityOptions.Public, gameMode) }
-            }
-        };
-
-        CommandQueue.Instance.AddCommand(new CanvasFadeCommand(cargandoPanel, 1, 0));
-
-        currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
-
-        string relayJoinCode = await relayManager.CreateRelay(maxPlayers);
-
-        Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions
-        {
-            Data = new Dictionary<string, DataObject>
-            {
-                { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode) },
-                { "GameMode", new DataObject(DataObject.VisibilityOptions.Public, gameMode) }
-            }
-        });
-
-        currentLobby = lobby;
-        CommandQueue.Instance.AddCommand(new CanvasFadeCommand(cargandoPanel, 0, 0));
-    }
-    catch (LobbyServiceException e)
-    {
-        Debug.LogException(e);
-    }
-}
     public async void DeleteLobby(string lobbyName)
     {
         try

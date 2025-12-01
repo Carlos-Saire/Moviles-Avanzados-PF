@@ -8,12 +8,20 @@ public class DoppleGanger: navMeshMovement
     public bool isWatched = false;
 
     public float fleeDistance = 4f;  // Distancia que intentará retroceder si lo ven
-
+    private Vector3 lastPosition;
+    private Vector3 velocity;
+    public float maxSpeed = 3f;
+    private Animator animator;
+   //public bool walking;
     private void Update()
     {
+        Debug.Log( isWalking);
+        UpdateAnimation();
         if (target == null)
         {
             CallRandomMovement();
+           
+
             return;
         }
 
@@ -22,13 +30,16 @@ public class DoppleGanger: navMeshMovement
             // si NO es visto → perseguir normalmente
             agent.isStopped = false;
             agent.SetDestination(target.position);
+           
         }
         else
         {
             // si es visto → actuar normal y alejarse un poco
             CallRandomMovement();
-           // ActNaturalAndRetreat();
+           
+            // ActNaturalAndRetreat();
         }
+        
     }
 
     private void ActNaturalAndRetreat()
@@ -44,6 +55,10 @@ public class DoppleGanger: navMeshMovement
 
         agent.SetDestination(retreatPos);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -57,6 +72,11 @@ public class DoppleGanger: navMeshMovement
             if (playerVision != null)
                 playerVision.OnDoppleWatched += HandleBeingWatched;
         }
+        /*if (other.gameObject.tag == "Attack")
+        {
+            Debug.Log("collision player doppleganger");
+            animator.SetTrigger("Attack");
+        }*/
     }
     private void OnTriggerExit(Collider other)
     {
@@ -84,4 +104,47 @@ public class DoppleGanger: navMeshMovement
         if (playerVision != null)
             playerVision.OnDoppleWatched -= HandleBeingWatched;
     }
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+       // isWalking = agent.isStopped;
+        lastPosition = transform.position;
+        
+    }
+    private void UpdateAnimation()
+    {
+        //float actualSpeed = ((transform.position - lastPosition).magnitude) / Time.deltaTime;
+
+        //lastPosition = transform.position;
+
+        // walking = actualSpeed > 0.05f;
+        if (HasReachedDestination())
+        {
+            isWalking = false;
+        }
+        else
+        {
+            isWalking = true;
+        }
+
+
+
+        animator.SetBool("isWalking", isWalking);
+
+    }
+    bool HasReachedDestination()
+    {
+        if (!agent.pathPending)
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;   // LLEGÓ
+                }
+            }
+        }
+        return false;  // TODAVÍA MOVIÉNDOSE
+    }
+
 }
