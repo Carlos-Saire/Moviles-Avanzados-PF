@@ -147,6 +147,7 @@ public class InputHandler : MonoBehaviour
         if (context.performed)
         {
             IsMove = false;
+            ResetInput();
             OnOpen?.Invoke();
         }
     }
@@ -156,8 +157,14 @@ public class InputHandler : MonoBehaviour
         if (context.performed)
         {
             IsMove = true;
+            ResetInput();
             onClouse?.Invoke();
         }
+    }
+    private void ResetInput()
+    {
+        OnMove?.Invoke(Vector2.zero);
+        OnLook?.Invoke(Vector2.zero);   
     }
 }
 
