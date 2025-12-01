@@ -72,11 +72,11 @@ public class DoppleGanger: navMeshMovement
             if (playerVision != null)
                 playerVision.OnDoppleWatched += HandleBeingWatched;
         }
-        if (other.gameObject.tag == "Attack")
+        /*if (other.gameObject.tag == "Attack")
         {
             Debug.Log("collision player doppleganger");
             animator.SetTrigger("Attack");
-        }
+        }*/
     }
     private void OnTriggerExit(Collider other)
     {

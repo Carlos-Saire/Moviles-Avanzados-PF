@@ -16,10 +16,11 @@ GameObject:
   - component: {fileID: 2167931343771057131}
   - component: {fileID: 5785562748917698035}
   - component: {fileID: 2323549955055067970}
-  - component: {fileID: 7149703938208541181}
   - component: {fileID: 651577696174966950}
   - component: {fileID: 2246309625843760700}
   - component: {fileID: 448171680128659939}
+  - component: {fileID: 7006477741123302857}
+  - component: {fileID: 346138390313010294}
   m_Layer: 6
   m_Name: Doppleganger
   m_TagString: Dopple
@@ -197,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3888278438
+  GlobalObjectIdHash: 4091066668
   InScenePlacedSourceGlobalObjectIdHash: 4091066668
   DeferredDespawnTick: 0
   Ownership: 1
@@ -210,21 +211,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &7149703938208541181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301281468819617315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6c2cf816b89974084c159ff5ac23e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  attackRange: 3
-  attackCooldown: 2
 --- !u!114 &651577696174966950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +323,36 @@ MonoBehaviour:
     TriggerNameHash: 1080829965
     TransitionIndex: 1
   m_Animator: {fileID: 662872222004100100}
+--- !u!114 &7006477741123302857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301281468819617315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6c2cf816b89974084c159ff5ac23e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  attackRange: 2
+  attackCooldown: 2
+--- !u!114 &346138390313010294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301281468819617315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6459f6db3cc0504a8fcb98858277a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  IsDead:
+    m_InternalValue: 0
 --- !u!1 &7393367135325493028
 GameObject:
   m_ObjectHideFlags: 0
