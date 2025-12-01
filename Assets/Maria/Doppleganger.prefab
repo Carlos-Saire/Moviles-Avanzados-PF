@@ -110,7 +110,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -156,7 +156,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3.78
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5785562748917698035
 Rigidbody:
@@ -290,10 +290,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.27613115
+  m_Radius: 0.39326862
   m_Height: 1.9981108
   m_Direction: 1
-  m_Center: {x: 0.0007276535, y: 0.4990554, z: -0.005034566}
+  m_Center: {x: 0.03240964, y: 0.4990554, z: 0.08042091}
 --- !u!114 &448171680128659939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +329,13 @@ MonoBehaviour:
     TransitionDuration: 0.25
     TriggerNameHash: 646380074
     TransitionIndex: 2
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -357476191
+    DestinationState: 1080829965
+    TransitionDuration: 0.25
+    TriggerNameHash: 1080829965
+    TransitionIndex: 1
   m_Animator: {fileID: 662872222004100100}
 --- !u!1 &7393367135325493028
 GameObject:
