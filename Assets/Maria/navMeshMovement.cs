@@ -9,6 +9,7 @@ abstract public class navMeshMovement : MonoBehaviour
     [SerializeField] protected float range;
     [SerializeField] protected Transform centerPlane;
 
+
     void Start()
     {
         

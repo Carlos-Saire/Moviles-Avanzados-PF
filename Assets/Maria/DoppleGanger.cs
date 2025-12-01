@@ -8,6 +8,10 @@ public class DoppleGanger: navMeshMovement
     public bool isWatched = false;
 
     public float fleeDistance = 4f;  // Distancia que intentará retroceder si lo ven
+    private Vector3 lastPosition;
+    private Vector3 velocity;
+    public float maxSpeed = 3f;
+    private Animator animator;
 
     private void Update()
     {
@@ -29,6 +33,7 @@ public class DoppleGanger: navMeshMovement
             CallRandomMovement();
            // ActNaturalAndRetreat();
         }
+        UpdateAnimation();
     }
 
     private void ActNaturalAndRetreat()
@@ -84,4 +89,26 @@ public class DoppleGanger: navMeshMovement
         if (playerVision != null)
             playerVision.OnDoppleWatched -= HandleBeingWatched;
     }
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+        lastPosition = transform.position;
+    }
+    private void UpdateAnimation()
+    {
+        Vector3 vel = agent.desiredVelocity;   // <-- ESTA ES LA DIFERENCIA
+        Vector3 localVel = transform.InverseTransformDirection(vel);
+
+        float x = localVel.x;
+        float z = localVel.z;
+
+        // Sensibilidad
+        if (Mathf.Abs(z) < 0.05f) z = 0;
+        if (Mathf.Abs(x) < 0.05f) x = 0;
+
+        animator.SetFloat("X", x);
+        animator.SetFloat("Z", z);
+
+    }
+
 }
