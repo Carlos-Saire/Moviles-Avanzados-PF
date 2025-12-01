@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7149703938208541181}
   - component: {fileID: 651577696174966950}
   - component: {fileID: 2246309625843760700}
+  - component: {fileID: 448171680128659939}
   m_Layer: 6
   m_Name: Doppleganger
   m_TagString: Dopple
@@ -109,7 +110,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -135,6 +136,7 @@ MonoBehaviour:
   target: {fileID: 0}
   isWatched: 0
   fleeDistance: 4
+  maxSpeed: 3
 --- !u!135 &2167931343771057131
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -195,8 +197,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4091066668
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 3888278438
+  InScenePlacedSourceGlobalObjectIdHash: 4091066668
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -292,6 +294,42 @@ CapsuleCollider:
   m_Height: 1.9981108
   m_Direction: 1
   m_Center: {x: 0.0007276535, y: 0.4990554, z: -0.005034566}
+--- !u!114 &448171680128659939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301281468819617315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1080829965
+    DestinationState: 964231127
+    TransitionDuration: 0.25
+    TriggerNameHash: 646380074
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -1091163100
+    DestinationState: 1080829965
+    TransitionDuration: 0.25
+    TriggerNameHash: 1080829965
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -1091163100
+    DestinationState: 964231127
+    TransitionDuration: 0.25
+    TriggerNameHash: 646380074
+    TransitionIndex: 2
+  m_Animator: {fileID: 662872222004100100}
 --- !u!1 &7393367135325493028
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +573,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1310036894110690706, guid: ea70b1b15ec37c24f8b3fff4e762c2d9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.09
+      objectReference: {fileID: 0}
     - target: {fileID: 1339101018200438765, guid: ea70b1b15ec37c24f8b3fff4e762c2d9, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -615,6 +657,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 026b378ceda6f0d4aa1fbd6469295918, type: 2}
+    - target: {fileID: 5866666021909216657, guid: ea70b1b15ec37c24f8b3fff4e762c2d9, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6240733294840144465, guid: ea70b1b15ec37c24f8b3fff4e762c2d9, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -665,6 +711,11 @@ PrefabInstance:
 --- !u!4 &172279970102842454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: ea70b1b15ec37c24f8b3fff4e762c2d9, type: 3}
+  m_PrefabInstance: {fileID: 6365956201662349717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &662872222004100100 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ea70b1b15ec37c24f8b3fff4e762c2d9, type: 3}
   m_PrefabInstance: {fileID: 6365956201662349717}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6904812156038604414 stripped
