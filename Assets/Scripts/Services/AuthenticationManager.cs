@@ -161,7 +161,7 @@ public class AuthenticationManager : MonoBehaviour
         }
         catch(Exception e)
         {
-            Debug.LogWarning("No se pudo cargar la información del jugador: " + e.Message);
+            Debug.LogWarning("No se pudo cargar la informaciï¿½n del jugador: " + e.Message);
         }
         
     }
