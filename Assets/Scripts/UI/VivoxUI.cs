@@ -17,7 +17,8 @@ public class VivoxUI : MonoBehaviour
     [SerializeField] private Image image;
     private bool isMuted;
 
-    [Header("Microphone")]
+    [Header("PlayerSO")]
+    [SerializeField] private PlayerInfoSO playerInfoSO;
 
     [Header("VivoxManager")]
     [SerializeField] private VivoxManager vivoxManager;
@@ -45,7 +46,7 @@ public class VivoxUI : MonoBehaviour
     }
     private void SubmitText(string arg0)
     {
-        vivoxManager.SendMessageToChannel(arg0);
+        vivoxManager.SendMessageToChannel(playerInfoSO.PlayerName + ": "+ arg0);
     }
     private void CreateText(string arg0)
     {

@@ -5287,6 +5287,7 @@ MonoBehaviour:
   inputFieldText: {fileID: 768103774}
   micButton: {fileID: 1012597035}
   image: {fileID: 1012597036}
+  playerInfoSO: {fileID: 11400000, guid: 8eb13d02a28a9404d911ee94dd9c6a7d, type: 2}
   vivoxManager: {fileID: 620479466}
 --- !u!4 &1346999721
 Transform:
