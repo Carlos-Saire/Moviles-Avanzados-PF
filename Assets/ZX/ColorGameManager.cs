@@ -224,5 +224,3 @@ public class ColorComparer : IEqualityComparer<Color>
         return r * 73856093 ^ g * 19349663 ^ b * 83492791;
     }
 }
-
-
