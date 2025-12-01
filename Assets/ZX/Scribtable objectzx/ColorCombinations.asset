@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0bf62456bc10a4bbcd526540d3935d, type: 3}
+  m_Name: ColorCombinations
+  m_EditorClassIdentifier: 
+  combinations:
+  - ingredients:
+    - {r: 1, g: 0, b: 0, a: 0.3254902}
+    - {r: 0.14117648, g: 1, b: 0, a: 1}
+    - {r: 0, g: 0.16078432, b: 1, a: 1}
+    resultColors:
+    - {r: 1, g: 0.4936322, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0.98224735, a: 1}
+  - ingredients:
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 1, g: 0, b: 0, a: 1}
+    - {r: 0, g: 0.16078432, b: 1, a: 1}
+    resultColors:
+    - {r: 0.11589551, g: 1, b: 0, a: 1}
+    - {r: 0, g: 0.98646975, b: 1, a: 1}

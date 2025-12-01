@@ -14,6 +14,7 @@ public class ButtonsEffects : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         originalScale = transform.localScale;
         targetScale = originalScale;
+       
     }
 
     private void Update()
@@ -24,6 +25,7 @@ public class ButtonsEffects : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         targetScale = originalScale * scaleFactor;
+        
     }
 
     public void OnPointerExit(PointerEventData eventData)
