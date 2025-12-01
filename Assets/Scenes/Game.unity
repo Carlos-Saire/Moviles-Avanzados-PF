@@ -896,7 +896,11 @@ MonoBehaviour:
   doubleClon: {fileID: 301281468819617315, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
   conteiner: {fileID: 153885944}
   visionRef: {fileID: 0}
-  positionRef: []
+  positionRef:
+  - {fileID: 461149712}
+  - {fileID: 317554499}
+  - {fileID: 1842966413}
+  - {fileID: 192007038}
   maxPlayers: 0
 --- !u!65 &133776696
 BoxCollider:
