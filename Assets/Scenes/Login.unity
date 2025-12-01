@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedScale: {x: 1.2, y: 1.2, z: 1.2}
-  imageIndex: 0
+  imageIndex: 1
 --- !u!114 &201951976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2247,7 +2247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedScale: {x: 1.2, y: 1.2, z: 1.2}
-  imageIndex: 1
+  imageIndex: 2
 --- !u!114 &747330978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4859,11 +4859,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1567244268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -583.76, y: -54.199}
-  m_SizeDelta: {x: 306.98, y: 338.138}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 222.75, y: -54.199}
+  m_SizeDelta: {x: 306.97998, y: 338.138}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1468605557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4877,7 +4877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedScale: {x: 1.2, y: 1.2, z: 1.2}
-  imageIndex: 2
+  imageIndex: 0
 --- !u!114 &1468605558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5180,7 +5180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1567244268
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6782,11 +6782,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1567244268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 596.10706, y: -46.955994}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -213.53094, y: -46.955994}
   m_SizeDelta: {x: 300.724, y: 323.65}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &2141615522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6800,7 +6800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedScale: {x: 1.2, y: 1.2, z: 1.2}
-  imageIndex: 2
+  imageIndex: 3
 --- !u!114 &2141615523
 MonoBehaviour:
   m_ObjectHideFlags: 0
