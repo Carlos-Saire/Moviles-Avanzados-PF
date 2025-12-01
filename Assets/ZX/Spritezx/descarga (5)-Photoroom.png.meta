@@ -1,0 +1,1799 @@
+fileFormatVersion: 2
+guid: e5f64f64e7496cd4da16c1364d15523f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 612
+        width: 59
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b1ed1e0891259d4c9e7dfef93492b69
+      internalID: 2127784085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_1
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 608
+        width: 51
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28c59fe2159ac5042b60a84df126ec42
+      internalID: -203963450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_2
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 608
+        width: 44
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf9b76573f2dca4e8d7368e00ea91fa
+      internalID: -990362739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_3
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 610
+        width: 59
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcd389f385238ae48952765c3780f38c
+      internalID: 1715833128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_4
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 610
+        width: 46
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f0fc4abd569430429ccd1d191a31a68
+      internalID: -1383782573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_5
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 611
+        width: 59
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be1a8591754596844928a759bf7fa3aa
+      internalID: -1228080857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_6
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 608
+        width: 57
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74dad192febb4b5438cbfa9956dfcf62
+      internalID: 550761822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_7
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 608
+        width: 54
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f9c53e522e855a4dbfc31cdacc0136a
+      internalID: -618393066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_8
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 608
+        width: 49
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60a2e9ea971269d4d8b40cdde82a480a
+      internalID: -781468288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_9
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 608
+        width: 49
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7238049f0b4fb1a40a33e8dda57bdc1c
+      internalID: 1249557881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_10
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 608
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c9541c83cd943e4ab6af0569a6713cf
+      internalID: 10394845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_11
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 608
+        width: 59
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9caa55aadd2ef5d4ab584ee2625cec85
+      internalID: 1169792364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_12
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 500
+        width: 59
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e53c493499a425479ca8cc1a5f8a76a
+      internalID: -1376211343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_13
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 501
+        width: 47
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b71fd0e697c75204a9701511902d6a17
+      internalID: 1062668429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_14
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 501
+        width: 54
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfde0182d070c2b4bac8d06cf36f0ff8
+      internalID: 232817041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_15
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 499
+        width: 58
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92d156a6440d5604985bc3e00dccfe05
+      internalID: -174324140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_16
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 502
+        width: 44
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8961fcea5643e8741a52c276488097c6
+      internalID: -9343044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_17
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 501
+        width: 72
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d40184c43ae7d7d4c9ed2c1c093100bb
+      internalID: -1746957354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_18
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 487
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99e5e6d39d161864c96e29e8305b9355
+      internalID: -833735757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_19
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 487
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e85d765d228c68e4a8580d24a2043367
+      internalID: -612754148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_20
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 487
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f18000df1a833eb4d94050cb16de72c2
+      internalID: -155732150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_21
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 487
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e666021eea643c43b6d20412a09cec3
+      internalID: -867458690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_22
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 487
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a9c84976bbabbe4a9a66843fe982a53
+      internalID: -2059115794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_23
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 487
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 717f625d19cd3c34483bb5bd00958b77
+      internalID: -1617960962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_24
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 393
+        width: 54
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6912cd1b27d64841848261252a50c21
+      internalID: 1885489821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_25
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 393
+        width: 61
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7d24e0760c72164198a0ad08c966439
+      internalID: -690713304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_26
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 396
+        width: 45
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eea979f2dd7a3614aa2d1eacaf880af6
+      internalID: 2066448475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_27
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 393
+        width: 51
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34a18721d7d412e4597b2a69719f4264
+      internalID: 1359050252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_28
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 393
+        width: 48
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97622c37d6dcebf42bd5700c689dec62
+      internalID: 1380859988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_29
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 394
+        width: 63
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d2418382dad69343b1fd13ebb540dae
+      internalID: 618981720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_30
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 366
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d17beec60e7f604d9ddcd1f87c712d7
+      internalID: -1326167912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_31
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 366
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6681bdd13e16708409f3b1d17f765bb6
+      internalID: 928801106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_32
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 366
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fb94add050dbbb4aa780ade4bca9b06
+      internalID: -1643894741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_33
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 366
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26cc067d108b193468332f9f8c8d75be
+      internalID: 540311853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_34
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 366
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b138cc2b0c7eeb74393fcde1797960f6
+      internalID: 1017100567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_35
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 366
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c92899905bbc9d418ae8b4a7c1f225c
+      internalID: -247023905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_36
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a0ab0d6009132e40ab8441aace96600
+      internalID: -2080612427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_37
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43ba0c8e8dbfb748a3d6059e224109f
+      internalID: 871774154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_38
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dd9c4a0142de1b49b83522c61ed820e
+      internalID: 2089241479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_39
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cb1195cb5f7fbf449ef5ef656da186b
+      internalID: 1087435691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_40
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 541a00ee3b2b8ed4f9c0b94f7c30b0c2
+      internalID: -1963107626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_41
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05de6d45c4dadd4586d44b8b3ae0f85
+      internalID: -1104968899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_42
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01dab32949248b343929cefc15daed32
+      internalID: 1866304874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_43
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70bbd74f85032c64ea602278a7cf11f9
+      internalID: -1169068529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_44
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f08d7e77928b7b43befb2e654a52211
+      internalID: 1909091153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_45
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d940fb690a27864f9a7048a582c7bcb
+      internalID: -297992412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_46
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81eb8b325685cc14584a32ed0c6b0916
+      internalID: -1649353652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_47
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 245
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fe4808a220f7e447a7176ae8e9794f5
+      internalID: 445552804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_48
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9579df0d712b4c14e95aa137f7ef1e3a
+      internalID: 345347227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_49
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06321aba9818d4c4d83acd5d6948a058
+      internalID: -1214629906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_50
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3f030bb3dcdaa44eb909cfd58a184dd
+      internalID: -82891002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_51
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df3c15a4329003240ac7eeeaa82706ed
+      internalID: 731381728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_52
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f994991491382a4fa03de8b9c38f58a
+      internalID: -1246001823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_53
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b948306223a749c46b0cdfcb0d4e6387
+      internalID: -92409885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_54
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9225357f93c43ad47a770b1bdd5c6c21
+      internalID: -726904830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_55
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e468ebd2c617a9347a1fae081f5904e4
+      internalID: 298731648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_56
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79ffeea8ade7a9f4fa9ccbfb54866bbf
+      internalID: 284877999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_57
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 912288c893ae093438126530306b91b3
+      internalID: 1743174016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_58
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c43c5064b7a97f47bcba8821cc4f718
+      internalID: -1562930811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_59
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 124
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66df02760ca3d97449d4a2245111d738
+      internalID: 1296786831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_60
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a62c22d379b170449ae176d5e1f4404
+      internalID: 1227873994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_61
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbc7d7d755e9a6949ba5d195be702d3e
+      internalID: -1124926528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_62
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35dc816c7ae1c4149a6350904a63c93d
+      internalID: 970390017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_63
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5044f6b0f6c303145a1045fc3ca90e36
+      internalID: 38002068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_64
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f709ca4abfe2f94bb67eaffa4fa6a1d
+      internalID: -874556352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_65
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe49de1c9a517d54f8049bfc47213013
+      internalID: -1777246115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_66
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6624392fa8d58d946a5b30ec1bc85f9b
+      internalID: 1661621755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_67
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d8a1f8ddb3d7c7409c55f9f6d63a7a1
+      internalID: -391146883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_68
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd05d950e498802419f496a68d055b16
+      internalID: -1469152496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_69
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baaef5f09861e2d43865f58ca54d7333
+      internalID: 852877267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_70
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74d8f8e49f6d060489c64c238fb69ed3
+      internalID: -604335486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: descarga (5)-Photoroom_71
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 3
+        width: 59
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1719dd4df14462a42ad70393ac1e082c
+      internalID: -839011342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a6c8fa03b595d7b479d7250a12931633
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      descarga (5)-Photoroom_0: 2127784085
+      descarga (5)-Photoroom_1: -203963450
+      descarga (5)-Photoroom_10: 10394845
+      descarga (5)-Photoroom_11: 1169792364
+      descarga (5)-Photoroom_12: -1376211343
+      descarga (5)-Photoroom_13: 1062668429
+      descarga (5)-Photoroom_14: 232817041
+      descarga (5)-Photoroom_15: -174324140
+      descarga (5)-Photoroom_16: -9343044
+      descarga (5)-Photoroom_17: -1746957354
+      descarga (5)-Photoroom_18: -833735757
+      descarga (5)-Photoroom_19: -612754148
+      descarga (5)-Photoroom_2: -990362739
+      descarga (5)-Photoroom_20: -155732150
+      descarga (5)-Photoroom_21: -867458690
+      descarga (5)-Photoroom_22: -2059115794
+      descarga (5)-Photoroom_23: -1617960962
+      descarga (5)-Photoroom_24: 1885489821
+      descarga (5)-Photoroom_25: -690713304
+      descarga (5)-Photoroom_26: 2066448475
+      descarga (5)-Photoroom_27: 1359050252
+      descarga (5)-Photoroom_28: 1380859988
+      descarga (5)-Photoroom_29: 618981720
+      descarga (5)-Photoroom_3: 1715833128
+      descarga (5)-Photoroom_30: -1326167912
+      descarga (5)-Photoroom_31: 928801106
+      descarga (5)-Photoroom_32: -1643894741
+      descarga (5)-Photoroom_33: 540311853
+      descarga (5)-Photoroom_34: 1017100567
+      descarga (5)-Photoroom_35: -247023905
+      descarga (5)-Photoroom_36: -2080612427
+      descarga (5)-Photoroom_37: 871774154
+      descarga (5)-Photoroom_38: 2089241479
+      descarga (5)-Photoroom_39: 1087435691
+      descarga (5)-Photoroom_4: -1383782573
+      descarga (5)-Photoroom_40: -1963107626
+      descarga (5)-Photoroom_41: -1104968899
+      descarga (5)-Photoroom_42: 1866304874
+      descarga (5)-Photoroom_43: -1169068529
+      descarga (5)-Photoroom_44: 1909091153
+      descarga (5)-Photoroom_45: -297992412
+      descarga (5)-Photoroom_46: -1649353652
+      descarga (5)-Photoroom_47: 445552804
+      descarga (5)-Photoroom_48: 345347227
+      descarga (5)-Photoroom_49: -1214629906
+      descarga (5)-Photoroom_5: -1228080857
+      descarga (5)-Photoroom_50: -82891002
+      descarga (5)-Photoroom_51: 731381728
+      descarga (5)-Photoroom_52: -1246001823
+      descarga (5)-Photoroom_53: -92409885
+      descarga (5)-Photoroom_54: -726904830
+      descarga (5)-Photoroom_55: 298731648
+      descarga (5)-Photoroom_56: 284877999
+      descarga (5)-Photoroom_57: 1743174016
+      descarga (5)-Photoroom_58: -1562930811
+      descarga (5)-Photoroom_59: 1296786831
+      descarga (5)-Photoroom_6: 550761822
+      descarga (5)-Photoroom_60: 1227873994
+      descarga (5)-Photoroom_61: -1124926528
+      descarga (5)-Photoroom_62: 970390017
+      descarga (5)-Photoroom_63: 38002068
+      descarga (5)-Photoroom_64: -874556352
+      descarga (5)-Photoroom_65: -1777246115
+      descarga (5)-Photoroom_66: 1661621755
+      descarga (5)-Photoroom_67: -391146883
+      descarga (5)-Photoroom_68: -1469152496
+      descarga (5)-Photoroom_69: 852877267
+      descarga (5)-Photoroom_7: -618393066
+      descarga (5)-Photoroom_70: -604335486
+      descarga (5)-Photoroom_71: -839011342
+      descarga (5)-Photoroom_8: -781468288
+      descarga (5)-Photoroom_9: 1249557881
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
