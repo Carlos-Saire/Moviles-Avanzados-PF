@@ -21,7 +21,6 @@ public class VivoxUI : MonoBehaviour
     [Header("VivoxManager")]
     [SerializeField] private VivoxManager vivoxManager;
 
-
     private void Reset()
     {
         gameObject.name = "VivoxUI";
