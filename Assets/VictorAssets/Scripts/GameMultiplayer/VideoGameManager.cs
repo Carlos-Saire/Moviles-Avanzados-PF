@@ -20,7 +20,11 @@ public class VideoGameManager : NetworkBehaviour
     {
         Instance = this;
     }
-
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     private void Update()
     {
         if (!IsServer) return;
