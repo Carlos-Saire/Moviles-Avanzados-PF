@@ -24,9 +24,10 @@ public class ScrollOpener : MonoBehaviour
     public float buttonInitialY_Offset = 50f; 
 
     private List<Vector2> originalButtonPositions = new List<Vector2>();
-
+    public RectTransform highlightSprite;
     private void Start()
     {
+
         foreach (var element in UI_Elements_To_Show)
         {
             originalButtonPositions.Add(element.anchoredPosition);
@@ -36,6 +37,10 @@ public class ScrollOpener : MonoBehaviour
             );
             element.anchoredPosition = initialPos;
             element.gameObject.SetActive(false);
+        }
+        if (highlightSprite != null)
+        {
+            highlightSprite.gameObject.SetActive(false);
         }
         contentPanel.localScale = new Vector3(0.1f, contentPanel.localScale.y, contentPanel.localScale.z);
         StartCoroutine(StartOpenDelay());
@@ -69,6 +74,15 @@ public class ScrollOpener : MonoBehaviour
                 .SetEase(Ease.OutBack);
             // efecto rebote 
             button.DOScale(1.05f, 0.15f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutSine);
+        }
+        if (highlightSprite != null && UI_Elements_To_Show.Count > 0)
+        {
+            RectTransform firstButton = UI_Elements_To_Show[0];
+            highlightSprite.gameObject.SetActive(true);
+            // posición del primer botón
+            highlightSprite.anchoredPosition = firstButton.anchoredPosition;
+            // efecto 
+            highlightSprite.DOScale(1.1f, 0.1f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutSine);
         }
     }
 }
