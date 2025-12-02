@@ -1,0 +1,32 @@
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\bin\x64\Release\resources.pri
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\bin\x64\Release\AppxManifest.xml
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\bin\x64\Release\My project (7).build.appxrecipe
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\My project (7).vcxproj.AssemblyReference.cache
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\My proje.DF9221EC.Up2Date
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\ResourceHandlingTask.state
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\My project (7).vcxproj.GenerateResource.Cache
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\priconfig.xml
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\priconfig.xml.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\unfiltered.layout.resfiles
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\unfiltered.layout.resfiles.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\filtered.layout.resfiles
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\filtered.layout.resfiles.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\excluded.layout.resfiles
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\excluded.layout.resfiles.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\resources.resfiles
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\resources.resfiles.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\pri.resfiles
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\pri.resfiles.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\qualifiers.txt
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\qualifiers.txt.intermediate
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\MultipleQualifiersPerDimensionFound.txt
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\ProjectArchitectures.txt
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\.winmd_cache\$UnityPlayer.winmd_638906011420000000.json
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\package.map.txt
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\_pkginfo.txt
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\Symbols\My project (7).pdb
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\Symbols\UnityPlayer_UAP_x64_Release_il2cpp.pdb
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\Symbols\lib_burst_generated.pdb
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\Symbols\GameAssembly.pdb
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\Symbols\baselib_UAP_x64_Release_il2cpp.pdb
+C:\Users\abish\OneDrive\Desktop\unity\5 ciclo\Consolas\Moviles-Avanzados-PF\Buil\build\obj\My project (7)\x64\Release\_installerinfo.log

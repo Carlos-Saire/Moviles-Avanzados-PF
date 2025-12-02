@@ -1,0 +1,15 @@
+GameAssembly.dll
+GameAssembly.pdb
+Assets\SplashScreen.scale-200.png
+Assets\Square150x150Logo.scale-200.png
+Assets\Square44x44Logo.scale-200.png
+Assets\Square44x44Logo.targetsize-24.png
+Assets\Square44x44Logo.targetsize-24_altform-unplated.png
+Assets\StoreLogo.png
+Assets\Wide310x150Logo.scale-200.png
+StoreManifest.xml
+D3D12\D3D12Core.dll
+D3D12\d3d12SDKLayers.dll
+baselib.dll
+baselib_UAP_x64_Release_il2cpp.pdb
+WinPixEventRuntime_UAP.dll

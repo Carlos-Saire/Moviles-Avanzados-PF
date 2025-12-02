@@ -97,3 +97,5 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Buil/build/obj/My project (7)/x64/Release/Symbols/My project (7)_1.0.0.0_x64.appxsym
+Buil/build/obj/My project (7)/x64/Release/Symbols/My project (7)_1.0.0.0_x64.appxsym
