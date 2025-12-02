@@ -95,7 +95,7 @@ public class InputHandler : MonoBehaviour
 
         OnMove?.Invoke(context.ReadValue<Vector2>());
         OnMoveSinglePLayer?.Invoke(context.ReadValue<Vector2>());
-        Debug.Log("Move :" + context.ReadValue<Vector2>());
+        //Debug.Log("Move :" + context.ReadValue<Vector2>());
     }
     public void InputLook(InputAction.CallbackContext context)
     {

@@ -13,6 +13,7 @@ public class GamepadChecker : MonoBehaviour
 
     private Button[] botones;
     private InputSystemUIInputModule uiInputModule; // Referencia al módulo de UI
+    [SerializeField] PlayerInfoSO playerInfo;
     private void Reset()
     {
         gameObject.name = "GamepadChecker";
@@ -110,6 +111,8 @@ public class GamepadChecker : MonoBehaviour
     public void SeleccionarJugadores(int cantidad)
     {
         PlayerPrefs.SetInt("JugadoresSeleccionados", cantidad);
+        playerInfo.numbOfPlayers = cantidad;
+       
     }
 
 }

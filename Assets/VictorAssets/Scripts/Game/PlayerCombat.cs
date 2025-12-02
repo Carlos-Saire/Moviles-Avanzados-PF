@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerCombat : NetworkBehaviour
+public class PlayerCombat : MonoBehaviour
 {
     private PlayerController player;
     private Animator animator;
@@ -29,39 +29,21 @@ public class PlayerCombat : NetworkBehaviour
 
     private void HandleAttack()
     {
-        if (!IsOwner) return;
         if (player.IsFrozen) return;
         if (isAttacking) return;
 
-        if (player.GetComponent<PlayerHealth>().IsDead.Value)
-            return;
-
-        if (SceneManager.GetActiveScene().name != "Game")
+        if (player.GetComponent<PlayerHealth2>().IsDead)
             return;
 
         isAttacking = true;
         animator.SetBool("IsAttacking", true);
-        PlayAttackAnimationRpc();
+        animator.SetTrigger("Attack");
 
         if (dagger != null)
             dagger.SetActive(true);
 
         StartCoroutine(EndAttack());
-
-        TryKillPlayerServerRpc(player.GetCameraForward(), player.GetCameraPosition());
-    }
-
-    [Rpc(SendTo.Server)]
-    private void PlayAttackAnimationRpc()
-    {
-        animator.SetTrigger("Attack");
-        PlayAttackAnimationClientRpc();
-    }
-
-    [Rpc(SendTo.NotServer)]
-    private void PlayAttackAnimationClientRpc()
-    {
-        animator.SetTrigger("Attack");
+        TryLocalDamage();
     }
 
     private IEnumerator EndAttack()
@@ -75,28 +57,26 @@ public class PlayerCombat : NetworkBehaviour
             dagger.SetActive(false);
     }
 
-    [Rpc(SendTo.Server)]
-    private void TryKillPlayerServerRpc(Vector3 camForward, Vector3 camPosition)
+    private void TryLocalDamage()
     {
-        if (SceneManager.GetActiveScene().name != "Game")
-            return;
-
         float attackRange = 2f;
-        float attackRadius = 1.2f;
+        float attackRadius = 1.1f;
 
-        Collider[] hits = Physics.OverlapSphere(camPosition + camForward * 1f, attackRadius);
+        Vector3 pos = player.GetCameraPosition();
+        Vector3 forward = player.GetCameraForward();
 
-        foreach (Collider col in hits)
+        Collider[] hits = Physics.OverlapSphere(pos + forward * 1f, attackRadius);
+
+        foreach (Collider hit in hits)
         {
-            if (col.TryGetComponent<PlayerController>(out PlayerController target))
+            if (hit.TryGetComponent<PlayerController>(out PlayerController target))
             {
-                if (target != player && target.TryGetComponent<PlayerHealth>(out PlayerHealth hp))
+                if (target != player)
                 {
-                    float dist = Vector3.Distance(player.transform.position, target.transform.position);
-                    if (dist <= attackRange)
+                    if (target.TryGetComponent<PlayerHealth2>(out PlayerHealth2 hp))
                     {
-                        hp.KillServerRpc();
-                        break; 
+                        hp.IsDead = true;
+                        hp.GetComponentInChildren<Animator>().SetTrigger("Death");
                     }
                 }
             }

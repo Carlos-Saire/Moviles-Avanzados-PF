@@ -1,17 +1,17 @@
 using TMPro;
 using UnityEngine;
-
+using SinglePlayer;
 public class UIVideoGame : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI fireText;
     [SerializeField] private TextMeshProUGUI timerText;
-
+    [SerializeField] private GameObject LosePanel;
     private void Update()
     {
-        if (VideoGameManager.Instance == null) return;
+        if (SinglePlayer.VideoGameManager.Instance == null) return;
 
-        float fire = VideoGameManager.Instance.GetFire();
-        float time = VideoGameManager.Instance.GetTimer();
+        float fire = SinglePlayer.VideoGameManager.Instance.GetFire();
+        float time = SinglePlayer.VideoGameManager.Instance.GetTimer();
 
         fireText.text = Mathf.RoundToInt(fire) + "%";
 
@@ -19,5 +19,9 @@ public class UIVideoGame : MonoBehaviour
         int seconds = Mathf.FloorToInt(time % 60);
 
         timerText.text = $"{minutes:00}:{seconds:00}";
+    }
+    public void ActiveLose()
+    {
+        LosePanel.SetActive(true);
     }
 }

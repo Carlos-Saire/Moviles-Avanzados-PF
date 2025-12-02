@@ -8,6 +8,7 @@ public class PlayerInfoSO : ScriptableObject
     public string Playerbirthday { get; set; }
     public int PlayerIndexProfile { get; set; }
     [SerializeField] private Sprite[] profileImages;
+    public int numbOfPlayers { get; set; }
     public Sprite GetProfileImage()
     {
         return profileImages[PlayerIndexProfile];

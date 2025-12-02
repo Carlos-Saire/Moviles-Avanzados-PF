@@ -42,6 +42,6 @@ public class UIGameEnd : MonoBehaviour
             MissionSpawnManager.Instance.CleanUpAllActiveMissions();
         }
 
-        NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
+       SceneManager.LoadScene("MenuSinglePlayer", LoadSceneMode.Single);
     }
 }

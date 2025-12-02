@@ -11,6 +11,7 @@ public class DeathUIManager : MonoBehaviour
         Instance = this;
         deathPanel.SetActive(false);
     }
+    
 
     public void ShowDeathScreen()
     {

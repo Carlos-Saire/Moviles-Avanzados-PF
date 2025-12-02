@@ -10,16 +10,24 @@ public class Search : navMeshMovement
     bool canSpawn = false;
     [SerializeField] int maxPlayers;
     int clonsCreated = 0;
-    
+    [SerializeField] PlayerInfoSO playerInfo;
     private void OnCollisionEnter(Collision collision)
     {
 
     }
     private void Start()
     {
-        maxPlayers = GameManager.Instance.GetPlayersConected();
+        if (GameManager.Instance != null) 
+        {
+            maxPlayers = GameManager.Instance.GetPlayersConected();
+        }
+        else if(playerInfo != null)
+        {
+            maxPlayers = playerInfo.numbOfPlayers;
+        }
+
         Debug.Log("NUMB OF PLAYERS" + maxPlayers);
-        for(int i = 0; i< maxPlayers; i++)
+        for (int i = 0; i< maxPlayers; i++)
         {
             //positionRef[i].transform.parent = conteiner.transform;
             GameObject doublePlayer = Instantiate(doubleClon, positionRef[i].transform.position, Quaternion.identity, conteiner.transform);
