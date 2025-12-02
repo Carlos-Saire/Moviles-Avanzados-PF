@@ -101,14 +101,20 @@ public class InputHandler : MonoBehaviour
     {
         if (!IsMove) return;
 
+        Vector2 look = context.ReadValue<Vector2>();
+
 #if UNITY_ANDROID
-        if (_width < _currentPrees)
-        {
-            OnLook?.Invoke(context.ReadValue<Vector2>());
-        }
+    if (_width < _currentPrees)
+    {
+        OnLook?.Invoke(look);
+        OnLookSinglePLayer?.Invoke(look);
+    }
 #else
-        OnLook?.Invoke(context.ReadValue<Vector2>());
+        OnLook?.Invoke(look);
+        OnLookSinglePLayer?.Invoke(look);
 #endif
+
+
     }
     public void InputPress(InputAction.CallbackContext context)
     {
