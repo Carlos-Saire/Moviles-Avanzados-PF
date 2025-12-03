@@ -22,8 +22,9 @@ namespace SinglePlayer
         {
             animator = GetComponent<Animator>();    
             controller = GetComponent<CharacterController>();
-            mainCamera = Camera.main.transform;
+            mainCamera = GetComponentInChildren<CameraController>().transform; 
             inputHandler = GetComponentInChildren<InputHandler>();
+            mainCamera = mainCamera.transform;
             inputHandler.OnMoveSinglePLayer += Move;
         }
         private void OnDestroy()
@@ -43,7 +44,7 @@ namespace SinglePlayer
         {
             if (controller.isGrounded && velocity.y < 0)
             {
-                velocity.y = -2f;  
+                velocity.y = -2f;
             }
             Vector3 direction = (mainCamera.right * input.x + mainCamera.forward * input.y).normalized;
             direction.y = 0;
