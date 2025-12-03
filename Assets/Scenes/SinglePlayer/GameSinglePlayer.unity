@@ -370,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113983877}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision8
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -401,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 182486116}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision7
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -1935,7 +1935,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 414917842}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision5
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -3203,7 +3203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 691944724}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision2
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -3234,7 +3234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733505849}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision9
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -3390,7 +3390,7 @@ GameObject:
   - component: {fileID: 783816927}
   - component: {fileID: 783816926}
   - component: {fileID: 783816925}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MisionBookZona
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -4659,7 +4659,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1142980900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision4
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -5083,7 +5083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1257100889}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision3
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -7364,7 +7364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751255370}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision1
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -8021,7 +8021,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1881305669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision6
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -8473,7 +8473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1975643957}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpawnMision10
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}

@@ -31,7 +31,7 @@ namespace SinglePlayer
         }
         private void Update()
         {
-            Debug.Log("update");
+            //Debug.Log("update");
 
             fireValue -= fireDrainRate * Time.deltaTime;
             if (fireValue<= 0)

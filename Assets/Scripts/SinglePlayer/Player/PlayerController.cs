@@ -16,8 +16,8 @@ namespace SinglePlayer
         private Vector2 input;
 
         private InputHandler inputHandler;
-        
-       
+
+        private bool isInInteractionZone = false;
         private void Awake()
         {
             animator = GetComponent<Animator>();    
@@ -26,10 +26,12 @@ namespace SinglePlayer
             inputHandler = GetComponentInChildren<InputHandler>();
             mainCamera = mainCamera.transform;
             inputHandler.OnMoveSinglePLayer += Move;
+            InputHandler.OnInteract += HandleInteractionAttempt;
         }
         private void OnDestroy()
         {
             inputHandler.OnMoveSinglePLayer -= Move;
+            InputHandler.OnInteract -= HandleInteractionAttempt;
         }
         private void Update()
         {
@@ -58,6 +60,37 @@ namespace SinglePlayer
         {
             animator.SetFloat("X", input.x, 0.1f, Time.deltaTime);
             animator.SetFloat("Z", input.y, 0.1f, Time.deltaTime);
+        }
+        private void HandleInteractionAttempt()
+        {
+            if (isInInteractionZone)
+            {
+                Debug.Log("exito zzz");
+                
+            }
+            else
+            {
+                Debug.Log("f en el chat");
+            }
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("InteractionZone"))
+            {
+                isInInteractionZone = true;
+                Debug.Log("Entró a la zona de interacción.");
+                
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("InteractionZone"))
+            {
+                isInInteractionZone = false;
+                Debug.Log("Salió de la zona de interacción.");
+                
+            }
         }
     }
 }

@@ -8,8 +8,8 @@ public class UIVideoGame : MonoBehaviour
     //[SerializeField] private GameObject LosePanel;
     private void Update()
     {
-        Debug.Log("UI Update");
-        Debug.Log(SinglePlayer.VideoGameManager.Instance+ "nose");
+        //Debug.Log("UI Update");
+        //Debug.Log(SinglePlayer.VideoGameManager.Instance+ "nose");
         if (SinglePlayer.VideoGameManager.Instance == null) return;
 
         float fire = SinglePlayer.VideoGameManager.Instance.GetFire();

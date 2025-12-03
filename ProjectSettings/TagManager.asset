@@ -7,6 +7,7 @@ TagManager:
   - Dopple
   - Kill
   - Attack
+  - InteractionZone
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Dopple
-  - 
+  - InteractionZone
   - 
   - 
   - 

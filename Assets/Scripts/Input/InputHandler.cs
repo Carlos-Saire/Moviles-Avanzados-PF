@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,8 +17,23 @@ public class InputHandler : MonoBehaviour
     public static event Action OnOpen;
     public static event Action onClouse;
     [SerializeField] private Transform UImobile;
-
+    private InputAction interactAction;
+    private PlayerInput playerInput;
     static public bool IsMove = true;
+
+    private void Awake()
+    {
+        // ...
+        playerInput = GetComponentInParent<PlayerInput>(); // Asumiendo que PlayerInput está en el padre
+        if (playerInput == null) playerInput = GetComponent<PlayerInput>();
+
+        // **OBTENER LA ACCIÓN POR NOMBRE**
+        interactAction = playerInput.actions["Interact"];
+
+        // **SUSCRIBIR LA FUNCIÓN DIRECTAMENTE**
+        // Nota: Si usas esta línea, puedes eliminar el método InputInteract(CallbackContext context)
+        interactAction.performed += OnPerformInteract;
+    }
 #if UNITY_ANDROID|| UNITY_IOS
     private float _width;
     private float _currentPrees;
@@ -135,14 +150,12 @@ public class InputHandler : MonoBehaviour
             OnAttack?.Invoke();
         }
     }
-    public void InputInteract(InputAction.CallbackContext context)
+    private void OnPerformInteract(InputAction.CallbackContext context)
     {
         if (!IsMove) return;
 
-        if (context.started)
-        {
-            OnInteract?.Invoke();
-        }
+        Debug.Log("🎉 ¡INTERACT DETECTADO POR CÓDIGO!");
+        OnInteract?.Invoke();
     }
     public void OpenInput(InputAction.CallbackContext context)
     {

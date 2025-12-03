@@ -1559,10 +1559,6 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/XInputControllerWindows/buttonWest,/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
-    m_ActionName: 'Player/Interact[/Keyboard/e,/XInputControllerWindows/buttonNorth]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 27c5f898-bc57-4ee1-8800-db469aca5fe3
     m_ActionName: 'Player/Crouch[/XInputControllerWindows/buttonEast,/Keyboard/c]'
   - m_PersistentCalls:
@@ -1623,8 +1619,28 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 4662c6e5-5317-4135-9fbd-5ef0bfa2d463
-    m_ActionName: UI/Select
+    m_ActionId: 7e9a99fd-f4dc-431a-b1af-c7518ddc5fa1
+    m_ActionName: Player/TouchPress
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1f043856-3bd0-412d-bfe6-21b215298f0e
+    m_ActionName: 'Player/Open[/Keyboard/t]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e32dd943-58b7-4282-97de-178f027a887d
+    m_ActionName: 'Player/Clouse[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7daac7a7-ec17-42ac-81fd-62c9b6c6118f
+    m_ActionName: 'Lobby/OpenText[/Keyboard/t]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f89123ff-a6ac-43d8-916d-05ed0a9caea0
+    m_ActionName: 'Lobby/ClouseText[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: daa59277-0242-48c8-9ffd-f7951e1d9d2b
+    m_ActionName: 'Player/Interact[/XInputControllerWindows1/buttonSouth]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: XBOX
   m_DefaultActionMap: Player
