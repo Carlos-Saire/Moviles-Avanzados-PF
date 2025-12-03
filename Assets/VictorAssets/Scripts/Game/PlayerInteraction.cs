@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private PlayerController player;
+    private SinglePlayer.PlayerController player;
     private MissionTrigger nearMission;
 
     private void Awake()
     {
-        player = GetComponent<PlayerController>();
+        player = GetComponent<SinglePlayer.PlayerController>();
     }
 
     private void OnEnable()
@@ -27,8 +27,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HandleInteract()
     {
-        if (!player.IsOwner) return;
-
+        Debug.Log("Se llamo");
         if (nearMission != null)
             nearMission.StartMission(player);
     }

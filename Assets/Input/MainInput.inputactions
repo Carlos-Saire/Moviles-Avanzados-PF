@@ -540,7 +540,7 @@
                     "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";XBOX",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false

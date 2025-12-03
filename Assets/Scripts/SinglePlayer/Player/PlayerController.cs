@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Windows;
 namespace SinglePlayer
 {
     [RequireComponent(typeof(CharacterController))]
@@ -16,6 +17,7 @@ namespace SinglePlayer
         private Vector2 input;
 
         private InputHandler inputHandler;
+        private PlayerInteraction playerInteraction;
 
         private bool isInInteractionZone = false;
         private void Awake()
@@ -24,14 +26,13 @@ namespace SinglePlayer
             controller = GetComponent<CharacterController>();
             mainCamera = GetComponentInChildren<CameraController>().transform; 
             inputHandler = GetComponentInChildren<InputHandler>();
+            playerInteraction = GetComponent<PlayerInteraction>();
             mainCamera = mainCamera.transform;
             inputHandler.OnMoveSinglePLayer += Move;
-            InputHandler.OnInteract += HandleInteractionAttempt;
         }
         private void OnDestroy()
         {
             inputHandler.OnMoveSinglePLayer -= Move;
-            InputHandler.OnInteract -= HandleInteractionAttempt;
         }
         private void Update()
         {
@@ -61,18 +62,6 @@ namespace SinglePlayer
             animator.SetFloat("X", input.x, 0.1f, Time.deltaTime);
             animator.SetFloat("Z", input.y, 0.1f, Time.deltaTime);
         }
-        private void HandleInteractionAttempt()
-        {
-            if (isInInteractionZone)
-            {
-                Debug.Log("exito zzz");
-                
-            }
-            else
-            {
-                Debug.Log("f en el chat");
-            }
-        }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("InteractionZone"))
@@ -91,6 +80,21 @@ namespace SinglePlayer
                 Debug.Log("Salió de la zona de interacción.");
                 
             }
+        }
+        public void SetNearMission(MissionTrigger mission)
+        {
+            playerInteraction.SetNearMission(mission);
+        }
+        public void FreezePlayer(bool state)
+        {
+
+
+            animator.SetFloat("X", 0);
+            animator.SetFloat("Z", 0);
+
+            Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = state;
+
         }
     }
 }

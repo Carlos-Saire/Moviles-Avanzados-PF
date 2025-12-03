@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Unity.Netcode;
-public class SymbolOrderMiniGame : NetworkBehaviour
+public class SymbolOrderMiniGame : MonoBehaviour
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel;
@@ -22,13 +22,13 @@ public class SymbolOrderMiniGame : NetworkBehaviour
     [Header("Posiciones Iniciales de Símbolos")]
     [SerializeField] private Transform[] initialSymbolPositions;
 
-    private PlayerController currentPlayer;
+    private SinglePlayer.PlayerController currentPlayer;
     private NetworkObject missionObject;
     public void SetMissionObject(NetworkObject missionObj)
     {
         missionObject = missionObj;
     }
-    public void SetPlayer(PlayerController player)
+    public void SetPlayer(SinglePlayer.PlayerController player)
     {
         currentPlayer = player;
     }

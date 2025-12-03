@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 
-public class BookManager : NetworkBehaviour
+public class BookManager : MonoBehaviour
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel; 
 
-    private PlayerController currentPlayer;
+    private SinglePlayer.PlayerController currentPlayer;
     private NetworkObject missionObject;
 
     private bool completed = false; 
@@ -30,7 +30,7 @@ public class BookManager : NetworkBehaviour
     {
         missionObject = missionObj;
     }
-    public void SetPlayer(PlayerController pc)
+    public void SetPlayer(SinglePlayer.PlayerController pc)
     {
         currentPlayer = pc;
     }

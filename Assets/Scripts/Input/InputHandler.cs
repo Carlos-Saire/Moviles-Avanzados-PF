@@ -150,11 +150,10 @@ public class InputHandler : MonoBehaviour
             OnAttack?.Invoke();
         }
     }
-    private void OnPerformInteract(InputAction.CallbackContext context)
+    public void OnPerformInteract(InputAction.CallbackContext context)
     {
         if (!IsMove) return;
 
-        Debug.Log("🎉 ¡INTERACT DETECTADO POR CÓDIGO!");
         OnInteract?.Invoke();
     }
     public void OpenInput(InputAction.CallbackContext context)

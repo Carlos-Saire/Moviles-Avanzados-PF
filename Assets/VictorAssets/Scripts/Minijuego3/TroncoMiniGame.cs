@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Unity.Netcode;
-public class TroncoMiniGame : NetworkBehaviour, IMiniGame
+public class TroncoMiniGame : MonoBehaviour, IMiniGame
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel;    
@@ -18,7 +18,7 @@ public class TroncoMiniGame : NetworkBehaviour, IMiniGame
     private int linesLeft;
     private bool completed = false;
 
-    private PlayerController currentPlayer;
+    private SinglePlayer.PlayerController currentPlayer;
     private NetworkObject missionObject;
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class TroncoMiniGame : NetworkBehaviour, IMiniGame
     {
         missionObject = missionObj;
     }
-    public void SetPlayer(PlayerController pc)
+    public void SetPlayer(SinglePlayer.PlayerController pc)
     {
         currentPlayer = pc;
     }
