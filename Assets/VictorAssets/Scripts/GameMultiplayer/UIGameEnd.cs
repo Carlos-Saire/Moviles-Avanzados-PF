@@ -12,6 +12,7 @@ public class UIGameEnd : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("UIGameEnd Awake");
         Instance = this;
         victoryPanel.SetActive(false);
         defeatPanel.SetActive(false);

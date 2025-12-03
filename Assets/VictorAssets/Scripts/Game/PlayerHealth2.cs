@@ -17,23 +17,16 @@ public class PlayerHealth2 : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<PlayerController>();
-        UIGame = FindObjectOfType<UIVideoGame>();
-        deathUIPanel = UIGame.gameObject;
+       
+      
     }
 
     private void Start()
     {
-        deathUIPanel.SetActive(false);
+        //deathUIPanel.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-   
-    }
-   public  void IsDeadPlayer()
-    {
-        
-    }
+
     private void Update()
     {
         if (IsDead == true)
@@ -41,8 +34,8 @@ public class PlayerHealth2 : MonoBehaviour
             IsDead = true;
             animator.SetTrigger("Death");
             Debug.Log("Player died");
-            controller.playerCamera.gameObject.SetActive(false);
-            UIGame.ActiveLose();
+            //controller.playerCamera.gameObject.SetActive(false);
+            UIGameEnd.Instance.Show(false);
         }
         /*if (IsDead ==true) 
         {
@@ -58,18 +51,18 @@ public class PlayerHealth2 : MonoBehaviour
 
     public void ResetPlayer()
     {
-        IsDead = false;
+        /* IsDead = false;
 
-        if (controller != null)
-            controller.enabled = true;
+         if (controller != null)
+             controller.enabled = true;
 
-        if (controller.playerCamera != null)
-            controller.playerCamera.gameObject.SetActive(true);
+         if (controller.playerCamera != null)
+             controller.playerCamera.gameObject.SetActive(true);
 
-        if ( deathUIPanel != null)
-            deathUIPanel.SetActive(false);
+         if ( deathUIPanel != null)
+             deathUIPanel.SetActive(false);
 
-        if (animator != null)
-            animator.Rebind();
+         if (animator != null)
+             animator.Rebind();*/
     }
 }
