@@ -53,8 +53,8 @@ public class ScrollOpener : MonoBehaviour
     public void OpenScroll()
     {
         // movimiento de la imagen en y  
-        leftPost.DOAnchorPosY(finalY_LeftPost, openDuration).SetEase(Ease.OutQuad);
-        rightPost.DOAnchorPosY(finalY_RightPost, openDuration).SetEase(Ease.OutQuad);
+        leftPost.DOAnchorPosX(finalY_LeftPost, openDuration).SetEase(Ease.OutQuad);
+        rightPost.DOAnchorPosX(finalY_RightPost, openDuration).SetEase(Ease.OutQuad);
         // expande el contenido
         contentPanel.DOScaleX(1f, openDuration)
              .SetDelay(0.1f) 

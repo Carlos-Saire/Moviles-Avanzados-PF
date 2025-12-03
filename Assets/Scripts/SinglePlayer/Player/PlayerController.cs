@@ -41,6 +41,10 @@ namespace SinglePlayer
         }
         private void MovePlayer()
         {
+            if (controller.isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;  
+            }
             Vector3 direction = (mainCamera.right * input.x + mainCamera.forward * input.y).normalized;
             direction.y = 0;
 
