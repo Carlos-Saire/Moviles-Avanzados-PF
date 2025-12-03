@@ -3062,6 +3062,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Doppleganger
       objectReference: {fileID: 0}
+    - target: {fileID: 301281468819617315, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1753348411169749109, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.59944
@@ -4545,7 +4549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -24.000183, y: 0}
+  m_AnchoredPosition: {x: -24.000366, y: 0}
   m_SizeDelta: {x: -393.0261, y: -221.0772}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103502138
