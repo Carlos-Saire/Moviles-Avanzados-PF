@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class DoppleCombat : NetworkBehaviour
+public class DoppleCombat : MonoBehaviour
 {
     private DoppleGanger dopple;
     private Animator animator;
