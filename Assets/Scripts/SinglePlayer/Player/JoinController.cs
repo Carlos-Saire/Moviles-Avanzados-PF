@@ -5,14 +5,16 @@ using UnityEngine.InputSystem;
 public class JoinController : MonoBehaviour
 {
     public GameObject playerPrefab;
+    public Transform[] spawnPoints; // <-- NUEVO
 
     private List<GameObject> jugadores = new List<GameObject>();
     private List<InputDevice> dispositivosUsados = new List<InputDevice>();
 
     private void Reset()
     {
-        gameObject.name  ="JoinController";
+        gameObject.name = "JoinController";
     }
+
     private void Start()
     {
         int cantidad = PlayerPrefs.GetInt("JugadoresSeleccionados", 1);
@@ -25,7 +27,17 @@ public class JoinController : MonoBehaviour
 
     public void CrearJugador()
     {
-        GameObject go =Instantiate(playerPrefab);
+        Vector3 spawnPos = Vector3.zero;
+        Quaternion spawnRot = Quaternion.identity;
+
+        if (spawnPoints != null && spawnPoints.Length > 0)
+        {
+            int index = jugadores.Count % spawnPoints.Length;
+            spawnPos = spawnPoints[index].position;
+            spawnRot = spawnPoints[index].rotation;
+        }
+
+        GameObject go = Instantiate(playerPrefab, spawnPos, spawnRot);
         jugadores.Add(go);
         ActualizarSplitScreen();
     }
@@ -40,7 +52,7 @@ public class JoinController : MonoBehaviour
             }
         }
 
-        return null; 
+        return null;
     }
 
     private void ActualizarSplitScreen()
