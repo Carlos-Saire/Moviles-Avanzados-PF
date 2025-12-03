@@ -5,7 +5,7 @@ public class UIVideoGame : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI fireText;
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private GameObject LosePanel;
+    //[SerializeField] private GameObject LosePanel;
     private void Update()
     {
         if (SinglePlayer.VideoGameManager.Instance == null) return;
@@ -22,6 +22,6 @@ public class UIVideoGame : MonoBehaviour
     }
     public void ActiveLose()
     {
-        LosePanel.SetActive(true);
+        //LosePanel.SetActive(true);
     }
 }

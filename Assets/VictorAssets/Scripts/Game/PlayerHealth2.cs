@@ -18,6 +18,7 @@ public class PlayerHealth2 : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<PlayerController>();
         UIGame = FindObjectOfType<UIVideoGame>();
+        deathUIPanel = UIGame.gameObject;
     }
 
     private void Start()
@@ -27,24 +28,30 @@ public class PlayerHealth2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Dopple")
+   
+    }
+   public  void IsDeadPlayer()
+    {
+        
+    }
+    private void Update()
+    {
+        if (IsDead == true)
         {
             IsDead = true;
             animator.SetTrigger("Death");
             Debug.Log("Player died");
+            controller.playerCamera.gameObject.SetActive(false);
             UIGame.ActiveLose();
         }
-    }
-    private void Update()
-    {
-        if (IsDead ==true) 
+        /*if (IsDead ==true) 
         {
             if (controller.playerCamera != null)
             {
                 controller.playerCamera.gameObject.SetActive(false);
 
             }
-        }
+        }*/
 
     }
 

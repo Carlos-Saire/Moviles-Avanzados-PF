@@ -2,9 +2,9 @@ using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public class DoppleHealth : NetworkBehaviour
+public class DoppleHealth : MonoBehaviour
 {
-    public NetworkVariable<bool> IsDead = new NetworkVariable<bool>(false);
+    public bool IsDead =false;
 
     private Animator animator;
     private DoppleGanger dopple;
@@ -18,10 +18,10 @@ public class DoppleHealth : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void KillServerRpc()
     {
-        if (IsDead.Value) return;
-        IsDead.Value = true;
+ 
+        IsDead = true;
 
-        KillClientRpc(NetworkObjectId);
+       // KillClientRpc(NetworkObjectId);
     Debug.Log("Dopple died");
 
         StartCoroutine(DespawnAfterDelay());
@@ -31,15 +31,13 @@ public class DoppleHealth : NetworkBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        if (NetworkObject != null && NetworkObject.IsSpawned)
-            NetworkObject.Despawn(true);
+        /*if (NetworkObject != null && NetworkObject.IsSpawned)
+            NetworkObject.Despawn(true);*/
     }
 
-    [Rpc(SendTo.Everyone)]
-    private void KillClientRpc(ulong targetId)
+    private void KillClientRpc()
     {
-        if (NetworkObjectId != targetId)
-            return;
+
 
         // Detener movimiento del dopple
         if (dopple != null)

@@ -12,6 +12,8 @@ public class DoppleCombat : MonoBehaviour
     public float attackCooldown = 2f;
     private bool canAttack = true;
 
+    bool attacking = false;
+
     private void Awake()
     {
         dopple = GetComponent<DoppleGanger>();
@@ -35,7 +37,10 @@ public class DoppleCombat : MonoBehaviour
             if (dist <= attackRange && canAttack)
             {
                 Debug.Log("Dopple starts attack");
+                attacking = true;
                 StartCoroutine(AttackRoutine());
+                dopple.target.GetComponent<PlayerHealth2>().IsDead = true;
+                Debug.Log("Player dead set to true from DoppleCombat");
             }
         }
     }
