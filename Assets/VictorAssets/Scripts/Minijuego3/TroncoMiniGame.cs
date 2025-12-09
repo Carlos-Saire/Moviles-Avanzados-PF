@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Unity.Netcode;
+
 public class TroncoMiniGame : MonoBehaviour, IMiniGame
 {
     [Header("Panel de la misión")]
-    public GameObject missionPanel;    
+    public GameObject missionPanel;
 
     [Header("Tronco")]
     public Image logImage;
@@ -19,14 +19,15 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
     private bool completed = false;
 
     private SinglePlayer.PlayerController currentPlayer;
-    private NetworkObject missionObject;
+    private MissionTrigger missionTrigger;
+
     private void Awake()
     {
         originalLogSprite = logImage.sprite;
     }
-    public void SetMissionObject(NetworkObject missionObj)
+    public void SetMissionObject(MissionTrigger missionObj)
     {
-        missionObject = missionObj;
+        missionTrigger = missionObj;
     }
     public void SetPlayer(SinglePlayer.PlayerController pc)
     {
@@ -75,14 +76,14 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
         yield return new WaitForSeconds(2f);
         missionPanel.SetActive(false);
 
-
         if (currentPlayer != null)
             currentPlayer.FreezePlayer(false);
 
-        VideoGameManager.Instance.AddFireServerRpc(20f);
+        VideoGameManager.Instance.AddFire(20f);
 
-        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
-        NetworkObjectReference missionRef = missionObject;
-        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
+        if (MissionSpawnManager.Instance != null)
+        {
+            MissionSpawnManager.Instance.CompleteMission(missionTrigger);
+        }
     }
 }

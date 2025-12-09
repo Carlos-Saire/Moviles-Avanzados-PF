@@ -1,18 +1,14 @@
-using Unity.Netcode;
 using UnityEngine;
+
 public class MissionTrigger : MonoBehaviour
 {
     [SerializeField] private string missionType;
-    private NetworkObject missionNetObject;
-    private void Awake()
-    {
-        missionNetObject = GetComponent<NetworkObject>(); 
-    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<SinglePlayer.PlayerController>(out var player))
         {
-            player.SetNearMission(this); 
+            player.SetNearMission(this);
         }
     }
 
@@ -20,13 +16,12 @@ public class MissionTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<SinglePlayer.PlayerController>(out var player))
         {
-            player.SetNearMission(null); 
+            player.SetNearMission(null);
         }
     }
 
     public void StartMission(SinglePlayer.PlayerController player)
     {
-
         GameObject currentMissionPanel = null;
         if (MissionPanelManager.Instance != null)
         {
@@ -43,7 +38,7 @@ public class MissionTrigger : MonoBehaviour
             if (tronco != null)
             {
                 tronco.SetPlayer(player);
-                tronco.SetMissionObject(missionNetObject);
+                tronco.SetMissionObject(this); // ahora pasamos this
             }
 
             // SIMBOLOS
@@ -51,7 +46,7 @@ public class MissionTrigger : MonoBehaviour
             if (sym != null)
             {
                 sym.SetPlayer(player);
-                sym.SetMissionObject(missionNetObject);
+                sym.SetMissionObject(this); // ahora pasamos this
             }
 
             // LIBROS
@@ -59,7 +54,7 @@ public class MissionTrigger : MonoBehaviour
             if (book != null)
             {
                 book.SetPlayer(player);
-                book.SetMissionObject(missionNetObject);
+                book.SetMissionObject(this); // ahora pasamos this
             }
         }
         else

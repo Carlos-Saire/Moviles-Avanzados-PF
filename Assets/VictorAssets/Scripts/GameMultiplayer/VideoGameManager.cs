@@ -1,8 +1,7 @@
-using Unity.Netcode;
 using UnityEngine;
 using System;
 
-public class VideoGameManager : NetworkBehaviour
+public class VideoGameManager : MonoBehaviour
 {
     public static VideoGameManager Instance;
 
@@ -11,8 +10,8 @@ public class VideoGameManager : NetworkBehaviour
     public float fireDrainRate = 1f;
     public float gameDuration = 240f;
 
-    private NetworkVariable<float> fireValue = new(100f);
-    private NetworkVariable<float> timerValue = new(240f);
+    private float fireValue = 100f;
+    private float timerValue = 240f;
 
     public event Action<bool> OnGameEnded;
 
@@ -27,20 +26,19 @@ public class VideoGameManager : NetworkBehaviour
     }
     private void Update()
     {
-        if (!IsServer) return;
-
-        fireValue.Value -= fireDrainRate * Time.deltaTime;
-        if (fireValue.Value <= 0)
+        // En singleplayer, todo corre en el Update local
+        fireValue -= fireDrainRate * Time.deltaTime;
+        if (fireValue <= 0)
         {
-            fireValue.Value = 0;
+            fireValue = 0;
             Debug.Log("GAME OVER: El fuego se apagó");
             EndGame(false);
         }
 
-        timerValue.Value -= Time.deltaTime;
-        if (timerValue.Value <= 0)
+        timerValue -= Time.deltaTime;
+        if (timerValue <= 0)
         {
-            timerValue.Value = 0;
+            timerValue = 0;
             Debug.Log("VICTORY: Sobrevivieron los 4 minutos");
             EndGame(true);
         }
@@ -55,21 +53,16 @@ public class VideoGameManager : NetworkBehaviour
 
         OnGameEnded?.Invoke(victory);
 
-        ShowEndScreenClientRpc(victory);
-    }
-
-    [Rpc(SendTo.Everyone)]
-    private void ShowEndScreenClientRpc(bool victory)
-    {
+        // Mostrar UI local
         UIGameEnd.Instance.Show(victory);
     }
 
-    [Rpc(SendTo.Server)]
-    public void AddFireServerRpc(float amount)
+    // Reemplazo del ServerRpc: método local
+    public void AddFire(float amount)
     {
-        fireValue.Value = Mathf.Clamp(fireValue.Value + amount, 0, fireMax);
+        fireValue = Mathf.Clamp(fireValue + amount, 0, fireMax);
     }
 
-    public float GetFire() => fireValue.Value;
-    public float GetTimer() => timerValue.Value;
+    public float GetFire() => fireValue;
+    public float GetTimer() => timerValue;
 }

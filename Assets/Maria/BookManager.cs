@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections; 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.Netcode;
 
-public class BookManager : MonoBehaviour
+public class BookManager : MonoBehaviour, IMiniGame
 {
     [Header("Panel de la misión")]
-    public GameObject missionPanel; 
+    public GameObject missionPanel;
 
     private SinglePlayer.PlayerController currentPlayer;
-    private NetworkObject missionObject;
+    private MissionTrigger missionTrigger; // ahora guardamos MissionTrigger
 
-    private bool completed = false; 
+    private bool completed = false;
 
     int objToCreate = 4;
     [SerializeField] Button[] booksInLibrary;
@@ -26,18 +25,21 @@ public class BookManager : MonoBehaviour
     private int currentBookIndex = -1;
     public int itemFounded = 0;
     public static event Action<int> OnNoteFound;
-    public void SetMissionObject(NetworkObject missionObj)
+
+    public void SetMissionObject(MissionTrigger missionObj)
     {
-        missionObject = missionObj;
+        missionTrigger = missionObj;
     }
     public void SetPlayer(SinglePlayer.PlayerController pc)
     {
         currentPlayer = pc;
     }
+
     private void OnEnable()
     {
         ResetMission();
     }
+
     void Start()
     {
         openPanelBook.SetActive(false);
@@ -53,7 +55,6 @@ public class BookManager : MonoBehaviour
         closeBook.onClick.AddListener(() => CloseBook());
     }
 
-
     void CloseBook()
     {
         if (currentBookIndex != -1 && noteInstances[currentBookIndex] != null)
@@ -66,7 +67,7 @@ public class BookManager : MonoBehaviour
 
     void SetActive(int index)
     {
-        if (completed) return; 
+        if (completed) return;
 
         if (currentBookIndex != -1 && noteInstances[currentBookIndex] != null)
             noteInstances[currentBookIndex].SetActive(false);
@@ -114,16 +115,21 @@ public class BookManager : MonoBehaviour
             }
         }
     }
+
     private void MissionCompleted()
     {
         completed = true;
         Debug.Log("Todas las notas encontradas! Misión completada.");
         StartCoroutine(ClosePanel());
     }
+
     private void ResetMission()
     {
         completed = false;
-        itemFounded = 0; 
+        itemFounded = 0;
+
+        if (noteInstances == null)
+            noteInstances = new GameObject[booksInLibrary.Length];
 
         for (int i = 0; i < noteInstances.Length; i++)
         {
@@ -155,15 +161,21 @@ public class BookManager : MonoBehaviour
         CloseBook();
 
         if (currentPlayer != null)
-            currentPlayer.FreezePlayer(false); 
+            currentPlayer.FreezePlayer(false);
 
         if (VideoGameManager.Instance != null)
         {
-            VideoGameManager.Instance.AddFireServerRpc(20f); 
+            VideoGameManager.Instance.AddFire(20f); // llamada local ahora
         }
 
-        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
-        NetworkObjectReference missionRef = missionObject;
-        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
+        // avisamos al MissionSpawnManager local
+        if (missionTrigger != null)
+        {
+            MissionSpawnManager.Instance?.CompleteMission(missionTrigger);
+        }
+        else
+        {
+            Debug.LogWarning("BookManager: missionTrigger es null al completar la misión.");
+        }
     }
 }

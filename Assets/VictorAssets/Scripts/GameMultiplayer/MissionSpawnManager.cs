@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
 
 public class MissionSpawnManager : MonoBehaviour
@@ -18,11 +17,10 @@ public class MissionSpawnManager : MonoBehaviour
     public List<GameObject> repeatableMissionPrefabs;
 
     private List<Transform> availableSpawnPoints;
-    private Dictionary<Transform, NetworkObject> activeMissions;
+    // ahora almacenamos la instancia GameObject localmente (null significa libre)
+    private Dictionary<Transform, GameObject> activeMissions;
 
     public static MissionSpawnManager Instance { get; private set; }
-
-    private bool UsingNetcode => NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening;
 
     void Awake()
     {
@@ -33,7 +31,7 @@ public class MissionSpawnManager : MonoBehaviour
         }
         Instance = this;
 
-        activeMissions = new Dictionary<Transform, NetworkObject>();
+        activeMissions = new Dictionary<Transform, GameObject>();
         availableSpawnPoints = new List<Transform>(spawnPoints);
     }
 
@@ -44,24 +42,17 @@ public class MissionSpawnManager : MonoBehaviour
 
     public void CleanUpAllActiveMissions()
     {
-        if (UsingNetcode && !NetworkManager.Singleton.IsServer)
-            return;
-
         Debug.Log("Limpiando todas las misiones activas...");
 
-        List<NetworkObject> missionsToDestroy = new List<NetworkObject>(activeMissions.Values);
+        List<GameObject> missionsToDestroy = new List<GameObject>(activeMissions.Values);
 
         activeMissions.Clear();
         availableSpawnPoints = new List<Transform>(spawnPoints);
 
-        foreach (var netObj in missionsToDestroy)
+        foreach (var go in missionsToDestroy)
         {
-            if (netObj == null) continue;
-
-            if (UsingNetcode)
-                netObj.Despawn(true);
-            else
-                Destroy(netObj.gameObject);
+            if (go == null) continue;
+            Destroy(go);
         }
     }
 
@@ -74,6 +65,7 @@ public class MissionSpawnManager : MonoBehaviour
             troncoMissionPrefab
         };
 
+        // si hay más puntos que prefabs, repite alguno al azar
         while (missionPrefabs.Count < availableSpawnPoints.Count)
             missionPrefabs.Add(missionPrefabs[Random.Range(0, missionPrefabs.Count)]);
 
@@ -87,18 +79,8 @@ public class MissionSpawnManager : MonoBehaviour
     {
         GameObject missionInstance = Instantiate(missionPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        NetworkObject netObj = missionInstance.GetComponent<NetworkObject>();
-
-        if (UsingNetcode && netObj != null)
-        {
-            netObj.Spawn();
-            activeMissions.Add(spawnPoint, netObj);
-        }
-        else
-        {
-            // local mode: store as null, but keep spawnPoint occupied
-            activeMissions.Add(spawnPoint, null);
-        }
+        // registra la instancia localmente para saber que el spawnPoint está ocupado
+        activeMissions.Add(spawnPoint, missionInstance);
 
         Debug.Log($"Misión '{missionPrefab.name}' creada en {spawnPoint.name}");
     }
@@ -112,20 +94,23 @@ public class MissionSpawnManager : MonoBehaviour
         }
     }
 
+    // llamada cuando una misión local se completa (se le pasa el GameObject de la misión)
     public void MissionCompleted(GameObject missionGO)
     {
+        if (missionGO == null) return;
+
         Transform spawnUsed = null;
 
         foreach (var pair in activeMissions)
         {
-            if (pair.Value != null && pair.Value.gameObject == missionGO)
+            if (pair.Value == missionGO)
             {
                 spawnUsed = pair.Key;
                 break;
             }
-            else if (pair.Value == null && missionGO != null)
+            else if (pair.Value == null)
             {
-                // fallback local mode match by position
+                // fallback por proximidad (por si algo se desincroniza)
                 if (Vector3.Distance(pair.Key.position, missionGO.transform.position) < 0.5f)
                 {
                     spawnUsed = pair.Key;
@@ -135,7 +120,11 @@ public class MissionSpawnManager : MonoBehaviour
         }
 
         if (spawnUsed == null)
+        {
+            Debug.LogWarning("No se encontró spawn asociado a la misión completada.");
+            Destroy(missionGO);
             return;
+        }
 
         activeMissions.Remove(spawnUsed);
         Destroy(missionGO);
@@ -147,7 +136,7 @@ public class MissionSpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
 
-        if (repeatableMissionPrefabs.Count == 0)
+        if (repeatableMissionPrefabs == null || repeatableMissionPrefabs.Count == 0)
         {
             Debug.LogWarning("No hay prefabs repetibles.");
             yield break;
@@ -156,12 +145,39 @@ public class MissionSpawnManager : MonoBehaviour
         SpawnMission(repeatableMissionPrefabs[Random.Range(0, repeatableMissionPrefabs.Count)], spawnPoint);
     }
 
-    [Rpc(SendTo.Server, RequireOwnership = false)]
-    public void CompleteMissionServerRpc(NetworkObjectReference missionRef)
+    // Nueva API pública más clara para las minis convertidas que reciben la referencia del trigger
+    public void CompleteMission(MissionTrigger trigger)
     {
-        if (!UsingNetcode) return;
+        if (trigger == null)
+        {
+            Debug.LogWarning("CompleteMission recibió un trigger nulo.");
+            return;
+        }
 
-        if (missionRef.TryGet(out var netObj))
-            MissionCompleted(netObj.gameObject);
+        // encuentra el GameObject de la misión en activeMissions por cercanía al trigger
+        Transform spawnUsed = null;
+        GameObject missionGO = null;
+
+        foreach (var pair in activeMissions)
+        {
+            if (pair.Value == null) continue;
+            if (Vector3.Distance(pair.Key.position, trigger.transform.position) < 1.0f)
+            {
+                spawnUsed = pair.Key;
+                missionGO = pair.Value;
+                break;
+            }
+        }
+
+        if (spawnUsed == null)
+        {
+            Debug.LogWarning("No se encontró la misión asociada al trigger al completar.");
+            return;
+        }
+
+        activeMissions.Remove(spawnUsed);
+        Destroy(missionGO);
+
+        StartCoroutine(RespawnMissionAfterDelay(spawnUsed));
     }
 }

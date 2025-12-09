@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using Unity.Netcode;
-public class SymbolOrderMiniGame : MonoBehaviour
+
+public class SymbolOrderMiniGame : MonoBehaviour, IMiniGame
 {
     [Header("Panel de la misión")]
     public GameObject missionPanel;
@@ -23,10 +23,11 @@ public class SymbolOrderMiniGame : MonoBehaviour
     [SerializeField] private Transform[] initialSymbolPositions;
 
     private SinglePlayer.PlayerController currentPlayer;
-    private NetworkObject missionObject;
-    public void SetMissionObject(NetworkObject missionObj)
+    private MissionTrigger missionTrigger; // ahora referencia a MissionTrigger
+
+    public void SetMissionObject(MissionTrigger missionObj)
     {
-        missionObject = missionObj;
+        missionTrigger = missionObj;
     }
     public void SetPlayer(SinglePlayer.PlayerController player)
     {
@@ -78,7 +79,6 @@ public class SymbolOrderMiniGame : MonoBehaviour
 
             GameObject newSymbol = Instantiate(symbolPrefab, initialSymbolContainer);
 
-
             RectTransform rt = newSymbol.GetComponent<RectTransform>();
 
             rt.anchoredPosition = spawnPoint.GetComponent<RectTransform>().anchoredPosition;
@@ -112,10 +112,12 @@ public class SymbolOrderMiniGame : MonoBehaviour
         if (currentPlayer != null)
             currentPlayer.FreezePlayer(false);
 
-        VideoGameManager.Instance.AddFireServerRpc(20f);
+        VideoGameManager.Instance.AddFire(20f);
 
-        //MissionSpawnManager.Instance.CompleteMissionServerRpc(missionObject);
-        NetworkObjectReference missionRef = missionObject;
-        MissionSpawnManager.Instance.CompleteMissionServerRpc(missionRef);
+        // Llamar al manejador local de misiones (implementa CompleteMission(MissionTrigger))
+        if (MissionSpawnManager.Instance != null)
+        {
+            MissionSpawnManager.Instance.CompleteMission(missionTrigger);
+        }
     }
 }
