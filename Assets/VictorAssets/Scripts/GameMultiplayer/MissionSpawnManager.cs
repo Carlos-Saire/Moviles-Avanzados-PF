@@ -58,21 +58,12 @@ public class MissionSpawnManager : MonoBehaviour
 
     private void InitializeMissions()
     {
-        List<GameObject> missionPrefabs = new List<GameObject>
+        activeMissions.Clear();
+
+        foreach (Transform spawn in availableSpawnPoints)
         {
-            symbolMissionPrefab,
-            bookMissionPrefab,
-            troncoMissionPrefab
-        };
-
-        // si hay más puntos que prefabs, repite alguno al azar
-        while (missionPrefabs.Count < availableSpawnPoints.Count)
-            missionPrefabs.Add(missionPrefabs[Random.Range(0, missionPrefabs.Count)]);
-
-        ShuffleList(missionPrefabs);
-
-        for (int i = 0; i < availableSpawnPoints.Count; i++)
-            SpawnMission(missionPrefabs[i], availableSpawnPoints[i]);
+            SpawnMission(troncoMissionPrefab, spawn);
+        }
     }
 
     private void SpawnMission(GameObject missionPrefab, Transform spawnPoint)
@@ -136,13 +127,8 @@ public class MissionSpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
 
-        if (repeatableMissionPrefabs == null || repeatableMissionPrefabs.Count == 0)
-        {
-            Debug.LogWarning("No hay prefabs repetibles.");
-            yield break;
-        }
-
-        SpawnMission(repeatableMissionPrefabs[Random.Range(0, repeatableMissionPrefabs.Count)], spawnPoint);
+        // Siempre respawnear solo la misión tronco
+        SpawnMission(troncoMissionPrefab, spawnPoint);
     }
 
     // Nueva API pública más clara para las minis convertidas que reciben la referencia del trigger

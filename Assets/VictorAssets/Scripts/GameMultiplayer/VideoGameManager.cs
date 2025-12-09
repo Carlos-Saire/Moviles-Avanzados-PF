@@ -3,7 +3,7 @@ using System;
 
 public class VideoGameManager : MonoBehaviour
 {
-    public static VideoGameManager Instance;
+    //public static VideoGameManager Instance;
 
     [Header("Settings")]
     public float fireMax = 100f;
@@ -17,7 +17,7 @@ public class VideoGameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
     }
     private void Start()
     {

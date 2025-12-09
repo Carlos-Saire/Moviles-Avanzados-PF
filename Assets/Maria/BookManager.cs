@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class BookManager : MonoBehaviour, IMiniGame
@@ -161,12 +162,13 @@ public class BookManager : MonoBehaviour, IMiniGame
         CloseBook();
 
         if (currentPlayer != null)
-            currentPlayer.FreezePlayer(false);
+            currentPlayer.FreezePlayerSingle(false);
+        currentPlayer.GetComponent<PlayerInput>().enabled = true;
 
-        if (VideoGameManager.Instance != null)
-        {
-            VideoGameManager.Instance.AddFire(20f); // llamada local ahora
-        }
+        //if (VideoGameManager.Instance != null)
+        //{
+        //    VideoGameManager.Instance.AddFire(20f); // llamada local ahora
+        //}
 
         // avisamos al MissionSpawnManager local
         if (missionTrigger != null)
@@ -177,5 +179,11 @@ public class BookManager : MonoBehaviour, IMiniGame
         {
             Debug.LogWarning("BookManager: missionTrigger es null al completar la misión.");
         }
+        var cursor = UnityEngine.Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
+        if (cursor != null) cursor.EnableCursor(false);
+
+        var playerInput = currentPlayer.GetComponent<PlayerInput>();
+        if (playerInput != null)
+            playerInput.enabled = true;
     }
 }

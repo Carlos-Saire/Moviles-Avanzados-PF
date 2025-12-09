@@ -1,10 +1,12 @@
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using System.Collections;
 
 public class TroncoMiniGame : MonoBehaviour, IMiniGame
 {
-    [Header("Panel de la misi�n")]
+    public SinglePlayer.VideoGameManager game;
+    [Header("Panel de la misión")]
     public GameObject missionPanel;
 
     [Header("Tronco")]
@@ -25,6 +27,16 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
     {
         originalLogSprite = logImage.sprite;
     }
+    private void Start()
+    {
+        if (game == null)
+        {
+            game = FindFirstObjectByType<SinglePlayer.VideoGameManager>(FindObjectsInactive.Include);
+            if (game == null)
+                Debug.LogError("TroncoMiniGame NO encontró VideoGameManager");
+        }
+    }
+
     public void SetMissionObject(MissionTrigger missionObj)
     {
         missionTrigger = missionObj;
@@ -72,18 +84,40 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
     private IEnumerator CloseMissionPanel()
     {
         MissionUIFeedback.Instance?.ShowMissionCompleted();
-
         yield return new WaitForSeconds(2f);
         missionPanel.SetActive(false);
 
+        Debug.Log(">>> CloseMission: des-congelando jugador");
+
         if (currentPlayer != null)
-            currentPlayer.FreezePlayer(false);
-
-        VideoGameManager.Instance.AddFire(20f);
-
-        if (MissionSpawnManager.Instance != null)
         {
-            MissionSpawnManager.Instance.CompleteMission(missionTrigger);
+            currentPlayer.FreezePlayerSingle(false);
+
+            var input = currentPlayer.GetComponent<PlayerInput>();
+            if (input != null)
+                input.enabled = true;
         }
+
+        game.AddFire(10f);
+
+        Debug.Log(">>> CloseMission: completando misión");
+
+        if (MissionSpawnManager.Instance == null)
+            Debug.LogError("❌ MissionSpawnManager.Instance ES NULL");
+
+        //if (missionTrigger == null)
+        //    Debug.LogError("❌ missionTrigger ES NULL en CloseMission");
+
+        //MissionSpawnManager.Instance?.CompleteMission(missionTrigger);
+
+        Debug.Log(">>> CloseMission: apagando cursor");
+
+        var cursor = Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
+        if (cursor != null)
+        {
+            cursor.EnableCursor(false);
+        }
+        missionTrigger.CompleteMission(currentPlayer);
+        Debug.Log(">>> CloseMission: FIN");
     }
 }

@@ -20,6 +20,18 @@ namespace SinglePlayer
         private PlayerInteraction playerInteraction;
 
         private bool isInInteractionZone = false;
+
+        private bool isFrozen = false;
+        public void FreezePlayerSingle(bool state) 
+        {
+            isFrozen = state;
+
+            animator.SetFloat("X", 0);
+            animator.SetFloat("Z", 0);
+
+            Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = state;
+        }
         private void Awake()
         {
             animator = GetComponent<Animator>();    
@@ -41,10 +53,18 @@ namespace SinglePlayer
         }
         private void Move(Vector2 vector2)
         {
+            if (isFrozen)
+            {
+                input = Vector2.zero;
+                return;
+            }
+
             input = vector2;
         }
         private void MovePlayer()
         {
+            if (isFrozen) return;
+
             if (controller.isGrounded && velocity.y < 0)
             {
                 velocity.y = -2f;

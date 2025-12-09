@@ -1,9 +1,11 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SymbolOrderMiniGame : MonoBehaviour, IMiniGame
 {
+    public VideoGameManager game;
     [Header("Panel de la misión")]
     public GameObject missionPanel;
 
@@ -109,15 +111,29 @@ public class SymbolOrderMiniGame : MonoBehaviour, IMiniGame
         yield return new WaitForSeconds(2f);
         missionPanel.SetActive(false);
 
+        // --- DESCONGELAR JUGADOR ---
         if (currentPlayer != null)
-            currentPlayer.FreezePlayer(false);
-
-        VideoGameManager.Instance.AddFire(20f);
-
-        // Llamar al manejador local de misiones (implementa CompleteMission(MissionTrigger))
-        if (MissionSpawnManager.Instance != null)
         {
+            currentPlayer.FreezePlayerSingle(false);
+
+            var input = currentPlayer.GetComponent<PlayerInput>();
+            if (input != null)
+                input.enabled = true;
+        }
+
+        // --- SUMAR FUEGO ---
+        game.AddFire(20f);
+
+        // --- COMPLETAR MISION ---
+        if (MissionSpawnManager.Instance != null)
             MissionSpawnManager.Instance.CompleteMission(missionTrigger);
+
+        // --- APAGAR CURSOR ---
+        var cursor = Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
+        if (cursor != null)
+        {
+            cursor.EnableCursor(false);
+            cursor.gameObject.SetActive(false); // <- lo oculta y detiene OnGUI
         }
     }
 }

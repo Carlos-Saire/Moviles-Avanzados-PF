@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class UniversalGamepadCursorV2 : MonoBehaviour
 {
+    private bool forceHidden = false;
+
     [Header("Cursor movement")]
     public float cursorSpeed = 900f;
     public float deadZone = 0.2f;
@@ -68,6 +70,8 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
     {
         cursorPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
         currentPointerData = new PointerEventData(eventSystem) { pointerId = -1 };
+
+        EnableCursor(false);
     }
 
     void Update()
@@ -174,16 +178,30 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
     // Draw cursor with OnGUI so it's always visible regardless of Canvas
     void OnGUI()
     {
+        if (forceHidden) return;        // <---- BLOQUEA SI O SI
+
+        if (!this.enabled) return;
+
         if (cursorTexture != null)
         {
-            // OnGUI y coordenadas Y invertida
-            Rect rect = new Rect(cursorPos.x - cursorSize.x / 2f, Screen.height - cursorPos.y - cursorSize.y / 2f, cursorSize.x, cursorSize.y);
+            Rect rect = new Rect(
+                cursorPos.x - cursorSize.x / 2f,
+                Screen.height - cursorPos.y - cursorSize.y / 2f,
+                cursorSize.x,
+                cursorSize.y
+            );
             GUI.DrawTexture(rect, cursorTexture);
         }
-        else
+    }
+    public void EnableCursor(bool active)
+    {
+        this.enabled = active;
+        forceHidden = !active;
+
+        if (!active)
         {
-            Rect rect = new Rect(cursorPos.x - 8, Screen.height - cursorPos.y - 8, 16, 16);
-            GUI.Box(rect, "");
+            lastHoveredObject = null;
+            isPressed = false;
         }
     }
 }

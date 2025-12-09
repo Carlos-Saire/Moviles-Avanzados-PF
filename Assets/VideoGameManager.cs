@@ -18,7 +18,10 @@ namespace SinglePlayer
 
         public event Action<bool> OnGameEnded;
         private bool _gameEnded = false;
-
+        public void AddFire(float amount)
+        {
+            fireValue = Mathf.Clamp(fireValue + amount, 0, fireMax);
+        }
         private void Awake()
         {
             Instance = this;
