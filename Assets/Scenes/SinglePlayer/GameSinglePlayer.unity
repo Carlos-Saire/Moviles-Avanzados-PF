@@ -4841,6 +4841,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 70320863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1148513955 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6658214596258789949, guid: da1ea815b0723d043b162fb410c4df5b, type: 3}
+  m_PrefabInstance: {fileID: 352337272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1148629217
 GameObject:
   m_ObjectHideFlags: 0
@@ -5701,6 +5706,7 @@ MonoBehaviour:
   cursorSize: {x: 32, y: 32}
   debugLogs: 0
   autoRefreshRaycasters: 1
+  targetCamera: {fileID: 0}
 --- !u!4 &1368768263
 Transform:
   m_ObjectHideFlags: 0
@@ -8988,7 +8994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2085035739}
   range: 30
-  centerPlane: {fileID: 0}
+  centerPlane: {fileID: 1148513955}
   doubleClon: {fileID: 301281468819617315, guid: 1c38e78fcf8392f4b9e8f5520ac23c04, type: 3}
   conteiner: {fileID: 351425693}
   visionRef: {fileID: 0}
