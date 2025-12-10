@@ -27,7 +27,6 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HandleInteract()
     {
-        Debug.Log("Se llamo");
         if (nearMission != null)
             nearMission.StartMission(player);
     }

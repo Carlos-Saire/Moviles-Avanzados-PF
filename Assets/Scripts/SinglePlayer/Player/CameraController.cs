@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace SinglePlayer 
 {
@@ -11,8 +12,10 @@ namespace SinglePlayer
         private Vector2 inputCamera;
 
         private InputHandler inputHandler;
-
         [SerializeField] private Transform playerBody;
+
+        public bool isFrozen = false;
+
         private void Awake()
         {
             inputHandler = GetComponentInParent<InputHandler>();
@@ -28,7 +31,8 @@ namespace SinglePlayer
         }
         private void Update()
         {
-            RotateCamera();
+            if(!isFrozen)
+                RotateCamera();
         }
         private void Move(Vector2 vector)
         {

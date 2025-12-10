@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -22,7 +23,7 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
 
     private SinglePlayer.PlayerController currentPlayer;
     private MissionTrigger missionTrigger;
-
+    public static event Action OnMissionCompleted;
     private void Awake()
     {
         originalLogSprite = logImage.sprite;
@@ -101,7 +102,7 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
         game.AddFire(10f);
 
         Debug.Log(">>> CloseMission: completando misión");
-
+        OnMissionCompleted?.Invoke();
         if (MissionSpawnManager.Instance == null)
             Debug.LogError("❌ MissionSpawnManager.Instance ES NULL");
 
@@ -112,12 +113,12 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
 
         Debug.Log(">>> CloseMission: apagando cursor");
 
-        var cursor = Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
-        if (cursor != null)
-        {
-            cursor.EnableCursor(false);
-        }
-        missionTrigger.CompleteMission(currentPlayer);
-        Debug.Log(">>> CloseMission: FIN");
+        //var cursor = UnityEngine.Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
+        //if (cursor != null)
+        //{
+        //    cursor.EnableCursor(false);
+        //}
+        //missionTrigger.CompleteMission(currentPlayer);
+        //Debug.Log(">>> CloseMission: FIN");
     }
 }

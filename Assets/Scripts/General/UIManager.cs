@@ -1,7 +1,5 @@
-using System;
 using TMPro;
 using UnityEngine;
-
 public class UIManager : MonoBehaviour
 {
     [Header("Text")]
@@ -11,10 +9,19 @@ public class UIManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject fail;
     [SerializeField] private GameObject Win;
+    [SerializeField] private GameObject gameTronco;
+
+    [Header("Cursor")]
+    [SerializeField] private UniversalGamepadCursorV2 cursor;
+
+    [Header("Player")]
+    [SerializeField] private SinglePlayer.PlayerController playerController;
+    [SerializeField] private SinglePlayer.CameraController cameraController;
     private void OnEnable()
     {
         UIVideoGame.OnFireChanged += UpdateFireUI;
         UIVideoGame.OnTimeChanged += UpdateTimerUI;
+        TroncoMiniGame.OnMissionCompleted += FinishGame;
     }
     private void OnDisable()
     {
@@ -34,5 +41,20 @@ public class UIManager : MonoBehaviour
     {
         fail.gameObject.SetActive(true);
     }
-  
+    public void Game()
+    {
+        playerController.isFrozen = true;
+        cameraController.isFrozen = true;
+
+        gameTronco.gameObject.SetActive(true);
+        cursor.EnableCursor(true);
+    }
+    private void FinishGame()
+    {
+        cursor.EnableCursor(false);
+
+        playerController.isFrozen = false;
+        cameraController.isFrozen = false;
+    }
+
 }

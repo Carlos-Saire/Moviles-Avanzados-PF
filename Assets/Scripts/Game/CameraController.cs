@@ -12,9 +12,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         DetectInteractable();
-
     }
-
     void DetectInteractable()
     {
         RaycastHit hit;

@@ -20,11 +20,13 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
     public bool debugLogs = false;
     public bool autoRefreshRaycasters = true;
 
+    [Header("Camera Limit")]
+    public Camera targetCamera;  
+
     Vector2 cursorPos;
     EventSystem eventSystem;
     List<GraphicRaycaster> raycasters = new List<GraphicRaycaster>();
 
-    // State for proper click simulation
     GameObject lastHoveredObject;
     bool isPressed = false;
     PointerEventData currentPointerData;
@@ -44,7 +46,7 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
     void OnEnable()
     {
         if (autoRefreshRaycasters)
-            Canvas.willRenderCanvases += OnWillRenderCanvases; // refresh if canvases change
+            Canvas.willRenderCanvases += OnWillRenderCanvases;
     }
 
     void OnDisable()
@@ -55,7 +57,6 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
 
     void OnWillRenderCanvases()
     {
-        // refresca si hay canvases nuevos o removidos en ejecución
         RefreshRaycasters();
     }
 
@@ -77,47 +78,39 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
     void Update()
     {
         if (Gamepad.current == null) return;
+        if (targetCamera == null) return; 
 
-        // Move cursor
+        // CURSOR MOVEMENT
         Vector2 move = Gamepad.current.leftStick.ReadValue();
         if (move.magnitude > deadZone)
             cursorPos += move * cursorSpeed * Time.deltaTime;
 
-        cursorPos.x = Mathf.Clamp(cursorPos.x, 0, Screen.width);
-        cursorPos.y = Mathf.Clamp(cursorPos.y, 0, Screen.height);
+        Rect pixelRect = targetCamera.pixelRect;
+        cursorPos.x = Mathf.Clamp(cursorPos.x, pixelRect.xMin, pixelRect.xMax);
+        cursorPos.y = Mathf.Clamp(cursorPos.y, pixelRect.yMin, pixelRect.yMax);
 
-        // Prepare PointerEventData
         currentPointerData.Reset();
         currentPointerData.position = cursorPos;
         currentPointerData.delta = Vector2.zero;
         currentPointerData.scrollDelta = Vector2.zero;
         currentPointerData.pointerId = -1;
 
-        // UI Raycast using EventSystem (works for all Canvas types)
         List<RaycastResult> uiResults = new List<RaycastResult>();
         eventSystem.RaycastAll(currentPointerData, uiResults);
 
         GameObject hovered = uiResults.Count > 0 ? uiResults[0].gameObject : null;
 
-        // Pointer enter / exit
         if (hovered != lastHoveredObject)
         {
             if (lastHoveredObject != null)
-            {
                 ExecuteEvents.Execute(lastHoveredObject, currentPointerData, ExecuteEvents.pointerExitHandler);
-                if (debugLogs) Debug.Log("[Cursor] pointerExit -> " + lastHoveredObject.name);
-            }
 
             if (hovered != null)
-            {
                 ExecuteEvents.Execute(hovered, currentPointerData, ExecuteEvents.pointerEnterHandler);
-                if (debugLogs) Debug.Log("[Cursor] pointerEnter -> " + hovered.name);
-            }
 
             lastHoveredObject = hovered;
         }
 
-        // Handle press / release (simulate mouse/touch properly)
         bool pressed = Gamepad.current.buttonSouth.wasPressedThisFrame;
         bool released = Gamepad.current.buttonSouth.wasReleasedThisFrame;
 
@@ -125,26 +118,20 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
         {
             isPressed = true;
 
-            // fill press-related fields
             currentPointerData.pressPosition = currentPointerData.position;
             currentPointerData.pointerPressRaycast = uiResults.Count > 0 ? uiResults[0] : new RaycastResult();
 
-            // Execute pointerDown on the topmost object under cursor (hierarchy)
             if (hovered != null)
             {
                 ExecuteEvents.ExecuteHierarchy(hovered, currentPointerData, ExecuteEvents.pointerDownHandler);
-                // Set pointerPress so Button can detect it later
                 GameObject newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(hovered);
                 currentPointerData.pointerPress = newPressed;
                 currentPointerData.rawPointerPress = hovered;
-                if (debugLogs) Debug.Log("[Cursor] pointerDown -> " + hovered.name + "  pressHandler: " + (newPressed ? newPressed.name : "null"));
             }
             else
             {
-                // No UI under cursor: still mark pressed to later send to world objects if needed
                 currentPointerData.pointerPress = null;
                 currentPointerData.rawPointerPress = null;
-                if (debugLogs) Debug.Log("[Cursor] pressed with no UI under cursor");
             }
         }
 
@@ -152,34 +139,25 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
         {
             isPressed = false;
 
-            // pointerUp on the object that received pointerDown (rawPointerPress) OR current hovered
             GameObject pointerUpTarget = currentPointerData.rawPointerPress != null ? currentPointerData.rawPointerPress : hovered;
 
             if (pointerUpTarget != null)
             {
                 ExecuteEvents.Execute(pointerUpTarget, currentPointerData, ExecuteEvents.pointerUpHandler);
-                if (debugLogs) Debug.Log("[Cursor] pointerUp -> " + pointerUpTarget.name);
 
-                // If pointerPress handler exists and it's same as pointerUp target, do click
                 GameObject clickHandler = currentPointerData.pointerPress;
                 if (clickHandler != null)
-                {
                     ExecuteEvents.Execute(clickHandler, currentPointerData, ExecuteEvents.pointerClickHandler);
-                    if (debugLogs) Debug.Log("[Cursor] pointerClick -> " + clickHandler.name);
-                }
             }
 
-            // reset press fields
             currentPointerData.pointerPress = null;
             currentPointerData.rawPointerPress = null;
         }
     }
 
-    // Draw cursor with OnGUI so it's always visible regardless of Canvas
     void OnGUI()
     {
-        if (forceHidden) return;        // <---- BLOQUEA SI O SI
-
+        if (forceHidden) return;
         if (!this.enabled) return;
 
         if (cursorTexture != null)
@@ -193,12 +171,20 @@ public class UniversalGamepadCursorV2 : MonoBehaviour
             GUI.DrawTexture(rect, cursorTexture);
         }
     }
+
     public void EnableCursor(bool active)
     {
         this.enabled = active;
         forceHidden = !active;
 
-        if (!active)
+        if (active)
+        {
+            if (targetCamera != null)
+            {
+                cursorPos = targetCamera.pixelRect.center;
+            }
+        }
+        else
         {
             lastHoveredObject = null;
             isPressed = false;

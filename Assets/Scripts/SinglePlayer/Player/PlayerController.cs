@@ -21,7 +21,7 @@ namespace SinglePlayer
 
         private bool isInInteractionZone = false;
 
-        private bool isFrozen = false;
+        public bool isFrozen = false;
         public void FreezePlayerSingle(bool state) 
         {
             isFrozen = state;
