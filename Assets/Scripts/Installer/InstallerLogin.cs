@@ -1,6 +1,7 @@
 using UnityEngine;
 using Command;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 #if UNITY_ANDROID
 using UnityEngine.Android;
 #endif
@@ -8,6 +9,8 @@ using UnityEngine.Android;
 public class InstallerLogin : MonoBehaviour
 {
     [SerializeField] private CanvasGroup logo;
+
+    [SerializeField] private GameObject currentSelect;
 
     [Header("Panels")]
     [SerializeField] private Transform intro;
@@ -39,10 +42,6 @@ public class InstallerLogin : MonoBehaviour
         reiniciar?.onClick.RemoveListener(reiniciarPress);
         AuthenticationManager.OnSignIn -= SignIn;
     }
-    private void Awake()
-    {
-        unityServices.InitializeServices();
-    }
     private void Start()
     {
         Invoke("BeginAnimation", 1);
@@ -61,6 +60,7 @@ public class InstallerLogin : MonoBehaviour
         CommandQueue.Instance.AddCommand(new SetActiveCommand(panelConnected.gameObject,true));
         CommandQueue.Instance.AddCommand(new SetActiveCommand(intro.gameObject, false));
 #if !UNITY_WSA_10_0
+        unityServices.InitializeServices();
 #endif
         CommandQueue.Instance.AddCommand(new SliderCommand(slider, duration));
         CommandQueue.Instance.AddCommand(new GenericCommad(CheckAuthentication));
@@ -79,6 +79,8 @@ public class InstallerLogin : MonoBehaviour
         {
 #if UNITY_WSA_10_0
         panelSinglePlayer.gameObject.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(currentSelect);
 #else
             panelReiniciar.gameObject.SetActive(true);
 #endif

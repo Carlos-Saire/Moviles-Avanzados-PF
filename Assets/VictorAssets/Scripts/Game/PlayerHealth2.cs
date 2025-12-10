@@ -17,8 +17,6 @@ public class PlayerHealth2 : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<PlayerController>();
-       
-      
     }
 
     private void Start()
