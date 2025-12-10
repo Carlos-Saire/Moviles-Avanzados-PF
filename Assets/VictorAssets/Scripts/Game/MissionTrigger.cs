@@ -5,24 +5,13 @@ public class MissionTrigger : MonoBehaviour
 {
     [SerializeField] private string missionType;
 
-    private PlayerController currentPlayer;
-    private void OnEnable()
-    {
-        TroncoMiniGame.OnMissionCompleted += Complete;
-    }
-    private void OnDisable()
-    {
-        TroncoMiniGame.OnMissionCompleted -= Complete;
-    }
+   
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<SinglePlayer.PlayerController>(out var player))
         {
             player.SetNearMission(this);
         }
-
-        if(other.gameObject.CompareTag("Player"))
-            currentPlayer = other.GetComponent<PlayerController>();
     }
 
     private void OnTriggerExit(Collider other)
@@ -31,18 +20,27 @@ public class MissionTrigger : MonoBehaviour
         {
             player.SetNearMission(null);
         }
-
-        if (other.gameObject.CompareTag("Player"))
-            currentPlayer = null;
     }
 
     public void StartMission(SinglePlayer.PlayerController player)
     {
         player.GetComponentInChildren<UIManager>().Game();
     }
-    private void Complete()
+    public void CompleteMission(SinglePlayer.PlayerController player)
     {
-        Debug.Log("Se llamo");
+        MissionSpawnManager.Instance.CompleteMission(this);
+
+        GameObject currentMissionPanel = MissionPanelManager.Instance.GetPanel(missionType);
+        if (currentMissionPanel != null)
+            currentMissionPanel.SetActive(false);
+
+        player.FreezePlayerSingle(false);
+
+        var cursor = Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
+        if (cursor != null)
+        {
+            cursor.EnableCursor(false);
+            cursor.gameObject.SetActive(false);
+        }
     }
 }
-

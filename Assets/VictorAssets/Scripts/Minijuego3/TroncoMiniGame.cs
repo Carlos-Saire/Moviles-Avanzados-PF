@@ -89,20 +89,18 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
         missionPanel.SetActive(false);
 
         Debug.Log(">>> CloseMission: des-congelando jugador");
+        OnMissionCompleted?.Invoke();
+        //if (currentPlayer != null)
+        //{
+        //    currentPlayer.FreezePlayerSingle(false);
 
-        if (currentPlayer != null)
-        {
-            currentPlayer.FreezePlayerSingle(false);
-
-            var input = currentPlayer.GetComponent<PlayerInput>();
-            if (input != null)
-                input.enabled = true;
-        }
+        //    var input = currentPlayer.GetComponent<PlayerInput>();
+        //    if (input != null)
+        //        input.enabled = true;
+        //}
 
         game.AddFire(10f);
-
         Debug.Log(">>> CloseMission: completando misión");
-        OnMissionCompleted?.Invoke();
         if (MissionSpawnManager.Instance == null)
             Debug.LogError("❌ MissionSpawnManager.Instance ES NULL");
 
@@ -111,7 +109,7 @@ public class TroncoMiniGame : MonoBehaviour, IMiniGame
 
         //MissionSpawnManager.Instance?.CompleteMission(missionTrigger);
 
-        Debug.Log(">>> CloseMission: apagando cursor");
+        //Debug.Log(">>> CloseMission: apagando cursor");
 
         //var cursor = UnityEngine.Object.FindFirstObjectByType<UniversalGamepadCursorV2>(FindObjectsInactive.Include);
         //if (cursor != null)

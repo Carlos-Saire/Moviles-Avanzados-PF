@@ -21,12 +21,15 @@ public class UIManager : MonoBehaviour
     {
         UIVideoGame.OnFireChanged += UpdateFireUI;
         UIVideoGame.OnTimeChanged += UpdateTimerUI;
+
         TroncoMiniGame.OnMissionCompleted += FinishGame;
     }
     private void OnDisable()
     {
         UIVideoGame.OnFireChanged -= UpdateFireUI;
         UIVideoGame.OnTimeChanged -= UpdateTimerUI;
+
+        TroncoMiniGame.OnMissionCompleted -= FinishGame;
     }
     private void UpdateTimerUI(int arg1, int arg2)
     {
@@ -51,6 +54,7 @@ public class UIManager : MonoBehaviour
     }
     private void FinishGame()
     {
+        Debug.Log("Se llamo");
         cursor.EnableCursor(false);
 
         playerController.isFrozen = false;

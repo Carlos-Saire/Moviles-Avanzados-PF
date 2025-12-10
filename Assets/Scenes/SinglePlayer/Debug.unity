@@ -175,7 +175,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MisionTroncoZona
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -7009689690073974971, guid: f2e49f4578f4b0d44827cd4cf9508ffb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
