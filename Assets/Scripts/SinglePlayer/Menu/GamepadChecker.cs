@@ -38,7 +38,7 @@ public class GamepadChecker : MonoBehaviour
     }
     private void Start()
     {
-        //for (int i = Gamepad.all.Count; i < 3; i++) {  InputSystem.AddDevice<Gamepad>(); }
+        for (int i = Gamepad.all.Count; i < 3; i++) {  InputSystem.AddDevice<Gamepad>(); }
     }
     private void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
