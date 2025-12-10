@@ -8,32 +8,28 @@ public class PlayerHealth2 : MonoBehaviour
     public bool IsDead = false;
 
     private Animator animator;
+    private UIManager UIManager;
     private PlayerController controller;
 
-    [SerializeField] private GameObject deathUIPanel;
     private UIVideoGame UIGame;
-
+    private bool isA=false;
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<PlayerController>();
+        UIManager = GetComponentInChildren<UIManager>();    
     }
-
-    private void Start()
-    {
-        //deathUIPanel.SetActive(false);
-    }
-
-
     private void Update()
     {
-        if (IsDead == true)
+        if (IsDead == true&& !isA)
         {
             IsDead = true;
             animator.SetTrigger("Death");
             Debug.Log("Player died");
             //controller.playerCamera.gameObject.SetActive(false);
-            UIGameEnd.Instance.Show(false);
+            SinglePlayer.VideoGameManager.Instance.UpdateDead();
+            UIManager.Fail();
+            isA = true;
         }
         /*if (IsDead ==true) 
         {

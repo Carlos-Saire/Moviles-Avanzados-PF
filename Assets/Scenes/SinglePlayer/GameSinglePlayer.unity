@@ -5534,7 +5534,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296667772}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 477c031e65ca1f64192dac347f67ad94, type: 3}
   m_Name: 
@@ -5666,56 +5666,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.8449707, y: 0.47558594}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1368768261
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1368768263}
-  - component: {fileID: 1368768262}
-  m_Layer: 0
-  m_Name: Cursor Bajito
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1368768262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368768261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c8ea33c9d4b9cd4e9012ee8928e778b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cursorSpeed: 900
-  deadZone: 0.2
-  cursorTexture: {fileID: 2800000, guid: 7c23185c083c26447a9d433b4e049e68, type: 3}
-  cursorSize: {x: 32, y: 32}
-  debugLogs: 0
-  autoRefreshRaycasters: 1
---- !u!4 &1368768263
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368768261}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5919952, y: 1.7422377, z: 6.1151114}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393928544
 GameObject:
   m_ObjectHideFlags: 0
@@ -8354,6 +8304,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 37936775601468265, guid: bb7ac11cf51897c45a4463bc2c730f54, type: 3}
+  spawnPoints:
+  - {fileID: 1865903057}
+  - {fileID: 1859971076}
+  - {fileID: 1915563519}
+  - {fileID: 395542577}
 --- !u!1 &1915563518
 GameObject:
   m_ObjectHideFlags: 0
@@ -9286,4 +9241,3 @@ SceneRoots:
   - {fileID: 2102142861}
   - {fileID: 70320863}
   - {fileID: 37608498}
-  - {fileID: 1368768263}

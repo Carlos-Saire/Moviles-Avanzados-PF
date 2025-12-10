@@ -1,7 +1,7 @@
 using System;
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 namespace SinglePlayer
 {
     public class VideoGameManager : MonoBehaviour
@@ -18,6 +18,8 @@ namespace SinglePlayer
 
         public event Action<bool> OnGameEnded;
         private bool _gameEnded = false;
+        private int cantidad;
+        private int currentDead;
         public void AddFire(float amount)
         {
             fireValue = Mathf.Clamp(fireValue + amount, 0, fireMax);
@@ -31,6 +33,18 @@ namespace SinglePlayer
             Debug.Log("start");
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            cantidad = PlayerPrefs.GetInt("JugadoresSeleccionados", 1);
+        }
+        public void UpdateDead()
+        {
+            currentDead++;
+            Debug.Log(currentDead);
+            Debug.Log(cantidad);
+            if (cantidad== currentDead)
+            {
+                SceneManager.LoadScene("MenuSinglePlayer");
+            }
         }
         private void Update()
         {
@@ -76,7 +90,10 @@ namespace SinglePlayer
         {
             fireValue = Mathf.Clamp(fireValue + amount, 0, fireMax);
         }
+        public void Win()
+        {
 
+        }
         public float GetFire() => fireValue;
         public float GetTimer() => timerValue;
     }

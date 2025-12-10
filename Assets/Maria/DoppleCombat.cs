@@ -49,7 +49,7 @@ public class DoppleCombat : MonoBehaviour
     {
         canAttack = false;
 
-       animator.SetTrigger("Attack");
+         animator.SetTrigger("Attack");
          Debug.Log("AttackRoutine IE");
         yield return new WaitForSeconds(0.4f);
 

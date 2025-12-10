@@ -43,6 +43,9 @@ public class UIManager : MonoBehaviour
     public void Fail()
     {
         fail.gameObject.SetActive(true);
+
+        playerController.isFrozen = true;
+        cameraController.isFrozen = true;
     }
     public void Game()
     {
